@@ -7,7 +7,7 @@ This enables a user to rapidly define a language and use it together with the Mo
 Some MontiCore advantages are the reusability of predefined language components, conservative extension and composition mechanisms, and an optimal integration of handwritten code into the generated tools.
 Its grammar languages are comfortable to use.
 
-This Getting Started aims to give a good and short introduction to all main features of MontiCore.
+This Getting Started aims to give a brief introduction to the main features of MontiCore.
 For this, we will consider multiple domain-specific languages and show you how these languages can be built with the help of MontiCore.
 This is designed to be interactive.
 This means that at some point you yourself have to write Java code to build a specific language or even design your own language.
