@@ -2,19 +2,20 @@
 # Composition of Automata and SimpleJava
 ## Language, Models and Grammars 
 
-In this Chapter, we will compose the two languages `Automata` created in Chapter 2 and
-`SimpleJava` from Chapter 3. 
-We will explore how to compose these two languages in the best and easiest way and we will
+In this Chapter, we will compose the two languages `Automata` created in Chapter 1 and
+`SimpleJava` from Chapter 2. 
+We will explore how to compose these two languages in the best and easiest way, and we will
  investigate which parts (AST, symbol table, context conditions, type check, visitors, ...) of the sublanguages can
-be used in this language as well. 
+ be used in this language as well. 
 As you can imagine, our composed language cannot use every part of the language.
 
 
 Composing multiple languages is fairly easy in MontiCore: 
-The language developer simply creates a new grammar that extends those languages. 
-Because both grammars have a start production (`Automaton` for Automata, `JavaCompilationUnit` for SimpleJava)
+The language developer simply creates a new grammar that extends those "super" grammars. 
+Because both super grammars have a start production 
+ (`Automaton` for Automata, `JavaCompilationUnit` for SimpleJava)
 and only one of them can be the start production of this composed grammar, 
- we have to specify the new start production of the composed grammar. 
+ we have to specify the new start production of the composed grammar using the keyword `start`. 
 The following shows our new grammar `SimpleJavaWithAutomata`:
 
 ```mc4
@@ -27,14 +28,16 @@ grammar SimpleJavaWithAutomata extends SimpleJava, Automata {
 }
 ```
 
-There is only one production in this grammar which overrides the production JavaBlock
-of the grammar SimpleJava. 
-It is a conservative extension of the production however, as both options `JavaVarDecl` and `Expression` are still possible for this production.
-Therefore, any `JavaBlock` of the grammar SimpleJava would also be a `JavaBlock` in this composed language. 
-The only difference is that a `JavaBlock` may consist of `Automata` as well. 
+There exists only one new production in this grammar:
+`JavaBlock`, which overrides the JavaBlock production of the grammar SimpleJava. 
+The extension is a conservative extension of the production,
+ as both original options `JavaVarDecl` and `Expression` are still possible.
+Therefore, any `JavaBlock` of the grammar SimpleJava would also be a valid `JavaBlock` in this composed language. 
+The only difference is that our new `JavaBlock` may consist of `Automata` as well. 
 A `JavaBlock` is only used in the production `JavaMethod`, or more specifically: 
- The body of a method is a `JavaBlock`. This means that in our composed language methods
-bodies can consist of variable declarations, expressions and automata. 
+ The body of a method is a `JavaBlock`.
+This means that in our composed language methods bodies can consist of variable declarations,
+ expressions and, now additionally, automata. 
 The next listing is a good example for a model of this language:
 
 ```java
@@ -76,83 +79,83 @@ class Check {
 }
 ```
 
-This model combines the model `Check` of the language SimpleJava and the PingPong automaton of the language Automata. 
+This model combines the model `Check` of the language SimpleJava 
+ and the `PingPong` automaton of the language Automata. 
 In the method `doSomething`, the PingPong automaton is squeezed between the variable declaration
- and the expression that were already there in the original SimpleJava model.
+ and the expressions that were already there in the original SimpleJava model.
 
 
 
 <!-- (c) https://github.com/MontiCore/monticore -->
 
 ## Composition
-You saw how to compose two grammars. 
+You saw how to compose the concrete syntax of two grammars.
 Now, we will focus on different parts of the language such as the AST, symbol table, type check, context conditions and visitors and
 investigate if the classes we implemented in the last two Chapters are reusable in this  language.
 
 ### AST
-The composition of the AST is fairly easy. For productions that are not overwritten in the
-composed language, the AST classes of the part languages are used. 
+The composition of the AST is fairly easy. 
+For productions that are not overwritten in the composed language, the AST classes of the defining languages are used. 
 Therefore, MontiCore generates only one new AST class for the grammar: `ASTJavaBlock`. 
-This new class now has the ability to store not only variable declarations or expressions as in SimpleJava, but also automata. 
-Because the production overwrites the production of SimpleJava in a
-conservative way, the new class `ASTJavaBlock` extends the old class `ASTJavaBlock` of the language SimpleJava.
+This new class has the ability to store not only variable declarations or expressions as in SimpleJava,
+ but also automata. 
+The new class `simplejavawithautomata._ast.ASTJavaBlock` extends the old class `simplejava._ast.ASTJavaBlock` of the language SimpleJava.
 
 ### Symbol Table
 
 
 Composing a symbol table means creating scopes that can store the symbols of every part language. 
-Therefore, MontiCore generates the three scope classes and interfaces mentioned in Section 1.4 for every grammar. The scope interface of the composed grammar extends
-all the scope interfaces of the sub languages. 
+Therefore, MontiCore generates the three scope classes and interfaces mentioned in Section 1.4 for every grammar. 
+The scope interface of the composed grammar extends all the scope interfaces of the sub languages. 
 Thus, the scope class implementing this interface is able to resolve the different symbols of all the sub languages. 
 Similar to the AST, the symbol classes of the sub languages are used instead of generating them anew
 for every grammar that uses them. 
-Only if the composed grammar would introduce a
-new symbol, a new symbol class would be generated for it. 
+Only if the composed grammar would introduce a new symbol, a new symbol class would be generated for it. 
 For the symbol table creation,
-i.e. the ScopesGenitor and ScopesGenitorDelegator, both classes are generated for every
-grammar. 
-The ScopesGenitor focuses on the symbol table creation for the composed
-grammar while the ScopesGenitorDelegator connects it with the ScopesGenitors of the
-sub languages,
- hence creating a symbol table that creates correct scopes and stores the correct symbols in it for the whole composed language. 
-Changes that were done to the ScopesGenitor of one of the sub languages like adding the package name of a model to the
-artifact scope need to be implemented in the ScopesGenitor of the composed language as well. 
-The symbol table creation for a language was split into two parts for more complex languages. 
-For this, the ScopesGenitorDelegator marked the first part that created the symbols
+ i.e. the `ScopesGenitor` and `ScopesGenitorDelegator`, both classes are generated for every grammar. 
+The `ScopesGenitor` focuses on the symbol table creation for the concrete grammar,
+ while the `ScopesGenitorDelegator` connects it with the `ScopesGenitor`s of the sub languages,
+ hence creating a symbol table with correct scopes and correct symbols for the whole composed language. 
+Changes that were done to the `ScopesGenitor` of one of the sub languages like adding the package name of a model to the
+artifact scope need to be implemented in the `ScopesGenitor` of the composed language as well. 
+The symbol table creation for a language was split into two parts for more complex languages:
+For this, the `ScopesGenitorDelegator` marked the first part that created the symbols
  but left some of their attributes unfilled while another handwritten class marked
-the second part that filled those attributes. 
+the second part that completed those attributes. 
 To add one class that acts as an interface for the symbol table creation, 
  we added another handwritten class combining the two phases of the symbol table creation. 
-While the handwritten class that we added for the second phase of the symbol table creation of the SimpleJava language can be reused, the class combining
-both parts of the symbol table creation cannot. 
-Therefore, we need to implement a new class that is structured just as the other class that we already created for SimpleJava.
-It first executes the ScopesGenitorDelegator on the AST and then executes all the classes
-that were handwritten for the second phase of the symbol table creation on the AST. 
-As they are stored in a traverser and a traverser of the composed language can use visitors of
-the sub languages, the class for the second phase of the SimpleJava language can simply
+While `SimpleJavaSTCompleteTypes`,
+ the handwritten class that we added for the second phase of the symbol table creation of the SimpleJava language can be reused,
+ the `SimpleJavaPhasedSTC` class combining both parts of the symbol table creation cannot. 
+Therefore, 
+ we need to implement a new class that is structured just as the `SimpleJavaPhasedSTC` class that we already created for SimpleJava.
+It first executes the `ScopesGenitorDelegator` on the AST and then executes all the classes
+ that were handwritten for the second, completition phase of the symbol table creation on the AST. 
+As a traverser of the composed language can use visitors of
+the sub languages, the class for the completition phase of the SimpleJava language can simply
 be given to this traverser.
 
 
 #### Exercise 1
-Similar to your exercise in the SimpleJava language, add the package name of a model
-to the symbol table by overwriting the ScopesGenitor with the TOP mechanism and adjusting the `createFromAST` method. 
+Similar to the exercise in the SimpleJava language,
+ add the package name of a model to the symbol table by overwriting the `ScopesGenitor` with the TOP mechanism 
+ and adjusting the `createFromAST` method. 
 After that, fill in the logic that combines the two symbol table creation phases in the class `SimpleJavaWithAutomataPhasedSTC`. 
-This will be similar to an exercise of SimpleJava as well. 
+This will be similar to an exercise of the SimpleJava chapter as well. 
 Check that your implementation is correct by executing the tests `testPackage` and `testSymbolCompletion` in the class `SymbolTableTest`.
 
-In SimpleJava, we introduced the symbol table import and export. The composed language
-can also export and import symbol tables into and from files. 
+In SimpleJava, we introduced the symbol table import and export mechanism.
+The composed language can also export and import symbol tables into and from files. 
 For this, the composed language has a Symbols2Json class as well. 
 You saw how the serialized symbol table of a model looks in a file in the last chapter. 
-The symbol table of the model Check of the language
-SimpleJava is stored under `src/test/resources/tutorial/simplejava/symboltable/Check.javasym`.
+The symbol table of the SimpleJava model `Check.sjava`  is stored in the `src/test/resources/tutorial/simplejava/symboltable/Check.javasym` file.
 One of the main questions for the symbol table import is: 
  Can we import the symbol table of a sub language in our composed language? 
 After all, our composed language knows all the scopes and symbols that
 are described in this file. 
-For this, we wrote a test. 
-Look at the test named `testSymbolTableImport` in the class `SymbolTableTest`. 
-We create an instance of `SimpleJavaWithAutomataSymbols2Json` first and try to load the symbol table of the model `Check` of the language SimpleJava. 
+For this, we wrote the test named `testSymbolTableImport` in the class `SymbolTableTest`. 
+We first create an instance of `SimpleJavaWithAutomataSymbols2Json` and
+ then try to load the symbol table of the SimpleJava model `Check`. 
 After that, we try to resolve the function `getBar` inside the class `Check`. 
 We assert that the symbol for the function can be found. 
 Executing this test will show you that loading a symbol table of a model of a part language works as intended 
@@ -165,18 +168,20 @@ Thus, symbol tables from totally different languages can be used together if the
 ### Visitors
 
 We will test whether the visitors we implemented in Section 1.2 work for models of the
-composed languages as well. For this, we will write a test that executes the three visitors
-on a new model. The test can be seen in the method `testVisitorsOnAutomaton`
-in the class `VisitorTest`.
-At first, the model Bar is parsed and its symbol table is created. 
-After that, the method resolves for the automaton symbol Door in the model.
+composed languages as well.
+For this, we will write a test that executes the three visitors on a new model.
+The test can be seen in the method `testVisitorsOnAutomaton` in the class `VisitorTest`.
+First, the model Bar is parsed and its symbol table is created. 
+After that, the method resolves for the automaton symbol `Door` in the model.
 After it was found, its corresponding AST node is retrieved and the three visitors are
-executed on it. There should be four transitions, five states in total, two initial states
-and one final state in this model. When executing the test, the visitors find exactly that
-amount of states and transitions. 
-The second test `testVisitorsOnWholeModel` does
-mostly the same. However, it does not retrieve the automaton but executes the visitors
-on the whole model. As the automaton is embedded into the whole model and it still has
+executed on it. 
+There should exist four transitions, five states in total, two initial states
+and one final state in this model. 
+When executing the test, the visitors find exactly that amount of states and transitions. 
+The second test `testVisitorsOnWholeModel` does mostly the same. 
+However, it does not retrieve the automaton but executes the visitors
+on the whole model. 
+As the automaton is embedded into the whole model and it still has
 the same number of transitions and states, the visitors should still return these numbers.
 Executing this test will tell you that the visitors returned the correct values. This means
 that the visitors of the sub languages work as intended in the composed language, even
