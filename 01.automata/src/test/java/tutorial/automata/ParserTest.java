@@ -27,11 +27,4 @@ public class ParserTest extends AbstractTest {
     //TODO Exercise 2: Delete the @Ignore annotation to test if the mealy automaton parses correctly
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPongMealy.aut");
   }
-
-  @Test
-  @Ignore 
-  public void testWithPreconditions() throws IOException {
-    //TODO Exercise TODO: Delete the @Ignore annotation to test if the mealy automaton parses correctly
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/WithPreconditions.aut");
-  }
 }

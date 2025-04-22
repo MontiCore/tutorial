@@ -262,22 +262,7 @@ Make sure that your modification is only optional.
 Otherwise, it can have the side effects of original (non-mealy machines) not
 parsing anymore.
 
-<!--
-#### Exercise TODO (evtl. weglassen)
-
-```automaton
-source [x > 42] - input > target;
-```
-
-* Insert (optional) precondition
-  * extends Expression (teaser for later)
-  * [expressions language family documentation](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/Expressions.md)
-  * `de.monticore.expressions.CommonExpressions`
-  * > 0xA0278 The interface nonterminal Literal must not be used without nonterminals implementing it in a grammar not marked as a grammar component
-  * `de.monticore.literals.MCCommonLiterals`
-  * `("[" precondition:Expression "]")?`
-  * Test
---><!-- (c) https://github.com/MontiCore/monticore -->
+<!-- (c) https://github.com/MontiCore/monticore -->
 ## Context Conditions 
 The MontiCore grammars that are written for creating DSLs are context-free. 
 This means that some restrictions for a language cannot (or should not) be 
@@ -332,7 +317,7 @@ It is common to specify a different error code and error message in every
 CoCo so that errors in models can be retraced to a single restriction of a 
 language.
 
-#### Exercise 4
+#### Exercise 3
 The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
 `AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and 
 `TransitionNameUncapitalized` are all given for the automata language 
@@ -413,7 +398,7 @@ public class CountTransitions implements AutomataVisitor2 {
 }
 ```
 
-#### Exercise 2
+#### Exercise 4
 Switch to your IDE.
 Look up the `CountTransitions` visitor under
 `src/main/java/tutorial/automata/visitor/`.
@@ -429,7 +414,7 @@ After that, a fresh traverser instance is retrieved via the mill with the call
 Finally, the traverser is executed on the ast with the call 
 `automaton.accept(traverser)` and the results are checked.
 
-#### Exercise 3
+#### Exercise 5
 The skeletons for two more visitors, `CountStates`, and `AddPrefixToName` are 
 given in the GettingStarted project.
 Implement the traversal behavior for these two classes by overriding the 
@@ -526,7 +511,7 @@ public IAutomatonArtifactScope createSymbolTable(ASTAutomaton node) {
 }
 ```
 
-#### Exercise 5
+#### Exercise 6
 Now, we recall the remaining missing test in the `CoCoTest` class. 
 It refers to a CoCo, that checks whether a source state of a transition exists.
 (The same check should be, of course, done for the target state. 
@@ -552,28 +537,41 @@ Pretty printing is the opposite to parsing.
 The input for a parser is a text file, the model,
 and its output is the AST conforming to the model. 
 For a pretty printer, this is the exact opposite. 
-Its input is an AST and its output is the model conforming to this AST and the language. 
-A pretty printer can be useful after the AST was transformed (e.g. adding a prefix to each state name). 
-Pretty printing the transformed AST and storing the contents in a file to view the transformed model might be interesting.
-
+Its input is an AST and its output is the model conforming to this AST 
+and the concrete syntax of the language. 
+A pretty printer can be useful after the AST was transformed (e.g., 
+adding a prefix to each state name). 
+Pretty printing the transformed AST and storing the contents in a file 
+to view the transformed model might be interesting.
 
 MontiCore attempts to generate a pretty printer for each language.
-For a language `A`, the two classes `APrettyPrinter` and `AFullPrettyPrinter` will be generated.
-The `APrettyPrinter` utilizes the visitor pattern and implements the `AHandler` interface.
-It uses an `IndentPrinter`, a special printer provided by MontiCore, as an attribute.
-The `handle` methods for each production are overwritten and instead of the default navigation being performed,
- the productions are printed during this navigation.
-Simple terminals like `"automaton"`
-or `"state"` in the Automata grammar can be printed with the indent printer while references to other nonterminals should be handled by delegating to the specific `handle` method.
+For a language `A`, the two classes `APrettyPrinter` and `AFullPrettyPrinter` 
+will be generated.
+The `APrettyPrinter` utilizes the visitor pattern and implements the 
+`AHandler` interface.
+It uses an `IndentPrinter`, a special printer provided by MontiCore.
+The `handle` methods for each production are overwritten and instead of 
+the default navigation being performed;
+The productions are printed during this navigation.
+Simple keywords like `"automaton"` or `"state"` in the Automata grammar 
+can be printed with the indent printer while references to other 
+nonterminals should be handled by delegating to the specific `handle` method.
 
-The `IndentPrinter` can be used to add an indent to each new line after an opening curly bracket as well as removing this indent before the closing curly bracket.
-The `AFullPrettyPrinter` sets up a traverser and adds the `APrettyPrinter` as a visitor.
-As the `APrettyPrinter` can only handle pretty printing the nonterminals of one grammar, the nonterminals of aggregated grammars cannot be pretty printed by it.
-The full pretty printer solves this, as it adds a pretty printing visitor for every language.
-When discussing language aggregation later on, we will circle back to this class.
+The `IndentPrinter` can be used to add an indent to each new line after 
+an opening curly bracket as well as removing this indent before the 
+closing curly bracket.
+The `AFullPrettyPrinter` sets up a traverser and adds the `APrettyPrinter` 
+as a visitor.
+As the `APrettyPrinter` can only handle pretty printing the nonterminals 
+of one grammar.
+However, MontiCore generally facilitates compositional language design.
+Thus, the productions of inherited languages must also be considered during 
+pretty printing.
+The full pretty printer solves this, as it adds the respective modular pretty 
+printers for every sub-language.
 
-
-One possible handle method for `ASTAutomaton` is displayed below.
+One possible handle method for the printer handling an `ASTAutomaton` 
+is displayed below.
 
 ```java
 public void handle(ASTAutomaton node) {
@@ -604,55 +602,39 @@ public void handle(ASTAutomaton node) {
 
 #### Exercise 7
 Open the generated class `AutomataPrettyPrinter`  in the folder 
-`target/generated-sources/monticore/ sourcecode/de/monticore/gettingstarted/automata/_prettyprint`.
+`target/generated-sources/monticore/sourcecode/tutorial/automata/_prettyprint`.
 
 Inspect the various `handle` methods. 
 Test the generated implementation by executing the class `PrettyPrinterTest`.
-Remove the `@Ignore` jUnit annotations first to enable this test.
+Remove the `@Ignore` JUnit annotations first to enable this test.
 
 You might notice that one of the tests fails.
 Open the `AutomataPrettyPrinter` class again and inspect the failing method.
 You will notice a `TODO: Implement me` comment.
 
-While MontiCore attempts to generate pretty printers, it is not sophisticated in doing so.
-The right hand side of the `AutAttributes` production was too complex for it: `"(" (Attribute | ",")* ")"`.
-(In fact, if a comma seperated list was desired,
- the `(Attribute || ",")*` notation with two vertical pipes would have been more appropriate.)
-
-Your task is to utilize the TOP mechanism to override this `handle(AutAttributes node)` method and implement a proper pretty printing behavior.
-Start by creating a new `AutomataPrettyPrinter` class (extending the proper super classes) and add the correct constructor.
-Assume a comma seperated list should be printed.
-
-
-#### Exercise 8
-The class `AutomataFullPrettyPrinter` and a `GrammarMill.prettyPrint` method are already generated. 
-Examine this class, exp. its `initializeTraverser` method, and compare it to its description above. 
-After that, add the option `pp` to your `AutomataTool`, extend its `run` method and implement its `prettyPrint` method with the help of the `AutomataMill.prettyPrint(...)` method. 
-Store the model in a file with the name of the automaton and the file ending `.aut`. 
-Test your implementation by executing the last `testPrettyPrinter` of the class `ToolTest`.
-<!-- (c) https://github.com/MontiCore/monticore -->
-## Language Tool 
-For each language, a *Tool* is generated. 
-This tool provides a general interface for the functionalities developed for a language. 
-This includes all features such as parsing of models, creating a symbol table from the AST, checking the Context Conditions of a language, pretty printing or reporting.
+While MontiCore attempts to generate pretty printers, it is not sophisticated 
+enough in doing so for each case.
+Part of the reason is, that there is a natural information loss between 
+concrete and abstract syntax.
+Thus, synthesizing a textual model from an AST always operates on imperfect
+information.
+The right hand side of the `AutAttributes` production was too complex for it: 
+`"(" (Attribute | ",")* ")"`.
+(In fact, if a comma seperated list was desired, the `(Attribute || ",")*` 
+notation with two vertical pipes would have been more appropriate.)
 
 
-For a grammar `A`, MontiCore generates the class `ATool`. 
-The tool contains standard methods that are either already filled with code or empty so that they may be overwritten in a subclass of the tool. 
-Methods that are filled with code contain basic functionalities that should be the same for each language such as parsing a model or creating a symbol table from an AST. 
-The empty methods are empty because the functionalities they implement are not generated for every language such as checking Context Conditions, pretty printing ASTs or providing reports for a model. 
-The CoCos, the pretty printer or the reports must be developed by the user first.
-
-The empty methods must be overwritten in a subclass of the Tool while the methods that are filled with code can but do not need to be overwritten in this subclass as well. 
-The subclass can be created using the *TOP mechanism*. 
-For this, the user creates their own hand-written Java class that has the same name and lies in the same package as the generated class. 
+Your task is to override this erroneous behavior and implement a proper pretty 
+printing in a corresponding subclass, which is automatically employed.
+Such a subclass can be created using the *TOP mechanism*.
+For this, the user creates their own hand-written Java class that has the same name and lies in the same package as the generated class.
 The difference between the generated class and the hand-written class is that the latter is located in the *source path*, i.e. in `src/main/java`,
- while the generated class is located in the *build path*, i.e. in `target/generated-sources/monticore/sourcecode`.
-After cleaning and while building the project anew with Gradle, the MontiCore generator finds the hand-written class that is named like the generated class and lies in the same package but only in the source path and, thus it adds the suffix `TOP` to the name of the generated class and makes it abstract. 
-The hand-written class then can extend the generated class with the TOP-suffix so that it might use every function of the generated class and extend its implementation. 
-This TOP-mechanism is supported for every generated class and allows the user to create their own hand-written extensions of the generated code without changing the usage of a class in the generated code. 
+while the generated class is located in the *build path*, i.e. in `target/generated-sources/monticore/sourcecode`.
+After cleaning and while building the project anew with Gradle, the MontiCore generator finds the hand-written class that is named like the generated class and lies in the same package but only in the source path and, thus it adds the suffix `TOP` to the name of the generated class and makes it abstract.
+The hand-written class then can extend the generated class with the TOP-suffix so that it might use every function of the generated class and extend its implementation.
+This TOP-mechanism is supported for every generated class and allows the user to create their own hand-written extensions of the generated code without changing the usage of a class in the generated code.
 Other classes, which use the (now extended) class do not have to be changed,
- as both the hand-written class and previously "old" generated class share the same name and package.
+as both the hand-written class and previously "old" generated class share the same name and package.
 The TOP-mechanism for the class `ASTState` can look like Figure 2.2.
 The generated Builder-class uses the hand-written `ASTState` class that extends the generated `ASTStateTOP` class.
 
@@ -664,18 +646,72 @@ The generated Builder-class uses the hand-written `ASTState` class that extends 
 
 
 
-#### Exercise 6
+#### Exercise 8
+Use the TOP mechanism to override the `handle(AutAttributes node)` method and 
+implement a proper pretty printing behavior.
+Start by creating a new `AutomataPrettyPrinter` class in the directory
+`src/main/java/tutorial/automata/_prettyprint`.
+Please note, that the exact location and naming is essential as MontiCore's
+TOP mechanism is name-sensitive. 
+After initially creating the handwritten class, regenerate by rebuilding the 
+project.
+If everything succeeded you should now find a generated class 
+`AutomataPrettyPrinterTOP` in the location of generated artifacts:
+`target/generated-sources/monticore/sourcecode/tutorial/automata/_prettyprint`.
+In your hand-written counterpart, you should now extend this superclass and 
+override the respective method of the printer.
+Assume a comma seperated list should be printed.
+Once everything is implemented, the initial test should, finally, secceed.<!-- (c) https://github.com/MontiCore/monticore -->
+## Language Tool 
+For each language, a *Tool* is generated. 
+This tool provides a general interface for the functionalities developed for 
+a language. 
+This includes all features such as parsing of models, creating a symbol table 
+from the AST, checking the Context Conditions of a language, pretty printing 
+or reporting.
+
+
+For a grammar `A`, MontiCore generates the class `ATool`. 
+The tool contains standard methods that are either already filled with defaults
+or empty so that they may be overwritten in a subclass of the tool. 
+Methods that are filled with code contain basic functionalities that should be 
+the same for each language such as parsing a model or creating a symbol table 
+from an AST. 
+The empty methods are empty because the functionalities they implement are not 
+generated for every language such as checking Context Conditions, pretty 
+printing ASTs or providing reports for a model. 
+The CoCos, the pretty printer, or the reports must be developed by the 
+language engineer first.
+
+The empty methods must be overwritten in a subclass of the tool (using the 
+TOP mechanism) while the methods that are filled with code can but do not 
+need to be overwritten in this subclass as well. 
+
+
+#### Exercise 9
 Create a hand-written extension for the generated class `AutomataTool`. 
-First, have a look at the already generated Tool class for the Automata grammar to get an overview of which methods are already implemented and do not need to be overwritten. 
-Overwrite the previously empty `runDefaultCoCos` method with the functionality to check all CoCos that were developed in Section 1.3. 
-Additionally, overwrite the method `report` to create a report for an AST as a text file. 
-Use the visitors implemented in Section 1.2 to collect some statistics for the states and transitions in the AST. 
-Store the report in the directory `target/automata/reports` as a text file with the name of the automaton. 
-For this, you will have to overwrite the `run` method and add the functionality for parsing, creating a symbol table, checking context conditions and reporting as well. 
-The command for parsing, creating a symbol table and checking context conditions is `i` and for reporting is `r`. 
-Use the predefined methods of the generated TOP-class for parsing, creating the symbol table,
-checking context conditions and reporting. 
-Your report should contain at least the following information (with the correct numbers):
+First, have a look at the already generated Tool class for the Automata 
+grammar to get an overview of which methods are already implemented and 
+do not need to be overwritten. 
+Overwrite the previously empty `runDefaultCoCos` method with the 
+functionality to check all CoCos that were developed in Section 1.3. 
+Additionally, overwrite the method `report` to create a report for an AST 
+as a text file. 
+Use the visitors implemented in Section 1.4 and 1.5 to collect some 
+statistics for the states and transitions in the AST. 
+Store the report in the directory `target/automata/reports` as a text file 
+with the name of the automaton. 
+For this, you will have to overwrite the `run` method and add the 
+functionality for calling the parser, creating a symbol table, checking 
+context conditions, and reporting as well. 
+The command for parsing, creating a symbol table and checking context conditions 
+is `i` and for reporting is `r`. 
+Use the predefined methods of the generated TOP-class for parsing, creating the 
+symbol table, checking context conditions, and reporting. 
+You can trigger and test your tool via the corresponding methods in the 
+`ToolTest` class.
+Your report should contain at least the following information (with the 
+respectively correct numbers):
 > Number of States: 42
 > 
 > Number of Transitions: 1234
@@ -684,6 +720,18 @@ Your report should contain at least the following information (with the correct 
  
 Check the reports for the PingPong automaton in `target/automata/reports/PingPong.txt`. 
 Test your tool by executing the first two tests of the class `ToolTest`.
+
+#### Exercise 10
+
+Recall, that the class `AutomataFullPrettyPrinter` and a 
+`AutomataMill.prettyPrint` method are already generated.
+Add the option `pp` to your `AutomataTool`, extend its `run` method and 
+implement its `prettyPrint` method with the help of the 
+`AutomataMill.prettyPrint(...)` method.
+Store the model in a file with the name of the automaton and the file ending 
+`.aut`.
+Test your implementation by executing the last `testPrettyPrinter` of the 
+class `ToolTest`.
 <!-- (c) https://github.com/MontiCore/monticore -->
 
 Next, continue with [Chapter 2](../02.simplejava/README.md)
