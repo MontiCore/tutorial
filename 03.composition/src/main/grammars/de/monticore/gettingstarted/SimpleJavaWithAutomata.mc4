@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.gettingstarted;
+
+import de.monticore.gettingstarted.*;
+
+grammar SimpleJavaWithAutomata extends SimpleJava, Automata {
+
+  start JavaCompilationUnit;
+
+  // -> allow writing automata in methods
+  @Override
+  JavaBlock = (JavaVarDecl | Expression | Automaton)*;
+
+}

@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+// The ping pong game
+automaton TransName {
+  state NoGame <<initial>>;
+  state Ping;
+  state Pong <<final>>;
+
+  NoGame - StartGame > Ping;
+
+  Ping - stopGame > NoGame;
+  Pong - stopGame > NoGame;
+
+  Ping - returnBall > Pong;
+  Pong - returnBall > Ping;
+}

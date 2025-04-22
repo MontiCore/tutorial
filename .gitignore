@@ -1,0 +1,14 @@
+target
+nppBackup
+.project
+.settings
+.classpath
+.idea
+.git
+
+.gradle
+*.iml
+
+gradlew.bat
+gradlew
+gradle

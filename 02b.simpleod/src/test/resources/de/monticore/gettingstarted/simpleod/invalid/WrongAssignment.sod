@@ -1,0 +1,10 @@
+package de.monticore.gettingstarted.simplejava.invalid;
+
+objectdiagram WrongAssignment {
+
+  foo:BarType {
+    int max = "Hello";
+  }
+
+
+}

@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.gettingstarted;
+
+grammar Statecharts extends de.monticore.MCBasics {
+  P = "P";
+
+
+}

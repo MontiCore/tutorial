@@ -1,0 +1,56 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+plugins {
+    id "java-library"
+    id "de.monticore.generator"
+    id "jacoco"
+}
+
+dependencies {
+    // Depend on the MontiCore language library (which in term depends on the runtime)
+    grammar "de.monticore:monticore-grammar:$mc_version"
+
+    grammar project(":01.automata")
+    grammar project(":02.simplejava")
+
+
+    implementation "org.apache.commons:commons-lang3:3.9"
+    implementation "commons-cli:commons-cli:1.4"
+    testImplementation "junit:junit:$junit_version"
+}
+
+
+
+test {
+    useJUnit()
+
+    testLogging {
+        // controls whether test output is shown
+        showStandardStreams = !("false").equals(getProperty('showTestOutput'))
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        exceptionFormat TestExceptionFormat.FULL
+        info {
+            events TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_OUT
+        }
+    }
+    afterTest { desc, result ->
+        logger.lifecycle "${desc.className} > ${desc.name} ${result.resultType}"
+    }
+    afterSuite { desc, result ->
+        if (!desc.parent) { // will match the outermost suite
+            def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+            def startItem = '|  ', endItem = '  |'
+            logger.lifecycle startItem + output + endItem
+        }
+    }
+    reports {
+        junitXml.required = false
+        html.required = false
+    }
+}

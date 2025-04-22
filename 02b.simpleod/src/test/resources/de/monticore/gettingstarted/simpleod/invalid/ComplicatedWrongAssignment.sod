@@ -1,0 +1,10 @@
+package de.monticore.gettingstarted.simplejava.invalid;
+
+objectdiagram ComplicatedWrongAssignment {
+
+  foo:BarType {
+    int max = 3/7*(4+"Foo");
+  }
+
+
+}

@@ -1,0 +1,30 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.gettingstarted;
+
+grammar Website extends de.monticore.literals.MCCommonLiterals {
+
+//<#if solution>
+  symbol scope Website = "website" Name  /* ... */  "{" Navigation? Page* "}";
+
+  Navigation = "navigation" "{" NavigationElement* "}";
+
+  NavigationElement = (Name@Page ("{" NavigationElement* "}" | ";"));
+
+  symbol Page = ["start"]? "page" Name "{" Title? Directory "}";
+
+  Title = StringLiteral ";";
+
+  interface DirectoryElement;
+
+  Directory = Name "{" DirectoryElement* "}";
+
+  Pic implements DirectoryElement = "pic" Name width:NatLiteral "x" height:NatLiteral ";";
+
+  Link implements DirectoryElement = "->" Name@Page title:StringLiteral? ";";
+
+  Text implements DirectoryElement = text:StringLiteral ";";
+//</#if>
+  // TODO define the grammar
+ //<#if !solution>symbol scope Website = "website" Name  /* ... */ ;//</#if>
+
+}

@@ -1,0 +1,34 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.gettingstarted;
+
+grammar MontiArc extends de.monticore.MCBasics, de.monticore.symbols.BasicSymbols,
+ de.monticore.types.MCBasicTypes    {
+   ArcUnit =
+     MCPackageDeclaration?
+
+     Component;
+
+  symbol scope Component implements ComponentMember, Type =
+    "component" Name
+     ( "("  (CompVar  || ",")*  ")" )?
+     (Instance ||",")*
+     "{"
+      ComponentMember*
+    "}";
+
+  symbol CompVar implements Variable = MCType Name;
+
+  interface ComponentMember;
+
+  PortDef implements ComponentMember = "port" direction:["in"|"out"] MCType (Port || ",")+ ";";
+
+  // The type a,b,c syntax requires us to use this name-symbol and set the type, etc. during symbol table construction
+  symbol Port implements Variable = Name;
+
+  // Note: only a.b in the models => Name "." Name also possible-ish
+  Connector implements ComponentMember = source:MCQualifiedName "->" target:MCQualifiedName  ";";
+
+  InstanceDef implements ComponentMember = Name@Component (Instance ||",")+ ";";
+  symbol Instance implements Variable = Name;
+
+}

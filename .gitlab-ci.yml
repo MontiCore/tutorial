@@ -1,0 +1,17 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+image: registry.git.rwth-aachen.de/monticore/container-registry/gradle:7.6.4-jdk11
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build_gradle:
+  stage: build
+  script:
+    - "gradle build"
+  artifacts:
+    paths:
+      - "target"
+    expire_in: 1 week

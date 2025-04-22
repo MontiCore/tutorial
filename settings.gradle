@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        if(("true").equals(getProperty('useLocalRepo'))){
+            mavenLocal()
+        }
+        maven {
+            credentials.username mavenUser
+            credentials.password mavenPassword
+            url repo
+        }
+
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'mc-tutorial'
+include(':01.automata')
+include(':02.simplejava')
+//include(':02b.simpleod')
+include(':03.composition')
+include(':04.website')
+
