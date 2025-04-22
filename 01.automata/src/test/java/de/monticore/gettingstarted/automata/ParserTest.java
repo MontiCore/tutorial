@@ -15,14 +15,14 @@ public class ParserTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore //</#if>
+  @Ignore 
   public void testPingPongMealy() throws IOException {
     //TODO Exercise TODO: Delete the @Ignore annotation to test if the mealy automaton parses correctly
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/PingPongMealy.aut");
   }
 
   @Test
-  //<#if !solution>@Ignore //</#if>
+  @Ignore 
   public void testWithPreconditions() throws IOException {
     //TODO Exercise TODO: Delete the @Ignore annotation to test if the mealy automaton parses correctly
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/WithPreconditions.aut");

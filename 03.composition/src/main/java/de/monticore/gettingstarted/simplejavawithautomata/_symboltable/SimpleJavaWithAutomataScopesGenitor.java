@@ -12,12 +12,7 @@ public class SimpleJavaWithAutomataScopesGenitor extends SimpleJavaWithAutomataS
   @Override
   public ISimpleJavaWithAutomataArtifactScope createFromAST(ASTJavaCompilationUnit ast){
     //TODO implement me!
-    //<#if solution>
-    ISimpleJavaWithAutomataArtifactScope as = super.createFromAST(ast);
-    as.setPackageName(ast.getMCPackageDeclaration().getMCQualifiedName().getQName());
-    return as;
-    //</#if>
-    //<#if !solution>return null;//</#if>
+    return null;
   }
 
 }

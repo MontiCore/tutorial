@@ -28,7 +28,7 @@ public class SymTabTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testPackageSet() throws IOException {
     ASTJavaCompilationUnit bar = parse("src/test/resources/de/monticore/gettingstarted/simplejava/valid/Bar.sjava");
     SimpleJavaScopesGenitorDelegator st = SimpleJavaMill.scopesGenitorDelegator();
@@ -37,7 +37,7 @@ public class SymTabTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testTypesSet() throws IOException {
     ASTJavaCompilationUnit bar = parse("src/test/resources/de/monticore/gettingstarted/simplejava/valid/Bar.sjava");
     ISimpleJavaArtifactScope as = createSymbolTable(bar);

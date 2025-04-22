@@ -68,23 +68,6 @@ public class SimpleJavaTypeCheck3 extends MapBasedTypeCheck3 {
     // TODO: Add visitors of the concrete super expressions here
     // Hint: CommonExpressionsCTTIVisitor and  ExpressionBasis...
 
-    //<#if solution>
-    {
-      CommonExpressionsCTTIVisitor visCommonExpressions = new CommonExpressionsCTTIVisitor();
-      visCommonExpressions.setType4Ast(type4Ast);
-      visCommonExpressions.setContext4Ast(ctx4Ast);
-      traverser.add4CommonExpressions(visCommonExpressions);
-      traverser.setCommonExpressionsHandler(visCommonExpressions);
-    }
-
-    {
-      ExpressionBasisCTTIVisitor visExpressionBasis = new ExpressionBasisCTTIVisitor();
-      visExpressionBasis.setType4Ast(type4Ast);
-      visExpressionBasis.setContext4Ast(ctx4Ast);
-      traverser.add4ExpressionsBasis(visExpressionBasis);
-      traverser.setExpressionsBasisHandler(visExpressionBasis);
-    }
-    //</#if>
 
     // MCTypes
 

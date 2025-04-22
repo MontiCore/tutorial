@@ -14,9 +14,6 @@ public class SimpleJavaWithAutomataCoCos {
   public SimpleJavaWithAutomataCoCoChecker getCoCoChecker(){
     SimpleJavaWithAutomataCoCoChecker checker = new SimpleJavaWithAutomataCoCoChecker();
     // TODO: Add the Automata CoCos here
-    //<#if solution>
-    checker.addChecker(new AutomataCoCos().getCoCoChecker());
-    //</#if>
     TypeCalculator tc = new TypeCalculator(new FullSynthesizeFromSimpleJava(), new FullDeriveFromSimpleJava());
     ExpressionIsValid coco = new ExpressionIsValid(tc);
     checker.addCoCo(new VariableDeclarationIsCorrect(tc));

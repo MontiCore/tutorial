@@ -113,7 +113,7 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testStaticAbstractOOFields(){
     testInvalidOO("0xA0241", staticAbstractOOFields);
   }
@@ -136,19 +136,19 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testComplicatedWrongAssignment(){
     testInvalidOO("0xA0168", complicatedWrongAssignment);
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testWrongAssignment(){
     testInvalidOO("0xA0457", wrongAssignment);
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testInvalidAutomaton(){
     testInvalidOO("0xA005", invalidAutomaton);
   }

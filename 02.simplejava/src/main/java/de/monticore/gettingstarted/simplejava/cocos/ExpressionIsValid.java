@@ -11,8 +11,6 @@ import de.monticore.expressions.expressionsbasis._cocos.ExpressionsBasisASTExpre
 import de.monticore.expressions.expressionsbasis._visitor.ExpressionsBasisHandler;
 import de.monticore.types.check.SymTypeExpression;
 import de.monticore.types.check.SymTypeExpressionFactory;
-import de.monticore.types.check.TypeCalculator;
-import de.monticore.types.check.TypeCheck;
 import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
@@ -24,12 +22,6 @@ public class ExpressionIsValid implements ExpressionsBasisASTExpressionCoCo, Com
 
   @Override
   public void check(ASTExpression node) {
-    //<#if solution>
-    SymTypeExpression sym = TypeCheck3.typeOf(node);
-    if(sym.isObscureType()){
-      Log.error(errorCode + ": " + errorMsg);
-    }
-    //</#if>
     //TODO implement me!
     // Hint: Use the TypeCheck3
   }

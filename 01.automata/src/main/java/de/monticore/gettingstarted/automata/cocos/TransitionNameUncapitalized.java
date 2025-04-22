@@ -13,11 +13,6 @@ public class TransitionNameUncapitalized implements AutomataASTTransitionCoCo {
 
   @Override
   public void check(ASTTransition node) {
-    //<#if solution>
-    if(Character.isUpperCase(node.getInput().charAt(0))){
-      Log.error(errorCode + String.format(errorMsg, node.getInput()));
-    }
-    //</#if>
     //TODO implement me
   }
 }

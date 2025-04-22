@@ -12,12 +12,7 @@ public class SimpleJavaScopesGenitor extends SimpleJavaScopesGenitorTOP {
   @Override
   public ISimpleJavaArtifactScope createFromAST(ASTJavaCompilationUnit ast){
     //TODO implement me!
-    //<#if solution>
-    ISimpleJavaArtifactScope as = super.createFromAST(ast);
-    as.setPackageName(ast.getMCPackageDeclaration().getMCQualifiedName().getQName());
-    return as;
-    //</#if>
-    //<#if !solution>return null;//</#if>
+    return null;
   }
 
 }

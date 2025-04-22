@@ -342,7 +342,7 @@ Then, the attributes of the symbols can be filled however the language developer
 #### Exercise 4
 The skeleton of a visitor for the second phase of the symbol table creation is displayed
 in the class `SimpleJavaSTCompleteTypes`. Implement the `visit` methods and use the
-`TypeCalculator` class to fill the empty attributes of the symbols. 
+`TypeCheck3` class to fill the empty attributes of the symbols. 
 After filling the attributes of the symbols, use the methods `replaceSurrogate` or `replaceSurrogates` 
  to remove symbol surrogates if present. 
 The test for correctness will be done after Exercise 5.
@@ -556,7 +556,7 @@ If a variable declaration has an expression that immediately initializes it,
  the `SymTypeExpression` for both the declared type and the initializing expression should be calculated and compared. 
 If the resulting `SymTypeExpression`s are not compatible (e.g. `int` and `boolean`),
  the Context Condition should log an error.
-The `TypeCalculator` has a method to check the compatibility of two `SymTypeExpression`s.
+The `SymTypeRelations` has a method to check the compatibility of two `SymTypeExpression`s.
 If a variable declaration does not have an expression, the CoCo should ignore this variable declaration.
 The second case is a little different and should use the class `ASTExpression` of the grammar `ExpressionsBasis`. 
 This class is an interface that all expressions implement.

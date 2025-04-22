@@ -13,11 +13,5 @@ public class AddPrefixToName implements AutomataVisitor2 {
   }
 
   //TODO implement visitor, hint: change the name of the states
-  //<#if solution>
-  @Override
-  public void visit(ASTState state){
-    state.setName(prefix + state.getName());
-  }
-  //</#if>
 
 }

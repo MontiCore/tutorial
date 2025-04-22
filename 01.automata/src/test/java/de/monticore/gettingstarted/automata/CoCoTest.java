@@ -62,28 +62,28 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testInvalidAutomatonName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/invalid/AutName.aut");
     checkInvalid(aut, AutomatonNameStartsWithCapitalLetter.errorCode);
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testInvalidStateName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/invalid/StateName.aut");
     checkInvalid(aut, StateNameStartsWithCapitalLetter.errorCode);
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testInvalidTransitionName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/invalid/TransName.aut");
     checkInvalid(aut, TransitionNameUncapitalized.errorCode);
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testTransitionSourceDoesNotExist() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/invalid/TransitionSource.aut");
     checkInvalid(aut, TransitionSourceIsState.errorCode);
@@ -96,7 +96,7 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testNoFinalState() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/invalid/NoFinal.aut");
     checkInvalid(aut, AutomatonHasAtLeastOneFinalState.errorCode);

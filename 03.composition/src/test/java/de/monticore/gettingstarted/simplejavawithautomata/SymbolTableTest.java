@@ -25,7 +25,7 @@ public class SymbolTableTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testPackage() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/de/monticore/gettingstarted/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope symbolTable = createSymbolTable(ast);
@@ -34,7 +34,7 @@ public class SymbolTableTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore//</#if>
+  @Ignore
   public void testSymbolCompletion() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/de/monticore/gettingstarted/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope symbolTable = createSymbolTable(ast);

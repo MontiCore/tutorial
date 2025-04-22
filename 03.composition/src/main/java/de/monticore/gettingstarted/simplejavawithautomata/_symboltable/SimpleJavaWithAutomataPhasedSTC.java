@@ -21,25 +21,11 @@ public class SimpleJavaWithAutomataPhasedSTC {
 
   public SimpleJavaWithAutomataPhasedSTC(){
     //TODO implement me!
-    //<#if solution>
-    this.scopesGenitorDelegator = SimpleJavaWithAutomataMill.scopesGenitorDelegator();
-    this.priorityList = Lists.newArrayList();
-
-    TypeCalculator tc = new TypeCalculator(new FullSynthesizeFromSimpleJava(), new FullDeriveFromSimpleJava(), new TypeRelations());
-    SimpleJavaWithAutomataTraverser traverser = SimpleJavaWithAutomataMill.traverser();
-    traverser.add4SimpleJava(new SimpleJavaSTCompleteTypes(tc));
-    priorityList.add(traverser);
-    //</#if>
   }
 
   public ISimpleJavaWithAutomataArtifactScope createFromAST(ASTJavaCompilationUnit ast){
     //TODO implement me!
-    //<#if solution>
-    ISimpleJavaWithAutomataArtifactScope as = scopesGenitorDelegator.createFromAST(ast);
-    priorityList.forEach(ast::accept);
-    return as;
-    //</#if>
-    //<#if !solution>return null;//</#if>
+    return null;
   }
 
 }

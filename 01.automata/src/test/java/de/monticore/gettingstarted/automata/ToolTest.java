@@ -19,7 +19,7 @@ public class ToolTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore // Task 6 //</#if>
+  @Ignore // Task 6 
   public void testReports() throws IOException {
     AutomataTool.main(new String[]{"-i", "src/test/resources/de/monticore/gettingstarted/automata/PingPong.aut",
             "-r", "target/automata/reports/"});
@@ -31,7 +31,7 @@ public class ToolTest extends AbstractTest {
   }
 
   @Test
-  //<#if !solution>@Ignore // Task 8 //</#if>
+  @Ignore // Task 8 
   public void testPrettyPrinter() throws IOException {
     ASTAutomaton originalAut = parse("src/test/resources/de/monticore/gettingstarted/automata/PingPong.aut");
     AutomataTool.main(new String[]{"-i", "src/test/resources/de/monticore/gettingstarted/automata/PingPong.aut",

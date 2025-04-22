@@ -39,28 +39,11 @@ public class DeSerTest extends AbstractTest {
   @Test
   public void testSerialization() throws IOException {
     //TODO implement me!
-    //<#if solution>
-    SimpleJavaPhasedSTC stc = new SimpleJavaPhasedSTC();
-
-    ASTJavaCompilationUnit bar = parse("src/test/resources/de/monticore/gettingstarted/simplejava/valid/Bar.sjava");
-    ISimpleJavaArtifactScope as = stc.createFromAST(bar);
-
-    SimpleJavaSymbols2Json symbols2Json = new SimpleJavaSymbols2Json();
-    symbols2Json.store(as, "target/symboltable/Bar.javasym");
-    //</#if>
   }
 
   @Test
   public void testDeserialization(){
     //TODO implement me!
-    //<#if solution>
-    SimpleJavaSymbols2Json symbols2Json = new SimpleJavaSymbols2Json();
-    ISimpleJavaArtifactScope as = symbols2Json.load("src/test/resources/de/monticore/gettingstarted/simplejava/symboltable/Check.javasym");
-    as.setEnclosingScope(SimpleJavaMill.globalScope());
-    assertTrue(as.resolveType("Check").isPresent());
-    assertTrue(as.resolveFunction("de.monticore.gettingstarted.simplejava.valid.Check.print").isPresent());
-    assertEquals(0, as.resolveType("Check").get().getSuperTypesList().size());
-    //</#if>
   }
 
 }
