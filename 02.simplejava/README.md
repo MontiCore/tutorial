@@ -91,7 +91,7 @@ calls and assignments to already existing variables.
 A simple model of this language is shown below:
 
 ```java
-package de.monticore.gettingstarted.simplejava.valid;
+package tutorial.simplejava.valid;
 
 class Bar {
   int max = 3
@@ -113,7 +113,7 @@ class Bar {
 
 It shows the class Bar that has two methods `getMax` and `getAge` which are getters for the attributes `max` and `age`.
 The methods do not contain `return` statements as these are not defined in the grammar.
-In this example, the class lies in the package `de.monticore.gettingstared.simplejava.valid`.
+In this example, the class lies in the package `tutorial.simplejava.valid`.
 
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## TypeCheck
@@ -389,15 +389,15 @@ The following shows an excerpt from the serialized symbol table of the `Bar` cla
 {
  "generated-using": "www.MontiCore.de technology",
  "name": "Bar",
- "package": "de.monticore.gettingstarted.simplejava.valid",
+ "package": "tutorial.simplejava.valid",
  "symbols": [
   {
-   "kind": "de.monticore.gettingstarted.simplejava._symboltable.JavaArtifactSymbol",
+   "kind": "tutorial.simplejava._symboltable.JavaArtifactSymbol",
    "name": "Bar",
    "spannedScope": {
     "symbols": [
      {
-      "kind": "de.monticore.gettingstarted.simplejava._symboltable.JavaMethodSymbol",
+      "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
       "name": "getMax",
       "type": {
        "kind": "de.monticore.types.check.SymTypePrimitive",
@@ -406,7 +406,7 @@ The following shows an excerpt from the serialized symbol table of the `Bar` cla
       "spannedScope": {
        "symbols": [
         {
-         "kind": "de.monticore.gettingstarted.simplejava._symboltable.JavaVarDeclSymbol",
+         "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
          "name": "d",
          "type": {
           "kind": "de.monticore.types.check.SymTypePrimitive",
@@ -414,7 +414,7 @@ The following shows an excerpt from the serialized symbol table of the `Bar` cla
          }
         },
         {
-         "kind": "de.monticore.gettingstarted.simplejava._symboltable.JavaVarDeclSymbol",
+         "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
          "name": "f",
          "type": {
           "kind": "de.monticore.types.check.SymTypePrimitive",
@@ -502,7 +502,7 @@ For this, you have to parse the model, create its symbol table and serialize it.
 Store the serialized symbol table in the file `target/symboltable/Bar.javasym`. 
 After that, implement the method `testDeserialization`. 
 Use the `SimpleJavaSymbols2Json` to deserialize the symbol table of the model.
-Check that is stored under `src/test/resources/de/monticore/gettingstarted/simplejava/symboltable`. 
+Check that is stored under `src/test/resources/tutorial/simplejava/symboltable`. 
 Add it as a subscope to the global scope and make sure that resolving the TypeSymbol `Check` is possible.
 Next, ensure that the amount of super types the TypeSymbol `Check` has equals `0`. (Hint: `.getSuperTypesList().size()`)
 

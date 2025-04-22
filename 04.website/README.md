@@ -73,7 +73,7 @@ Links begin with the terminal `->`, followed by the name of the page that is ref
  and an optional title.
 Pages can have titles and always have a directory content in which text, links to other pages
  and pictures can be added in arbitrary order. 
-You will find more models like this under `src/test/resources/de/monticore/gettingstarted/website`.
+You will find more models like this under `src/test/resources/tutorial/website`.
 In terms of symbol table we will design the language as simple as possible.
 As only pages can be referred to (by links or in the navigation),
  we will need `PageSymbols` to find the referred page with the help of the symbol table.
@@ -86,7 +86,8 @@ Complete the grammar so that the language's parser can parse every website model
 Use interface productions where useful and do not create nonterminals for things that are already defined in the "super" grammar like `Name`.
 Test your grammar by executing the tests in the class `ParseTest` which will
 try to use the parser of your grammar to parse the models. 
-After you've finished, ask your supervisor for our solution and compare it with yours.<!-- (c) https://github.com/MontiCore/monticore -->
+After you've finished, ask your supervisor for our solution and compare it with yours.
+<!-- (c) https://github.com/MontiCore/monticore -->
 ## CoCos 
 For some productions in this grammar, we will need several Context Conditions to ensure
 that the models are well-defined and that they make sense. 

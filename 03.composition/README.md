@@ -42,13 +42,13 @@ class Check {
 
  int foo = 3
 
- de.monticore.gettingstarted.simplejava.valid.Bar getBar(){
-   de.monticore.gettingstarted.simplejava.valid.Bar bar
+ tutorial.simplejava.valid.Bar getBar(){
+   tutorial.simplejava.valid.Bar bar
    foo = bar.getAge()
  }
 
  void doSomething(){
-   de.monticore.gettingstarted.simplejava.valid.Bar bar = getBar()
+   tutorial.simplejava.valid.Bar bar = getBar()
    // The ping pong game
    automaton PingPong {
      state NoGame <<initial>>;
@@ -63,13 +63,13 @@ class Check {
      Ping - returnBall > Pong;
      Pong - returnBall > Ping;
    }
-   print(de.monticore.gettingstarted.simplejava.valid.Bar.getMax())
+   print(tutorial.simplejava.valid.Bar.getMax())
  }
 
  void print(int max){
-   de.monticore.gettingstarted.simplejava.valid.InheritanceBar inBar
+   tutorial.simplejava.valid.InheritanceBar inBar
    //test inheritance
-   de.monticore.gettingstarted.simplejava.valid.Bar bar = inBar
+   tutorial.simplejava.valid.Bar bar = inBar
    //test that InheritanceBar can use the methods of Bar
    int foo = inBar.getAge()
  }
@@ -145,7 +145,7 @@ can also export and import symbol tables into and from files.
 For this, the composed language has a Symbols2Json class as well. 
 You saw how the serialized symbol table of a model looks in a file in the last chapter. 
 The symbol table of the model Check of the language
-SimpleJava is stored under `src/test/resources/de/monticore/gettingstarted/simplejava/symboltable/Check.javasym`.
+SimpleJava is stored under `src/test/resources/tutorial/simplejava/symboltable/Check.javasym`.
 One of the main questions for the symbol table import is: 
  Can we import the symbol table of a sub language in our composed language? 
 After all, our composed language knows all the scopes and symbols that

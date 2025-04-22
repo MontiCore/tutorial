@@ -142,7 +142,7 @@ Switch to your IDE.
 First, have a look at the `Automata` grammar located under `src/main/grammars/tutorial/` and make yourself familiar with the production rules.
 You will identify similar rules as described above for `Automaton`, `State`, and `Transition`.
 Come up with your own automaton and write it down as an Automata model, i.e., follow the rules set by the Automata grammar (located in `src/main/grammars`). 
-Store your file under `src/test/resources/de/monticore/gettingstarted/automata` and with the file ending `.aut`. 
+Store your file under `src/test/resources/tutorial/automata` and with the file ending `.aut`. 
 After that, open the class `VisitorTest`, complete the test method `testYourModel` and execute it.
 (It suffices to execute the test itself, e.g., directly from within your IDE. Alternatively, you could run `gradle 01.automata:build` again.)
 It will read your model with the parser that was generated for the Automata language and transfer its contents into an instance of ASTAutomaton. 
