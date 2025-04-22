@@ -13,6 +13,7 @@ import de.monticore.gettingstarted.automata.visitor.StateCollector;
 import de.monticore.gettingstarted.simplejava._ast.ASTJavaCompilationUnit;
 import de.monticore.gettingstarted.simplejavawithautomata._symboltable.ISimpleJavaWithAutomataArtifactScope;
 import de.monticore.gettingstarted.simplejavawithautomata._visitor.SimpleJavaWithAutomataTraverser;
+import de.monticore.gettingstarted.simplejavawithautomata.types3.SimpleJavaWithAutomataTypeCheck3;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -30,6 +31,7 @@ public class VisitorTest extends AbstractTest {
   public void setup(){
     SimpleJavaWithAutomataMill.globalScope().clear();
     SimpleJavaWithAutomataMill.init();
+    SimpleJavaWithAutomataTypeCheck3.init();
     BasicSymbolsMill.initializePrimitives();
   }
 

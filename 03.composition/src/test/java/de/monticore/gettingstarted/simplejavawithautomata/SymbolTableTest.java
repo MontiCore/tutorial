@@ -4,6 +4,7 @@ package de.monticore.gettingstarted.simplejavawithautomata;
 import de.monticore.gettingstarted.simplejava._ast.ASTJavaCompilationUnit;
 import de.monticore.gettingstarted.simplejavawithautomata._symboltable.ISimpleJavaWithAutomataArtifactScope;
 import de.monticore.gettingstarted.simplejavawithautomata._symboltable.SimpleJavaWithAutomataSymbols2Json;
+import de.monticore.gettingstarted.simplejavawithautomata.types3.SimpleJavaWithAutomataTypeCheck3;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symbols.basicsymbols._symboltable.FunctionSymbol;
 import org.junit.Before;
@@ -21,6 +22,7 @@ public class SymbolTableTest extends AbstractTest {
   public void setup(){
     SimpleJavaWithAutomataMill.globalScope().clear();
     SimpleJavaWithAutomataMill.init();
+    SimpleJavaWithAutomataTypeCheck3.init();
     BasicSymbolsMill.initializePrimitives();
   }
 

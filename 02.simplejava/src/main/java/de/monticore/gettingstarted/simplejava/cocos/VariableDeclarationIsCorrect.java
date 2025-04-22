@@ -15,7 +15,6 @@ public class VariableDeclarationIsCorrect implements SimpleJavaASTJavaVarDeclCoC
   protected static final String errorCode = "0xA0457";
 
 
-
   @Override
   public void check(ASTJavaVarDecl node) {
     //TODO implement me!

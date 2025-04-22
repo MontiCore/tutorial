@@ -10,7 +10,7 @@ before_script:
 build_gradle:
   stage: build
   script:
-    - "gradle build"
+    - "gradle test build"
   artifacts:
     paths:
       - "target"

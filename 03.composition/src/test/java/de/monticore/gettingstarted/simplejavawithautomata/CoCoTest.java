@@ -5,9 +5,11 @@ import de.monticore.gettingstarted.simplejava._ast.ASTJavaCompilationUnit;
 import de.monticore.gettingstarted.simplejavawithautomata._cocos.SimpleJavaWithAutomataCoCoChecker;
 import de.monticore.gettingstarted.simplejavawithautomata._symboltable.SimpleJavaWithAutomataPhasedSTC;
 import de.monticore.gettingstarted.simplejavawithautomata.cocos.SimpleJavaWithAutomataCoCos;
+import de.monticore.gettingstarted.simplejavawithautomata.types3.SimpleJavaWithAutomataTypeCheck3;
 import de.monticore.io.paths.MCPath;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
 import org.junit.Before;
@@ -17,6 +19,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -40,6 +43,7 @@ public class CoCoTest extends AbstractTest {
     LogStub.init();
     LogStub.enableFailQuick(false);
     SimpleJavaWithAutomataMill.init();
+    SimpleJavaWithAutomataTypeCheck3.init();
     Log.clearFindings();
   }
 
@@ -115,7 +119,7 @@ public class CoCoTest extends AbstractTest {
   @Test
   @Ignore
   public void testStaticAbstractOOFields(){
-    testInvalidOO("0xA0241", staticAbstractOOFields);
+    testInvalidOO("0xFD118", staticAbstractOOFields);
   }
 
 //  Due to changes to the TypeCheck not tested
@@ -138,7 +142,7 @@ public class CoCoTest extends AbstractTest {
   @Test
   @Ignore
   public void testComplicatedWrongAssignment(){
-    testInvalidOO("0xA0168", complicatedWrongAssignment);
+    testInvalidOO("0xB0163", complicatedWrongAssignment);
   }
 
   @Test
@@ -161,8 +165,9 @@ public class CoCoTest extends AbstractTest {
     }catch(Exception e){
       //do nothing here, just catch the exception for further testing
     }
-    assertTrue(Log.getFindingsCount()>=1);
-    assertTrue(Log.getFindings().get(0).getMsg().startsWith(errorCode));
+    assertTrue("Expected finding, but found none!", Log.getFindingsCount()>=1);
+    assertTrue(Log.getFindings().stream().map(Finding::toString).collect(Collectors.joining(System.lineSeparator())),
+               Log.getFindings().get(0).getMsg().startsWith(errorCode));
   }
 
   protected void testValidOO(ASTJavaCompilationUnit comp){

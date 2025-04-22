@@ -2,8 +2,6 @@
 package de.monticore.gettingstarted.simplejavawithautomata._symboltable;
 
 import com.google.common.collect.Lists;
-import de.monticore.gettingstarted.simplejava.FullDeriveFromSimpleJava;
-import de.monticore.gettingstarted.simplejava.FullSynthesizeFromSimpleJava;
 import de.monticore.gettingstarted.simplejava._ast.ASTJavaCompilationUnit;
 import de.monticore.gettingstarted.simplejava._symboltable.SimpleJavaSTCompleteTypes;
 import de.monticore.gettingstarted.simplejavawithautomata.SimpleJavaWithAutomataMill;
