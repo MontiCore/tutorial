@@ -29,6 +29,12 @@ public class ExpressionIsValid implements ExpressionsBasisASTExpressionCoCo, Com
 
   @Override
   public void check(ASTExpression node) {
+    //<#if solution>
+    SymTypeExpression sym = tc.typeOf(node);
+    if(sym.isObscureType()){
+      Log.error(errorCode + ": " + errorMsg);
+    }
+    //</#if>
     //TODO implement me!
   }
 

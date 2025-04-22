@@ -34,7 +34,7 @@ public class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testVisitorsOnAutomaton() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/de/monticore/gettingstarted/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);
@@ -47,7 +47,7 @@ public class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testVisitorsOnWholeModel() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/de/monticore/gettingstarted/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);

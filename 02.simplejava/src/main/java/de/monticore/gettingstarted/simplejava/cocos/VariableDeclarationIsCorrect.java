@@ -27,5 +27,10 @@ public class VariableDeclarationIsCorrect implements SimpleJavaASTJavaVarDeclCoC
     //  then check that the types of the expression and of the declaration
     //  are compatible
     //Hint: Use the TypeCalculator class to check compatibility
+    //<#if solution>
+    if (node.isPresentExpression() && !tc.compatible(tc.symTypeFromAST(node.getMCType()), tc.typeOf(node.getExpression()))) {
+      Log.error(errorCode + String.format(errorMsg, node.getName()));
+    }
+    //</#if>
   }
 }

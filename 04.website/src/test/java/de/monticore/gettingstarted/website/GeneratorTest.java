@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class GeneratorTest extends AbstractTest {
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testSERWTH() throws IOException {
     ASTWebsite ast = parse("src/test/resources/de/monticore/gettingstarted/website/valid/SERWTH.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -26,7 +26,7 @@ public class GeneratorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testDream() throws IOException {
     ASTWebsite ast = parse("src/test/resources/de/monticore/gettingstarted/website/valid/Dream.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -34,7 +34,7 @@ public class GeneratorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testSinglePage() throws IOException {
     ASTWebsite ast = parse("src/test/resources/de/monticore/gettingstarted/website/valid/SinglePage.web");
     final Path outputDirectory = Paths.get("target/website/");

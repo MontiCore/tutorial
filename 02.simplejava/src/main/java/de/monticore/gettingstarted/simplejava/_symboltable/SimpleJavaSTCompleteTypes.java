@@ -30,16 +30,36 @@ public class SimpleJavaSTCompleteTypes implements SimpleJavaVisitor2 {
   @Override
   public void visit(ASTJavaMethod node) {
     //TODO implement me!
+    //<#if solution>
+    JavaMethodSymbol symbol = node.getSymbol();
+    SymTypeExpression symType = tc.symTypeFromAST(node.getMCReturnType());
+    symbol.setType(symType);
+    replaceSurrogate(symbol);
+    //</#if>
   }
 
   @Override
   public void visit(ASTJavaVarDecl node) {
     //TODO implement me!
+    //<#if solution>
+    JavaVarDeclSymbol symbol = node.getSymbol();
+    SymTypeExpression symType = tc.symTypeFromAST(node.getMCType());
+    symbol.setType(symType);
+    replaceSurrogate(symbol);
+    //</#if>
   }
 
   @Override
   public void visit(ASTJavaArtifact node) {
     //TODO implement me!
+    //<#if solution>
+    JavaArtifactSymbol symbol = node.getSymbol();
+    if(node.isPresentSuperType()) {
+      SymTypeExpression superType = tc.symTypeFromAST(node.getSuperType());
+      symbol.setSuperTypesList(Lists.newArrayList(superType));
+    }
+    replaceSurrogates(symbol);
+    //</#if>
   }
 
   public void replaceSurrogates(TypeSymbol type){

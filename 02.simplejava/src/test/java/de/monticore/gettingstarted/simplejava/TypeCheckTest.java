@@ -43,7 +43,7 @@ public class TypeCheckTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testSynthesizer() throws IOException {
     SimpleJavaParser p = SimpleJavaMill.parser();
     FullSynthesizeFromSimpleJava syn = new FullSynthesizeFromSimpleJava();
@@ -70,7 +70,7 @@ public class TypeCheckTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testDeriver() throws IOException {
     SimpleJavaParser p = SimpleJavaMill.parser();
     FullDeriveFromSimpleJava der = new FullDeriveFromSimpleJava();

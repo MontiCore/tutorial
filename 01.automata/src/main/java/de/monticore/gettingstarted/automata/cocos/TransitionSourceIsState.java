@@ -17,5 +17,10 @@ public class TransitionSourceIsState implements AutomataASTTransitionCoCo {
     // check that the "from" name of the transition can be resolved to a state
 
     // hint: use the symbol table by accessing the enclosing scope of the transition
+    //<#if solution>
+    if(node.getEnclosingScope().resolveState(node.getFrom().getQName()).isEmpty()){
+      Log.error(errorCode + String.format(errorMsg, node.getFrom().getQName(), node.getInput()));
+    }
+    //</#if>
   }
 }

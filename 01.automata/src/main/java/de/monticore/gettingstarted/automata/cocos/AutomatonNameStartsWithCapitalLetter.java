@@ -13,6 +13,11 @@ public class AutomatonNameStartsWithCapitalLetter implements AutomataASTAutomato
 
   @Override
   public void check(ASTAutomaton node) {
+    //<#if solution>
+    if(!Character.isUpperCase(node.getName().charAt(0))){
+      Log.error(errorCode + String.format(errorMsg, node.getName()));
+    }
+    //</#if>
     //TODO implement CoCo
   }
 

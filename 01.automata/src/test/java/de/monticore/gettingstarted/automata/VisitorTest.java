@@ -55,7 +55,7 @@ public class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testPingPong() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/PingPong.aut");
     checkCountTransitions(aut, 5);
@@ -64,7 +64,7 @@ public class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testDoor() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/Door.aut");
     checkCountTransitions(aut, 4);
@@ -73,7 +73,7 @@ public class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testHierarchical() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/de/monticore/gettingstarted/automata/Hierarchical.aut");
     checkCountTransitions(aut, 7);

@@ -30,7 +30,7 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testDream() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/valid/Dream.web");
     checkValid(website);
@@ -43,42 +43,42 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testLinkTitleEmpty() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/invalid/LinkTitleEmpty.web");
     checkInvalid(website, LinkTitleNotEmpty.errorCode);
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testMultipleStartPages() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/invalid/MultipleStartPages.web");
     checkInvalid(website, ExactlyOneStartPage.errorCode);
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testNavigationReferencesInaccessiblePage() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/invalid/NavigationReferencesInaccessiblePage.web");
     checkInvalid(website, NavigationItemPageExists.errorCode);
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testPageNameLowerCase() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/invalid/PageNameLowerCase.web");
     checkInvalid(website, PageNameStartUpperCase.errorCode);
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testPageNameNotUnique() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/invalid/PageNameNotUnique.web");
     checkInvalid(website, PageNameIsUnique.errorCode);
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testWebsiteNameLowerCase() throws IOException {
     ASTWebsite website = parse("src/test/resources/de/monticore/gettingstarted/website/invalid/WebsiteNameLowerCase.web");
     checkInvalid(website, WebsiteNameStartUpperCase.errorCode);

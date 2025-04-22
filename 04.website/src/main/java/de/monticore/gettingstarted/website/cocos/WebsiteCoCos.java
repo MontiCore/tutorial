@@ -8,6 +8,15 @@ public class WebsiteCoCos {
   public WebsiteCoCoChecker createChecker(){
     WebsiteCoCoChecker checker = new WebsiteCoCoChecker();
     //TODO uncomment after implementing the CoCos
+    //<#if solution>
+    checker.addCoCo(new WebsiteNameStartUpperCase());
+    checker.addCoCo(new NavigationItemPageExists());
+    checker.addCoCo(new ExactlyOneStartPage());
+    checker.addCoCo(new PageNameStartUpperCase());
+    checker.addCoCo(new PageNameIsUnique());
+    checker.addCoCo(new LinkTitleNotEmpty());
+    checker.addCoCo(new PageTitleNotEmpty());
+    //</#if>
     return checker;
   }
 

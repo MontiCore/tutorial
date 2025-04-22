@@ -3,10 +3,6 @@ package de.monticore.gettingstarted;
 
 grammar Automata extends
 	de.monticore.MCBasics,
-	//<#if solution>
-  de.monticore.expressions.CommonExpressions,
-  de.monticore.literals.MCCommonLiterals,
-	//</#if>
 	de.monticore.types.MCBasicTypes {
 
     /** A ASTAutomaton represents a finite automata
@@ -44,9 +40,6 @@ grammar Automata extends
       ("[" precondition:Expression "]")?
       "-"
       input:Name
-      //<#if solution>
-      ("/" output:Name)?
-      //</#if>
       ">"
       to:MCQualifiedName ";" ;
 

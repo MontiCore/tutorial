@@ -17,19 +17,19 @@ import static org.junit.Assert.assertTrue;
 public class PrettyPrinterTest extends AbstractTest {
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testPrettyPrinter() throws IOException {
     testPrettyPrinter("src/test/resources/de/monticore/gettingstarted/automata/PingPong.aut");
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testPrettyPrinterHierarchical() throws IOException {
     testPrettyPrinter("src/test/resources/de/monticore/gettingstarted/automata/Hierarchical.aut");
   }
 
   @Test
-  @Ignore
+  //<#if !solution>@Ignore//</#if>
   public void testPrettyPrinterAttr() throws IOException {
     testPrettyPrinter("src/test/resources/de/monticore/gettingstarted/automata/PingPongAttributes.aut");
   }

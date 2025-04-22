@@ -14,6 +14,11 @@ public class StateNameStartsWithCapitalLetter implements AutomataASTStateCoCo {
 
   @Override
   public void check(ASTState node) {
+    //<#if solution>
+    if(!Character.isUpperCase(node.getName().charAt(0))){
+      Log.error(errorCode + String.format(errorMsg, node.getName()));
+    }
+    //</#if>
     //TODO implement me!
   }
 

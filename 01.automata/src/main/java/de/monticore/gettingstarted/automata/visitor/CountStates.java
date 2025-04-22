@@ -46,5 +46,20 @@ public class CountStates implements AutomataVisitor2 {
   }
 
   //TODO implement visitor
+  //<#if solution>
+  @Override
+  public void visit(ASTState state) {
+    count++;
+    if(state.isInitial()){
+      countInitial++;
+      initialStateNames.add(state.getName());
+    }
+    if(state.isFinal()){
+      countFinal++;
+      finalStateNames.add(state.getName());
+    }
+    stateNames.add(state.getName());
+  }
+  //</#if>
 
 }
