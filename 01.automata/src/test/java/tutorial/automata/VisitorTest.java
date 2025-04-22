@@ -53,6 +53,13 @@ public class VisitorTest extends AbstractTest {
       assertTrue(state.getName().startsWith(prefix));
     }
   }
+  
+  @Test
+  @Ignore
+  public void testPingPongTCount() throws IOException {
+    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
+    checkCountTransitions(aut, 5);
+  }
 
   @Test
   @Ignore
@@ -79,16 +86,6 @@ public class VisitorTest extends AbstractTest {
     checkCountTransitions(aut, 7);
     checkCountStates(aut, 6, 3, 1);
     checkChangeName(aut, "Bar");
-  }
-
-  @Ignore
-  @Test
-  public void testYourModel() throws IOException {
-    //TODO Exercise 1: Delete the @Ignore annotation and insert the path to your model similar to the other test methods!
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/");
-    //TODO Exercise 2: Check the function of the CountTransitions visitor -> see the other test methods
-    //TODO Exercise 3: Check that your visitors work as they should -> see the other test methods
-
   }
 
 }

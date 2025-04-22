@@ -336,7 +336,7 @@ language.
 The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
 `AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and 
 `TransitionNameUncapitalized` are all given for the automata language 
-(located under `src/main/java/cocos/`).
+(located under `src/main/java/tutorial/automata/cocos/`).
 Implement them! 
 To test that the CoCos are implemented correctly, execute every test except 
 for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
@@ -346,28 +346,50 @@ Before implementing the corresponding CoCo checks, these tests will fail.
 Afterwards, all mentioned tests should succeed.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Visitors 
-Visitors provide the means to traverse the AST and execute different behavior for every AST node.
-For every grammar `A`, MontiCore generates three interfaces `AHandler`, `AVisitor2` and `ATraverser`.
-The traverser can store handlers and visitors for the grammar and delegates the traversal to them.
-The handler interface provides the methods `handle` and `traverse` for every AST class and the visitor provides the methods `visit` and `endVisit` for every AST class.
-For more information on these three interfaces, see Chapter 8 of the MontiCore Reference Manual.
+Visitors provide the means to traverse the AST and execute different behavior 
+for each AST node.
+For every grammar `A`, MontiCore generates three interfaces `AHandler`, 
+`AVisitor2` and `ATraverser`.
+The traverser can store handlers and visitors for the grammar and delegates 
+to them during traversal for their concrete realizations.
+The visitor interface provides the methods `visit` and `endVisit` for every 
+AST class.
+These are the hook points, where customized operations on particular AST nodes
+should be implemented.
+Additionally, the handler interface provides the methods `handle` and 
+`traverse` for every AST class for altering the traversal behavior. 
+Often, these are not required as MontiCore supports a default depth-first
+climb-down traversal strategy.
+For more information on these three interfaces, see also Chapter 8 in the 
+MontiCore Handbook.
 
+To add your own behavior when traversing the AST, you can create a class that 
+implements the `Visitor2` interface and overrides the corresponding `visit` 
+or `endVisit` methods. 
+To use your own navigation strategy, you can create a class that implements 
+the `Handler` interface and overrides the corresponding `traverse` or 
+`handle` methods of the interface.
+These classes must be added to a traverser, which can then be executed on any 
+instance of the AST of a language via a command like `ast.accept(traverser)`.
 
-To add your own behavior when traversing the AST, 
- you can create a class that implements the `Visitor2` interface and overrides the corresponding `visit` or `endVisit` methods. 
-To use your own navigation strategy, you can create a class that implements the `Handler` interface 
- and overrides the corresponding `traverse` or `handle` methods of the interface.
-These classes must be added to a traverser which can then be executed on any instance of the AST of a language.
-
-In the context of the Automata language, it might be interesting to know how many transitions are in a particular automaton.
-This can be done by creating a class `CountTransitions` that implements the `AutomataVisitor2` and that contains an attribute `count` to count the number of transitions in the automaton.
-Additionally, it has an attribute `transitionInputs` that is used to store the inputs of each transition.
-After that, you can override the visitor interfaces `visit` method for `ASTTransition`s and increase the `count` attribute by one for each visited transition.
+In the context of the Automata language, we are interested in how many 
+transitions are in a particular automaton.
+This can be done by creating a class `CountTransitions` that implements 
+the `AutomataVisitor2` and that contains an attribute `count` to count 
+the number of transitions in the automaton.
+Additionally, it has an attribute `transitionInputs` that is used to store 
+the inputs of each transition.
+You can override the visitor interfaces `visit` method for `ASTTransition`s 
+and increase the `count` attribute by one for each visited transition.
 The input of the transition is added to the `transitionInputs` list.
 Finally, accessor methods for the attributes are added to the class.
-An instance of this class can then be added to an `AutomataTraverser` and be executed on the AST.
-For the ping pong automaton, the accessor method for the `count` attribute should yield the result `5`.
-The implementation of the CountTransitions visitor is displayed below:
+An instance of this class can then be added to an `AutomataTraverser` and be 
+executed on the AST.
+For the PingPong automaton, the accessor method for the `count` attribute 
+should yield the result `5`.
+The implementation of the CountTransitions visitor is displayed below.
+It is also located in your project under 
+`src/main/java/tutorial/automata/visitor/`.
 
 ```java
 public class CountTransitions implements AutomataVisitor2 {
@@ -393,14 +415,32 @@ public class CountTransitions implements AutomataVisitor2 {
 
 #### Exercise 2
 Switch to your IDE.
-Look up the `CountTransitions` visitor.
-Go to the `VisitorTest` class and execute it on the automaton you wrote in Exercise 1 in the test method `testYourModel`.
+Look up the `CountTransitions` visitor under
+`src/main/java/tutorial/automata/visitor/`.
+Go to the `src/test/java/tutorial/automata/VisitorTest` class and execute the 
+`testPingPongTCount()` for our initial PingPong automaton model. 
+Please note, how this test method delegates the call to the 
+`checkCountTransitions()` method.
+Please have a brief look at it and make yourself familiar with how visitors 
+are typically employed. 
+First, the concrete visitor implementation `CountTransitions` is instantiated.
+After that, a fresh traverser instance is retrieved via the mill with the call
+`AutomataMill.traverser()` and the corresponding visitor is attached to it.
+Finally, the traverser is executed on the ast with the call 
+`automaton.accept(traverser)` and the results are checked.
 
 #### Exercise 3
-The skeletons for two more visitors, `CountStates` and `AddPrefixToName` are given in the GettingStarted project.
-Implement the traversal behavior for these two classes by overriding the correct methods of the `AutomataVisitor2`.
-Test your implementation by removing the `@Ignore` annotation before the test methods in the `VisitorTest` class and executing the methods.
-Execute the visitors on your own model from Exercise 1 in the `testYourModel` method.<!-- (c) https://github.com/MontiCore/monticore -->
+The skeletons for two more visitors, `CountStates`, and `AddPrefixToName` are 
+given in the GettingStarted project.
+Implement the traversal behavior for these two classes by overriding the 
+correct methods of the `AutomataVisitor2`.
+`CountStates` should reflect a similar behavior as `CountTransitions` and is
+a straightforward starting point for implementing your first visitor. 
+`AddPrefixToName` should rename all states of an automaton by adding a 
+given prefix.
+After realizing your visitors, test your implementation by removing the 
+`@Ignore` annotation before the test methods in the `VisitorTest` class and 
+executing the methods.<!-- (c) https://github.com/MontiCore/monticore -->
 ## Symbol Table 
 Nearly every computer language needs a symbol table to reference objects. 
 In Java, you can differentiate between the declaration of a variable and its use. 
