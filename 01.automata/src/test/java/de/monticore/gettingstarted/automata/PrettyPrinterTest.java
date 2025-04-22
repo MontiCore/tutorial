@@ -16,16 +16,6 @@ import static org.junit.Assert.assertTrue;
 
 public class PrettyPrinterTest extends AbstractTest {
 
-  @BeforeClass
-  public static void init(){
-    AutomataMill.init();
-  }
-
-  @AfterClass
-  public static void reset() {
-    AutomataMill.reset();
-  }
-
   @Test
   @Ignore
   public void testPrettyPrinter() throws IOException {

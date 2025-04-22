@@ -73,6 +73,18 @@ The representation of a transition starts with the (qualified) name of its sourc
 After that, the input, i.e. the trigger of the transition, is followed by a `>`. 
 To end the transition, the (qualified) name of the target state and a semicolon must be written.
 
+The following table summarizes the most often used constructs for grammar construction:
+
+| Element                | Example         | Description                                                                                                               
+|------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------
+| Constant Strings       | `"state"`       | Double quotes to define constant strings, which are then used as keywords                                                 
+| NonTerminal References | `A`             | Usage of other nonterminals                                                                                               
+| Grouping               | `( A B )`       | Parentheses `(` and `)` to signify grouping                                                                               
+| Cardinality  1..*      | `A+`            | `+` to signify the appearance of a group or nonterminal one or more times.                                                
+| Cardinality  *         | `A*`            | `*` to signify the appearance of a group or nonterminal zero or more times.                                               
+| Cardinality  0..1      | `A?`            | `?` to signify the appearance of a group or nonterminal zero or one time.                                                 
+| Usagenames             | `myA:A`         | Names can be attached to terminals and nonterminal, describing where the attributes will be stored in the AST             
+| Separated list         | `(A \|\| "b")+` | Shorthand notation to define zero or one or more repetitions of the nonterminal `A` being separated by the terminal `"b"` 
 
 ```mc4
 grammar Automata extends de.monticore.MCBasics,
@@ -190,19 +202,54 @@ The skeletons for two more visitors, `CountStates` and `AddPrefixToName` are giv
 Implement the traversal behavior for these two classes by overriding the correct methods of the `AutomataVisitor2`.
 Test your implementation by removing the `@Ignore` annotation before the test methods in the `VisitorTest` class and executing the methods.
 Execute the visitors on your own model from Exercise 1 in the `testYourModel` method.<!-- (c) https://github.com/MontiCore/monticore -->
-## Modifying the Automata Grammar 
- 
-TODO:
-* Insert mealy
-* Insert (optional) precondition
-  * mention conservative?
-  * extends Expression (teaser for later)
-* Show example transition
-* Include test
+
+## Modifying the Automata Grammar
+
+Mealy automata are automatons with the ability to output values,
+determined by their current state and input.
+But the current automata grammar is only able to model moore automata,
+i.e. their output is only determined by their current state.
+
+With the current grammar,
+a possible transition from a source to a target state,
+which triggers on a given input, might look like the following:
+
+```automaton
+source - input > target;
+```
+
+The transition of a mealy automaton could look like the following:
+
+```automaton
+source - input / output > target;
+```
+
+Note the addition of the slash, followed by the actual output.
+When designing such additions,
+ language engineers have to consider if original models should still be valid models.
+If that is the case, additions must be optionals.
+
+
 
 #### Exercise TODO
- 
-TODO<!-- (c) https://github.com/MontiCore/monticore -->
+
+Open the `src/main/grammars/de/monticore/gettingstarted/Automata.mc4` grammar file.
+Extend the `Transition` production by an optional `Name` output value.
+Use a sensible usage name for the output.
+Test your grammar by removing the `@Ignore` annotation before the test methods in the `ParserTest` class and executing the methods.
+If both tests succeed, both mealy and moore automata can be parsed.
+
+
+#### Exercise TODO
+
+```automaton
+source [x > 42] - input > target;
+```
+
+* Insert (optional) precondition
+  * extends Expression (teaser for later)
+* Include test
+<!-- (c) https://github.com/MontiCore/monticore -->
 ## Context Conditions 
 The MontiCore grammars that are written for creating DSLs have one problem: they are context-free. 
 This means that some restrictions for a language cannot or should not be realized in a grammar. 

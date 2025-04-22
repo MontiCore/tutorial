@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+// The ping pong game, with outputs on only some transitions
+automaton PingPong {
+  state NoGame <<initial>>;
+  state Ping;
+  state Pong <<final>>;
+
+  NoGame - startGame > Ping;
+
+  Ping - stopGame > NoGame;
+  Pong - stopGame > NoGame;
+
+  Ping - returnBall / ping > Pong;
+  Pong - returnBall / pong > Ping;
+}
