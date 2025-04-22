@@ -1,6 +1,6 @@
 <!-- (c) https://github.com/MontiCore/monticore -->
 # Automata 
-## Language, Models and Grammars 
+## Language, Models, and Grammars 
 First, we will consider an automata language for 
 describing finite automata consisting of states and transitions. 
 Each finite automata must have an initial state and at least one final state. 
@@ -149,6 +149,110 @@ which incrementally checks what to rebuild, and ultimately results in executing 
 The test processes your model with the parser that was generated for the Automata language and transfer its contents into an instance of `ASTAutomaton`. 
 Check that no error was logged.
 <!-- (c) https://github.com/MontiCore/monticore -->
+
+## Modifying the Automata Grammar
+
+In this scenario, we consider the predefined Automata grammar 
+only as an intermediate step in our actual design.
+Ultimately, we want to be able to represent mealy machines as well.
+Mealy machines are automata with the ability to output values,
+determined by their current state and input.
+The current automata grammar is only able to model moore automata,
+i.e., their output is only determined by their current state.
+
+With the current grammar,
+a possible transition from a source to a target state,
+which triggers on a given input, might look like the following:
+
+```automaton
+source - input > target;
+```
+
+The transition of a mealy automaton could look like the following:
+
+```automaton
+source - input / output > target;
+```
+
+Note the addition of the slash, followed by the actual output.
+When designing such additions,
+ language engineers have to consider if original models should still be valid models.
+If that is the case, additions must be optionals.
+To get a better feeling on actual language design and grammar realization,
+in the next step, we are going to modify our original language to being able of 
+representing mealy machines as well.
+
+#### Exercise 2
+
+Open the `src/main/grammars/tutorial/Automata.mc4` grammar file.
+Modify or extend the `Transition` production by an optional `Name` output value.
+Use a sensible usage name for the output.
+You will find a corresponding model under `src/test/resources/tutorial/PingPongMealy.aut`.
+To test your grammar modifications with that model, go to `src/test/java/ParserTest.java`
+and remove the `@Ignore` annotation before the corresponding test method.
+After that, rebuild your language by executing `gradle 01.automata:build` again.
+
+
+<!--
+#### Exercise TODO (evtl. weglassen)
+
+```automaton
+source [x > 42] - input > target;
+```
+
+* Insert (optional) precondition
+  * extends Expression (teaser for later)
+  * [expressions language family documentation](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/Expressions.md)
+  * `de.monticore.expressions.CommonExpressions`
+  * > 0xA0278 The interface nonterminal Literal must not be used without nonterminals implementing it in a grammar not marked as a grammar component
+  * `de.monticore.literals.MCCommonLiterals`
+  * `("[" precondition:Expression "]")?`
+  * Test
+--><!-- (c) https://github.com/MontiCore/monticore -->
+## Context Conditions 
+The MontiCore grammars that are written for creating DSLs have one problem: they are context-free. 
+This means that some restrictions for a language cannot or should not be realized in a grammar. 
+In the Automata language for example, an automaton must have exactly one initial state. 
+This rule cannot be established in a grammar because the grammar only describes the syntax of a state. 
+However, there is no mechanism for the grammar that enables counting the number of initial states of an automaton.
+The production State does not know the context necessary for the restriction (there should be exactly one initial state in an automaton) and thus it cannot prevent more than one or no initial state existing in an automaton.
+
+To add these restrictions, MontiCore offers the possibility to create Context Conditions for a language. 
+Context Conditions are handwritten restrictions in the form of simple Java classes that can use the AST and visitor to check context-sensitive restrictions. 
+After parsing a model and thus creating an instance of the AST of a language for this model,
+a Context Condition can be applied to this AST to check that the additional context-sensitive restrictions are kept by the model. 
+For this, MontiCore generates interfaces for every production of a grammar that specify a check method. 
+Additionally, a `CoCoChecker` is generated that can be used to check one or more Context Conditions for a model. 
+For a more detailed explanation, see Chapter 10 of the MontiCore Reference Manual.
+
+To add the restriction from above that there must be exactly one initial state in an automaton, the class `AutomatonHasExactlyOneInitialState` displayed below was written by a language engineer. 
+```java
+public class AutomatonHasExactlyOneInitialState implements AutomataASTAutomatonCoCo {
+    public static final String errorCode = "0xA005";
+
+    public static final String errorMsg = " The automaton %s must have exactly one initial state";
+
+    @Override
+    public void check(ASTAutomaton node) {
+        if (node.streamStates().filter(ASTState::isInitial).count() != 1) {
+            Log.error(errorCode + String.format(errorMsg, node.getName()));
+        }
+    }
+}
+```
+The class implements the CoCo interface that was generated for the Automaton production of the grammar Automata (`AutomataASTAutomatonCoCo`) 
+ and implements its specified `check` method. 
+In the method, the number of initial states of the automaton are counted and if it does not equal 1, an error is logged by the log provided by MontiCore's runtime. 
+It is common to specify a different error code and error message in every CoCo so that errors in models can be retraced to a single restriction of a language.
+
+#### Exercise 4
+The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
+`AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and `TransitionNameUncapitalized` are all given for the automata language.
+Implement them! 
+To test that the CoCos are implemented correctly, 
+ execute every test except for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
+
+TODO: Wenn mealy, dann überall<!-- (c) https://github.com/MontiCore/monticore -->
 ## Visitors 
 Visitors provide the means to traverse the AST and execute different behavior for every AST node.
 For every grammar `A`, MontiCore generates three interfaces `AHandler`, `AVisitor2` and `ATraverser`.
@@ -205,108 +309,6 @@ The skeletons for two more visitors, `CountStates` and `AddPrefixToName` are giv
 Implement the traversal behavior for these two classes by overriding the correct methods of the `AutomataVisitor2`.
 Test your implementation by removing the `@Ignore` annotation before the test methods in the `VisitorTest` class and executing the methods.
 Execute the visitors on your own model from Exercise 1 in the `testYourModel` method.<!-- (c) https://github.com/MontiCore/monticore -->
-
-## Modifying the Automata Grammar
-
-In this scenario, we consider the predefined Automata grammar 
-only as an intermediate step in our actual design.
-Ultimately, we want to be able to represent mealy machines as well.
-Mealy machines are automata with the ability to output values,
-determined by their current state and input.
-The current automata grammar is only able to model moore automata,
-i.e., their output is only determined by their current state.
-
-With the current grammar,
-a possible transition from a source to a target state,
-which triggers on a given input, might look like the following:
-
-```automaton
-source - input > target;
-```
-
-The transition of a mealy automaton could look like the following:
-
-```automaton
-source - input / output > target;
-```
-
-Note the addition of the slash, followed by the actual output.
-When designing such additions,
- language engineers have to consider if original models should still be valid models.
-If that is the case, additions must be optionals.
-To get a better feeling on actual language design and grammar realization,
-in the next step, we are going to modify our original language to being able of 
-representing mealy machines as well.
-
-#### Exercise TODO
-
-Open the `src/main/grammars/tutorial/Automata.mc4` grammar file.
-Modify or extend the `Transition` production by an optional `Name` output value.
-Use a sensible usage name for the output.
-You will find a corresponding model under `src/test/resources/tutorial/PingPongMealy.aut`.
-To test your grammar modifications with that model, go to `src/test/java/ParserTest.java`
-and remove the `@Ignore` annotation before the corresponding test method.
-After that, rebuild your language by executing `gradle 01.automata:build` again.
-
-#### Exercise TODO (evtl. weglassen)
-
-```automaton
-source [x > 42] - input > target;
-```
-
-* Insert (optional) precondition
-  * extends Expression (teaser for later)
-  * [expressions language family documentation](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/Expressions.md)
-  * `de.monticore.expressions.CommonExpressions`
-  * > 0xA0278 The interface nonterminal Literal must not be used without nonterminals implementing it in a grammar not marked as a grammar component
-  * `de.monticore.literals.MCCommonLiterals`
-  * `("[" precondition:Expression "]")?`
-  * Test
-<!-- (c) https://github.com/MontiCore/monticore -->
-## Context Conditions 
-The MontiCore grammars that are written for creating DSLs have one problem: they are context-free. 
-This means that some restrictions for a language cannot or should not be realized in a grammar. 
-In the Automata language for example, an automaton must have exactly one initial state. 
-This rule cannot be established in a grammar because the grammar only describes the syntax of a state. 
-However, there is no mechanism for the grammar that enables counting the number of initial states of an automaton.
-The production State does not know the context necessary for the restriction (there should be exactly one initial state in an automaton) and thus it cannot prevent more than one or no initial state existing in an automaton.
-
-To add these restrictions, MontiCore offers the possibility to create Context Conditions for a language. 
-Context Conditions are handwritten restrictions in the form of simple Java classes that can use the AST and visitor to check context-sensitive restrictions. 
-After parsing a model and thus creating an instance of the AST of a language for this model,
-a Context Condition can be applied to this AST to check that the additional context-sensitive restrictions are kept by the model. 
-For this, MontiCore generates interfaces for every production of a grammar that specify a check method. 
-Additionally, a `CoCoChecker` is generated that can be used to check one or more Context Conditions for a model. 
-For a more detailed explanation, see Chapter 10 of the MontiCore Reference Manual.
-
-To add the restriction from above that there must be exactly one initial state in an automaton, the class `AutomatonHasExactlyOneInitialState` displayed below was written by a language engineer. 
-```java
-public class AutomatonHasExactlyOneInitialState implements AutomataASTAutomatonCoCo {
-    public static final String errorCode = "0xA005";
-
-    public static final String errorMsg = " The automaton %s must have exactly one initial state";
-
-    @Override
-    public void check(ASTAutomaton node) {
-        if (node.streamStates().filter(ASTState::isInitial).count() != 1) {
-            Log.error(errorCode + String.format(errorMsg, node.getName()));
-        }
-    }
-}
-```
-The class implements the CoCo interface that was generated for the Automaton production of the grammar Automata (`AutomataASTAutomatonCoCo`) 
- and implements its specified `check` method. 
-In the method, the number of initial states of the automaton are counted and if it does not equal 1, an error is logged by the log provided by MontiCore's runtime. 
-It is common to specify a different error code and error message in every CoCo so that errors in models can be retraced to a single restriction of a language.
-
-#### Exercise 4
-The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
-`AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and `TransitionNameUncapitalized` are all given for the automata language.
-Implement them! 
-To test that the CoCos are implemented correctly, 
- execute every test except for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
-
-TODO: Wenn mealy, dann überall<!-- (c) https://github.com/MontiCore/monticore -->
 ## Symbol Table 
 Nearly every computer language needs a symbol table to reference objects. 
 In Java, you can differentiate between the declaration of a variable and its use. 
@@ -364,60 +366,6 @@ Complete this CoCo with the help of the symbol table
  and test your implementation by executing the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
 
 *Hint:* The `ASTMCQualifiedName` class has a `getQName()` method, which returns the qualified name as a String.
-<!-- (c) https://github.com/MontiCore/monticore -->
-## Language Tool 
-For each language, a *Tool* is generated. 
-This tool provides a general interface for the functionalities developed for a language. 
-This includes all features such as parsing of models, creating a symbol table from the AST, checking the Context Conditions of a language, pretty printing or reporting.
-
-
-For a grammar `A`, MontiCore generates the class `ATool`. 
-The tool contains standard methods that are either already filled with code or empty so that they may be overwritten in a subclass of the tool. 
-Methods that are filled with code contain basic functionalities that should be the same for each language such as parsing a model or creating a symbol table from an AST. 
-The empty methods are empty because the functionalities they implement are not generated for every language such as checking Context Conditions, pretty printing ASTs or providing reports for a model. 
-The CoCos, the pretty printer or the reports must be developed by the user first.
-
-The empty methods must be overwritten in a subclass of the Tool while the methods that are filled with code can but do not need to be overwritten in this subclass as well. 
-The subclass can be created using the *TOP mechanism*. 
-For this, the user creates their own hand-written Java class that has the same name and lies in the same package as the generated class. 
-The difference between the generated class and the hand-written class is that the latter is located in the *source path*, i.e. in `src/main/java`,
- while the generated class is located in the *build path*, i.e. in `target/generated-sources/monticore/sourcecode`.
-After cleaning and while building the project anew with Gradle, the MontiCore generator finds the hand-written class that is named like the generated class and lies in the same package but only in the source path and, thus it adds the suffix `TOP` to the name of the generated class and makes it abstract. 
-The hand-written class then can extend the generated class with the TOP-suffix so that it might use every function of the generated class and extend its implementation. 
-This TOP-mechanism is supported for every generated class and allows the user to create their own hand-written extensions of the generated code without changing the usage of a class in the generated code. 
-Other classes, which use the (now extended) class do not have to be changed,
- as both the hand-written class and previously "old" generated class share the same name and package.
-The TOP-mechanism for the class `ASTState` can look like Figure 2.2.
-The generated Builder-class uses the hand-written `ASTState` class that extends the generated `ASTStateTOP` class.
-
-
-|           ![Class diagram showing the functionality of the TOP mechanism](02.top.png)           |
-|:-----------------------------------------------------------------------------------------------:| 
-| <a name="fig_2.1"></a> Figure 2.2: Class diagram showing the functionality of the TOP mechanism |
-
-
-
-
-#### Exercise 6
-Create a hand-written extension for the generated class `AutomataTool`. 
-First, have a look at the already generated Tool class for the Automata grammar to get an overview of which methods are already implemented and do not need to be overwritten. 
-Overwrite the previously empty `runDefaultCoCos` method with the functionality to check all CoCos that were developed in Section 1.3. 
-Additionally, overwrite the method `report` to create a report for an AST as a text file. 
-Use the visitors implemented in Section 1.2 to collect some statistics for the states and transitions in the AST. 
-Store the report in the directory `target/automata/reports` as a text file with the name of the automaton. 
-For this, you will have to overwrite the `run` method and add the functionality for parsing, creating a symbol table, checking context conditions and reporting as well. 
-The command for parsing, creating a symbol table and checking context conditions is `i` and for reporting is `r`. 
-Use the predefined methods of the generated TOP-class for parsing, creating the symbol table,
-checking context conditions and reporting. 
-Your report should contain at least the following information (with the correct numbers):
-> Number of States: 42
-> 
-> Number of Transitions: 1234
-> 
-> Initial State Names: NotAnExitState 
- 
-Check the reports for the PingPong automaton in `target/automata/reports/PingPong.txt`. 
-Test your tool by executing the first two tests of the class `ToolTest`.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Application of Visitors: Pretty Printer 
 Pretty printing is the opposite to parsing. 
@@ -502,6 +450,60 @@ Examine this class, exp. its `initializeTraverser` method, and compare it to its
 After that, add the option `pp` to your `AutomataTool`, extend its `run` method and implement its `prettyPrint` method with the help of the `AutomataMill.prettyPrint(...)` method. 
 Store the model in a file with the name of the automaton and the file ending `.aut`. 
 Test your implementation by executing the last `testPrettyPrinter` of the class `ToolTest`.
+<!-- (c) https://github.com/MontiCore/monticore -->
+## Language Tool 
+For each language, a *Tool* is generated. 
+This tool provides a general interface for the functionalities developed for a language. 
+This includes all features such as parsing of models, creating a symbol table from the AST, checking the Context Conditions of a language, pretty printing or reporting.
+
+
+For a grammar `A`, MontiCore generates the class `ATool`. 
+The tool contains standard methods that are either already filled with code or empty so that they may be overwritten in a subclass of the tool. 
+Methods that are filled with code contain basic functionalities that should be the same for each language such as parsing a model or creating a symbol table from an AST. 
+The empty methods are empty because the functionalities they implement are not generated for every language such as checking Context Conditions, pretty printing ASTs or providing reports for a model. 
+The CoCos, the pretty printer or the reports must be developed by the user first.
+
+The empty methods must be overwritten in a subclass of the Tool while the methods that are filled with code can but do not need to be overwritten in this subclass as well. 
+The subclass can be created using the *TOP mechanism*. 
+For this, the user creates their own hand-written Java class that has the same name and lies in the same package as the generated class. 
+The difference between the generated class and the hand-written class is that the latter is located in the *source path*, i.e. in `src/main/java`,
+ while the generated class is located in the *build path*, i.e. in `target/generated-sources/monticore/sourcecode`.
+After cleaning and while building the project anew with Gradle, the MontiCore generator finds the hand-written class that is named like the generated class and lies in the same package but only in the source path and, thus it adds the suffix `TOP` to the name of the generated class and makes it abstract. 
+The hand-written class then can extend the generated class with the TOP-suffix so that it might use every function of the generated class and extend its implementation. 
+This TOP-mechanism is supported for every generated class and allows the user to create their own hand-written extensions of the generated code without changing the usage of a class in the generated code. 
+Other classes, which use the (now extended) class do not have to be changed,
+ as both the hand-written class and previously "old" generated class share the same name and package.
+The TOP-mechanism for the class `ASTState` can look like Figure 2.2.
+The generated Builder-class uses the hand-written `ASTState` class that extends the generated `ASTStateTOP` class.
+
+
+|           ![Class diagram showing the functionality of the TOP mechanism](02.top.png)           |
+|:-----------------------------------------------------------------------------------------------:| 
+| <a name="fig_2.1"></a> Figure 2.2: Class diagram showing the functionality of the TOP mechanism |
+
+
+
+
+#### Exercise 6
+Create a hand-written extension for the generated class `AutomataTool`. 
+First, have a look at the already generated Tool class for the Automata grammar to get an overview of which methods are already implemented and do not need to be overwritten. 
+Overwrite the previously empty `runDefaultCoCos` method with the functionality to check all CoCos that were developed in Section 1.3. 
+Additionally, overwrite the method `report` to create a report for an AST as a text file. 
+Use the visitors implemented in Section 1.2 to collect some statistics for the states and transitions in the AST. 
+Store the report in the directory `target/automata/reports` as a text file with the name of the automaton. 
+For this, you will have to overwrite the `run` method and add the functionality for parsing, creating a symbol table, checking context conditions and reporting as well. 
+The command for parsing, creating a symbol table and checking context conditions is `i` and for reporting is `r`. 
+Use the predefined methods of the generated TOP-class for parsing, creating the symbol table,
+checking context conditions and reporting. 
+Your report should contain at least the following information (with the correct numbers):
+> Number of States: 42
+> 
+> Number of Transitions: 1234
+> 
+> Initial State Names: NotAnExitState 
+ 
+Check the reports for the PingPong automaton in `target/automata/reports/PingPong.txt`. 
+Test your tool by executing the first two tests of the class `ToolTest`.
 <!-- (c) https://github.com/MontiCore/monticore -->
 
 Next, continue with [Chapter 2](../02.simplejava/README.md)
