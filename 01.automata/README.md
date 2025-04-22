@@ -85,7 +85,7 @@ grammar Automata extends de.monticore.MCBasics,
          (("<<" ["initial"] ">>" ) | ("<<" ["final"] ">>" ))* ";") ;
 
  Transition =
-         from:Name "-" input:Name ">" to:Name ";" ;
+         from:MCQualifiedName "-" input:Name ">" to:MCQualifiedName ";" ;
 
 }
 ```
