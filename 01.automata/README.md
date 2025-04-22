@@ -442,47 +442,82 @@ After realizing your visitors, test your implementation by removing the
 `@Ignore` annotation before the test methods in the `VisitorTest` class and 
 executing the methods.<!-- (c) https://github.com/MontiCore/monticore -->
 ## Symbol Table 
-Nearly every computer language needs a symbol table to reference objects. 
-In Java, you can differentiate between the declaration of a variable and its use. 
+Symbol tables are a common practice in compiler construction for enabling 
+quick navigation and cross-referencing between elements in computer languages. 
+For instance, in Java, you can differentiate between the declaration of a 
+variable and its use. 
 This is done by giving these variables unique names. 
-After their declaration, variables can be used with the help of their declared name. 
-To create the connection between the reference (the use) of a variable and its declaration, the symbol table is necessary. 
-It receives a name referencing a variable and tries to find the declaration of this variable by comparing it to the names of all declarations. 
+After their declaration, variables can be used with the help of this declared 
+name. 
+To create the connection between the reference (the use) of a variable and 
+its declaration, the symbol table is necessary. 
+It receives a name referencing a variable and tries to find the declaration 
+of this variable by comparing it to the names of all declarations. 
 Once found, the declared variable can then be used.
 
-A symbol table consists of scopes and symbols. 
-Scopes can store symbols and other scopes.
-Some languages need a more complex symbol table with many nested scopes and symbols lying in those scopes while a simple symbol table without nested scopes and few symbols might suffice. 
-Referring to Java, the file itself "spans" a scope in which the symbol of the class lies.
-The class, in turn, spans a scope that contains all the symbols for its attributes and methods. 
-Attributes do not span scopes as an attribute does not contain other things such as variables or methods, it is only declared. 
-Methods however span a scope containing all the symbols for variables declared in the method. 
-Usually, when using an already declared method, attribute or variable, the symbol table is used to find the symbol that the usage refers to. 
-If an attribute foo is used in a method, the symbol table first looks for a variable foo that was declared in the method. 
-If there is no such variable that was declared in the method, the symbol table moves up one scope in the hierarchy so that the scope spanned by the class is searched for a variable foo next. 
+A symbol table consists of symbols and scopes, where symbols are uniquely
+identifiable via their names with a respective namespace. 
+Scopes can store symbols and other scopes, thereby spanning such namespaces.
+Referring to Java, a class spans a scope that contains all the symbols for its 
+contained attributes and methods. 
+Attributes do not span scopes as an attribute does not have any further 
+constituents, such as variables or methods. 
+It is only declared. 
+Methods, however, span a scope containing all the symbols for variables 
+declared in that method. 
+Usually, when using an already declared method, attribute or variable, 
+the symbol table is used to find the symbol that the usage refers to. 
+For instance, if an attribute `foo` is used in a method, the symbol table 
+is used to resolve a corresponding variable that was declared in the current 
+method. 
+If there is no such locally declared variable, the resolving algorithm 
+extends the search by moving up one scope in the hierarchy. 
+In the example, the scope spanned by the class would be searched for a 
+variable `foo` next. 
 There, it finds the attribute that was referred to and returns its symbol. 
-The process of searching for the correct symbol in the symbol table is called *symbol resolution*. 
-For a more detailed description of the symbol table and how it works, see Chapter 9 of the MontiCore Reference Manual.
+The process of searching for the correct symbol in the symbol table is called 
+*symbol resolution*. 
+For a more detailed description of the symbol table and how it works, see 
+Chapter 9 of the MontiCore Handbook.
 
-For every grammar, MontiCore generates a symbol table infrastructure containing three different kinds of scopes:
+For every grammar, MontiCore generates a symbol table infrastructure 
+containing three different kinds of scopes:
 Global scopes, artifact scopes, and a general scope.
 `Scopes` contain symbols and scopes inside a model, 
- `ArtifactScopes` contain the whole symbol table (scopes and symbols) for a model,
- and the `GlobalScope` contains every `ArtifactScopes` to make inter-model resolution of symbols possible. 
-This is necessary to refer to other models from a model, e.g. to refer other Java classes in a specific Java class. 
-Productions of a grammar can be annotated with the keyword `symbol` to make sure that every declaration of this production in a model results in a symbol in the symbol table. 
-Additionally, productions can be annotated with the keyword `scope` to signal that a production spans a scope, like a class in Java.
-MontiCore generates a mechanism that automatically creates a symbol table for an existing instance of the AST of a language. 
-Next, MontiCore generates a `ScopesGenitorDelegator` classed used during the creation of a symbol table.
-You can obtain an instance of this class from the `AutomataMill`.
-For more information about the creation of a symbol table from the AST, see Chapter 9 of the MontiCore Reference Manual.
-A state in an automaton is similar to a variable in a Java class. 
-If the declaration of a variable can be compared to the `declaration` of a state (e.g. `state Ping;`), then the use of a variable can be compared to the use of a state in a transition (e.g.
-`Ping returnBall > Pong`). 
-This means that it is also sensible to make states symbols of the Automata language.
+`ArtifactScopes` contain the whole symbol table (scopes and symbols) for a 
+model file (i.e., artifact),
+and the `GlobalScope` contains every `ArtifactScope` to enable inter-model 
+resolution of symbols. 
+This is necessary to refer to other models from a model, e.g. to refer to 
+other Java classes in a specific Java class. 
 
-After parsing a model into an instance of the AST, the `ScopesGenitorDelegator` can be used to create the symbol table for this AST. 
-The following method shows the simple process of creating a symbol table for a given automaton.
+In MontiCore, productions of a grammar can be annotated with the keyword 
+`symbol` to make sure that every declaration of this production in a model 
+results in a symbol entry within the symbol table.
+To ensure the prerequisite of unique identifiability, such a production 
+must employ the predefined `Name` token.
+Additionally, productions can be annotated with the keyword `scope` to signal 
+that a production spans a scope, like a class or method in Java.
+MontiCore generates a mechanism that automatically creates a symbol table for 
+an existing instance of the AST of a language, the `ScopesGenitorDelegator`.
+You can obtain an instance of this class from the corresponding 
+language-specific `Mill`.
+For more information on the creation of a symbol table from the AST, see 
+also Chapter 9 of the MontiCore Handbook.
+
+A state in an automaton can be seen similar to a attribute in a Java class. 
+It has a unique name and should, thus, be referable by it. 
+If the declaration of a variable can be compared to the `declaration` of a 
+state (e.g. `state Ping;`), then the use of a variable can be compared to 
+the referring to a state in a transition (e.g. `Ping - returnBall > Pong`). 
+Overall, this implies states should be symbols within the Automata language.
+(Generally the rule of thumb applies: Every symbol has a name, and everything 
+that has a name is a symbol.)
+
+After parsing a model into an AST, the `ScopesGenitorDelegator` can be used to 
+create the symbol table for it. 
+The following method shows the simple process of creating a symbol table for a 
+given automaton.
 
 ```java 
 public IAutomatonArtifactScope createSymbolTable(ASTAutomaton node) {
@@ -492,12 +527,25 @@ public IAutomatonArtifactScope createSymbolTable(ASTAutomaton node) {
 ```
 
 #### Exercise 5
-Read Chapter 9 of the MontiCore Reference Manual. 
-The skeleton for the Context Condition `TransitionSourceIsState` is given in the Getting Started project. 
-Complete this CoCo with the help of the symbol table 
- and test your implementation by executing the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
+Now, we recall the remaining missing test in the `CoCoTest` class. 
+It refers to a CoCo, that checks whether a source state of a transition exists.
+(The same check should be, of course, done for the target state. 
+However, in this tutorial, we keep things simple.)
+This CoCo is not realized yet and needs to be implemented. 
+Its skeleton is already given in `TransitionSourceIsState` class. 
+Complete this CoCo with the help of the symbol table. 
+Test your implementation by executing the test 
+`testTransitionSourceDoesNotExist` in the class `CoCoTest`.
+Chapter 9 of the MontiCore Handbook also provides further information on that 
+respective use case of the symbol table.
 
-*Hint:* The `ASTMCQualifiedName` class has a `getQName()` method, which returns the qualified name as a String.
+
+*Hints:* 
+* The methods `getEnclosingScope()` (available for every symbol and AST
+node), as well as `resolveState()` (available on each scope) should be
+helpful.
+* The `ASTMCQualifiedName` class has a `getQName()` method, which returns the 
+qualified name as a String.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Application of Visitors: Pretty Printer 
 Pretty printing is the opposite to parsing. 

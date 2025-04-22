@@ -83,13 +83,6 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
-  public void testTransitionSourceDoesNotExist() throws IOException {
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/TransitionSource.aut");
-    checkInvalid(aut, TransitionSourceIsState.errorCode);
-  }
-
-  @Test
   public void testNoInitialState() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/NoInitial.aut");
     checkInvalid(aut, AutomatonHasExactlyOneInitialState.errorCode);
@@ -100,5 +93,12 @@ public class CoCoTest extends AbstractTest {
   public void testNoFinalState() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/NoFinal.aut");
     checkInvalid(aut, AutomatonHasAtLeastOneFinalState.errorCode);
+  }
+  
+  @Test
+  @Ignore
+  public void testTransitionSourceDoesNotExist() throws IOException {
+    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/TransitionSource.aut");
+    checkInvalid(aut, TransitionSourceIsState.errorCode);
   }
 }
