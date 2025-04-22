@@ -131,7 +131,7 @@ All of these classes combined are called the AST (abstract syntax tree) for a la
 This is the data structure that MontiCore generates for every grammar to work with the models. 
 For further explanation about the AST, see Chapter 5 of the MontiCore Handbook.
 
-For every grammar that is not labeled as component (not handled here, see Section 7.3.1 of the MontiCore Reference Manual), MontiCore generates a Parser class. 
+For every grammar that is not labeled as component (not handled here, see Section 7.3.1 of the MontiCore Handbook), MontiCore generates a Parser class. 
 A parser can be used to read a model and create an instance of the AST conforming to the model. 
 This means that an `AutomatonParser` can be used to read the Ping Pong automaton and transfer it into an instance of `ASTAutomaton`. 
 The `name` attribute of this instance is filled with the string `PingPong` and the attributes `stateList` and `transitionList` are filled with instances of the `ASTState` and `ASTTransition` classes fitting to the ping pong automaton. 
@@ -151,7 +151,7 @@ Visitors provide the means to traverse the AST and execute different behavior fo
 For every grammar `A`, MontiCore generates three interfaces `AHandler`, `AVisitor2` and `ATraverser`.
 The traverser can store handlers and visitors for the grammar and delegates the traversal to them.
 The handler interface provides the methods `handle` and `traverse` for every AST class and the visitor provides the methods `visit` and `endVisit` for every AST class.
-For more information on these three interfaces, see Chapter 8 of the MontiCore Reference Manual.
+For more information on these three interfaces, see Chapter 8 of the MontiCore Handbook.
 
 
 To add your own behavior when traversing the AST, 
@@ -269,7 +269,7 @@ After parsing a model and thus creating an instance of the AST of a language for
 a Context Condition can be applied to this AST to check that the additional context-sensitive restrictions are kept by the model. 
 For this, MontiCore generates interfaces for every production of a grammar that specify a check method. 
 Additionally, a `CoCoChecker` is generated that can be used to check one or more Context Conditions for a model. 
-For a more detailed explanation, see Chapter 10 of the MontiCore Reference Manual.
+For a more detailed explanation, see Chapter 10 of the MontiCore Handbook.
 
 To add the restriction from above that there must be exactly one initial state in an automaton, the class `AutomatonHasExactlyOneInitialState` displayed below was written by a language engineer. 
 ```java
@@ -320,7 +320,7 @@ If an attribute foo is used in a method, the symbol table first looks for a vari
 If there is no such variable that was declared in the method, the symbol table moves up one scope in the hierarchy so that the scope spanned by the class is searched for a variable foo next. 
 There, it finds the attribute that was referred to and returns its symbol. 
 The process of searching for the correct symbol in the symbol table is called *symbol resolution*. 
-For a more detailed description of the symbol table and how it works, see Chapter 9 of the MontiCore Reference Manual.
+For a more detailed description of the symbol table and how it works, see Chapter 9 of the MontiCore Handbook.
 
 For every grammar, MontiCore generates a symbol table infrastructure containing three different kinds of scopes:
 Global scopes, artifact scopes, and a general scope.
@@ -333,7 +333,7 @@ Additionally, productions can be annotated with the keyword `scope` to signal th
 MontiCore generates a mechanism that automatically creates a symbol table for an existing instance of the AST of a language. 
 Next, MontiCore generates a `ScopesGenitorDelegator` classed used during the creation of a symbol table.
 You can obtain an instance of this class from the `AutomataMill`.
-For more information about the creation of a symbol table from the AST, see Chapter 9 of the MontiCore Reference Manual.
+For more information about the creation of a symbol table from the AST, see Chapter 9 of the MontiCore Handbook.
 A state in an automaton is similar to a variable in a Java class. 
 If the declaration of a variable can be compared to the `declaration` of a state (e.g. `state Ping;`), then the use of a variable can be compared to the use of a state in a transition (e.g.
 `Ping returnBall > Pong`). 
@@ -350,7 +350,7 @@ public IAutomatonArtifactScope createSymbolTable(ASTAutomaton node) {
 ```
 
 #### Exercise 5
-Read Chapter 9 of the MontiCore Reference Manual. 
+Read Chapter 9 of the MontiCore Handbook. 
 The skeleton for the Context Condition `TransitionSourceIsState` is given in the Getting Started project. 
 Complete this CoCo with the help of the symbol table 
  and test your implementation by executing the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
