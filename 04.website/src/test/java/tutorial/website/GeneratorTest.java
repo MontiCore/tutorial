@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class GeneratorTest extends AbstractTest {
 
   @Test
-  @Ignore
+  @Ignore //TODO: Exercise 3 
   public void testSERWTH() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/SERWTH.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -25,7 +25,7 @@ public class GeneratorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @Ignore //TODO: Exercise 3 
   public void testDream() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/Dream.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -33,7 +33,7 @@ public class GeneratorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @Ignore //TODO: Exercise 3 
   public void testSinglePage() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/SinglePage.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -42,6 +42,7 @@ public class GeneratorTest extends AbstractTest {
 
   public void executeGenerator(ASTWebsite ast, Path outputDirectory){
     // TODO comment in the test and fix the AST-imports
+     /* 
     final Path expectedFolder = Paths
       .get(outputDirectory + "/" + ast.getName().toLowerCase());
 
@@ -62,6 +63,7 @@ public class GeneratorTest extends AbstractTest {
     WebsiteTraverser traverser = WebsiteMill.traverser();
     traverser.add4Website(visitor);
     ast.accept(traverser);
+     */ 
   }
 
 }

@@ -84,7 +84,7 @@ Only the website nonterminal spans a scope.
 The grammar `Website.mc4` already exists. 
 Complete the grammar so that the language's parser can parse every website model into an AST. 
 Use interface productions where useful and do not create nonterminals for things that are already defined in the "super" grammar like `Name`.
-Test your grammar by executing the tests in the class `ParseTest` which will
+Test your grammar by un-ignoring and executing the tests in the class `ParseTest` which will
 try to use the parser of your grammar to parse the models. 
 After you've finished, ask your supervisor for our solution and compare it with yours.
 <!-- (c) https://github.com/MontiCore/monticore -->
@@ -103,7 +103,7 @@ created eight CoCo classes that are not implemented yet.
 Implement the eight CoCos whose skeletons we already created for you. 
 Make certain that every CoCo implements the correct interface. 
 Add them to the `WebsiteCoCoChecker` in the class `WebsiteCoCos` similar to the class `AutomataCoCos`. 
-Test your CoCos by executing the tests in the `CoCoTest` class.
+Test your CoCos by un-ignoring and executing the tests in the `CoCoTest` class.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Generator
 Our language is useful to describe a website with the help of a model. 
@@ -180,7 +180,7 @@ Outsource parts of the template into other templates where useful.
 Hint: Use `website.Page.ftl` as the template name in the `generate` method of the GeneratorEngine.
 Your template should create a valid HTML website with a navigation (if present in the
 model), a title (if present in the model) and all contents of the page. 
-Test your generator by executing the tests of the class `GeneratorTest` and looking at your generated websites.
+Test your generator by un-ignoring and executing the tests of the class `GeneratorTest` and looking at your generated websites.
 
 The pictures that are referenced in the models can be found at `pics/modelName`. 
 Copy the pictures for the correct model into the folder generated for the HTML files before
