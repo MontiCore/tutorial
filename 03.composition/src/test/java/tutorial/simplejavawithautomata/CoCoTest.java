@@ -117,7 +117,7 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @Ignore //TODO Exercise 2 
   public void testStaticAbstractOOFields(){
     testInvalidOO("0xFD118", staticAbstractOOFields);
   }
@@ -140,19 +140,19 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @Ignore //TODO Exercise 2 
   public void testComplicatedWrongAssignment(){
     testInvalidOO("0xB0163", complicatedWrongAssignment);
   }
 
   @Test
-  @Ignore
+  @Ignore //TODO Exercise 2 
   public void testWrongAssignment(){
     testInvalidOO("0xA0457", wrongAssignment);
   }
 
   @Test
-  @Ignore
+  @Ignore //TODO Exercise 2 
   public void testInvalidAutomaton(){
     testInvalidOO("0xA005", invalidAutomaton);
   }
