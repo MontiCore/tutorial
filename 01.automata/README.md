@@ -139,9 +139,12 @@ This instance can now be analyzed programmatically.
 
 #### Exercise 1
 Switch to your IDE. 
+First, have a look at the `Automata` grammar located under `src/main/grammars/tutorial/` and make yourself familiar with the production rules.
+You will identify similar rules as described above for `Automaton`, `State`, and `Transition`.
 Come up with your own automaton and write it down as an Automata model, i.e., follow the rules set by the Automata grammar (located in `src/main/grammars`). 
 Store your file under `src/test/resources/de/monticore/gettingstarted/automata` and with the file ending `.aut`. 
-After that, open the class `VisitorTest`, complete the test method `testYourModel` and execute it. 
+After that, open the class `VisitorTest`, complete the test method `testYourModel` and execute it.
+(It suffices to execute the test itself, e.g., directly from within your IDE. Alternatively, you could run `gradle 01.automata:build` again.)
 It will read your model with the parser that was generated for the Automata language and transfer its contents into an instance of ASTAutomaton. 
 Check that no error was logged.
 <!-- (c) https://github.com/MontiCore/monticore -->
@@ -204,10 +207,13 @@ Execute the visitors on your own model from Exercise 1 in the `testYourModel` me
 
 ## Modifying the Automata Grammar
 
-Mealy automata are automatons with the ability to output values,
+In this scenario, we consider the predefined Automata grammar 
+only as an intermediate step in our actual design.
+Ultimately, we want to be able to represent mealy machines as well.
+Mealy machines are automata with the ability to output values,
 determined by their current state and input.
-But the current automata grammar is only able to model moore automata,
-i.e. their output is only determined by their current state.
+The current automata grammar is only able to model moore automata,
+i.e., their output is only determined by their current state.
 
 With the current grammar,
 a possible transition from a source to a target state,
@@ -227,19 +233,21 @@ Note the addition of the slash, followed by the actual output.
 When designing such additions,
  language engineers have to consider if original models should still be valid models.
 If that is the case, additions must be optionals.
-
-
+To get a better feeling on actual language design and grammar realization,
+in the next step, we are going to modify our original language to being able of 
+representing mealy machines as well.
 
 #### Exercise TODO
 
-Open the `src/main/grammars/de/monticore/gettingstarted/Automata.mc4` grammar file.
-Extend the `Transition` production by an optional `Name` output value.
+Open the `src/main/grammars/tutorial/Automata.mc4` grammar file.
+Modify or extend the `Transition` production by an optional `Name` output value.
 Use a sensible usage name for the output.
-Test your grammar by removing the `@Ignore` annotation before the test methods in the `ParserTest` class and executing the methods.
-If both tests succeed, both mealy and moore automata can be parsed.
+You will find a corresponding model under `src/test/resources/tutorial/PingPongMealy.aut`.
+To test your grammar modifications with that model, go to `src/test/java/ParserTest.java`
+and remove the `@Ignore` annotation before the corresponding test method.
+After that, rebuild your language by executing `gradle 01.automata:build` again.
 
-
-#### Exercise TODO
+#### Exercise TODO (evtl. weglassen)
 
 ```automaton
 source [x > 42] - input > target;
