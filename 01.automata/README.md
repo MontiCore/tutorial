@@ -139,7 +139,7 @@ This instance can now be analyzed programmatically.
 
 #### Exercise 1
 Switch to your IDE. 
-Come up with your own automaton and write it down as an Automata model, i.e. follow the rules set by the Automata grammar. 
+Come up with your own automaton and write it down as an Automata model, i.e., follow the rules set by the Automata grammar (located in `src/main/grammars`). 
 Store your file under `src/test/resources/de/monticore/gettingstarted/automata` and with the file ending `.aut`. 
 After that, open the class `VisitorTest`, complete the test method `testYourModel` and execute it. 
 It will read your model with the parser that was generated for the Automata language and transfer its contents into an instance of ASTAutomaton. 
