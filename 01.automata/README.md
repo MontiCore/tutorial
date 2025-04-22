@@ -50,9 +50,8 @@ automaton PingPong {
 It describes the same automaton as Figure [2.1](#fig_2.1). 
 The name of the automaton is `PingPong` and it has three states `NoGame`, `Ping` and `Pong`. 
 NoGame is the inital state and Pong the final state of the automaton.
-Further, the transitions `startGame` going from NoGame to Pong, `stopGame` going from either Ping or Pong to NoGame and `returnBall` going from Ping to Pong and the other way around are included.
-This textual representation however is more important than the graphical representation when working with MontiCore. 
-This is because MontiCore is able to process the textual representation while it is not able to process the graphical representation.
+Further, the transitions `startGame` going from NoGame to Pong, `stopGame` going from either `Ping` or `Pong` to `NoGame` and `returnBall` going from `Ping` to `Pong` and the other way around are included.
+As within MontiCore, we develop mainly textual DSLs, this textual representation is more important for this tutorial. 
 
 The ping pong automaton is only one automaton out of many more. 
 Automata can be created for many situations that have multiple states and transitions between those states.
