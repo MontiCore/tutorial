@@ -15,6 +15,7 @@ import tutorial.simplejavawithautomata._visitor.SimpleJavaWithAutomataTraverser;
 import tutorial.simplejavawithautomata.types3.SimpleJavaWithAutomataTypeCheck3;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -3,6 +3,7 @@ package tutorial.automata;
 
 import tutorial.automata._ast.ASTAutomaton;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.io.File;
 import java.io.IOException;

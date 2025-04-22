@@ -5,6 +5,7 @@ import tutorial.website._ast.ASTWebsite;
 import tutorial.website._visitor.WebsiteTraverser;
 import tutorial.website._visitor.WebsiteVisitor2;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.io.File;
 import java.io.IOException;

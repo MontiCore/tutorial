@@ -13,6 +13,7 @@ import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

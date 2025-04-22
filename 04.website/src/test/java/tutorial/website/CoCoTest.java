@@ -6,6 +6,7 @@ import tutorial.website._cocos.WebsiteCoCoChecker;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 import tutorial.website.cocos.*;
 
 import java.io.IOException;
