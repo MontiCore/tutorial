@@ -26,6 +26,7 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
+  @Ignore //TODO: Exercise 2 
   public void testSERWTH() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/valid/SERWTH.web");
     checkValid(website);
