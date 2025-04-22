@@ -1,8 +1,8 @@
 <!-- (c) https://github.com/MontiCore/monticore -->
 # Automata 
 ## Language, Models and Grammars 
-The Automata language describes finite automata consisting of states and transitions. 
-It is used to model states and sequences. 
+First, we will consider an automata language for 
+describing finite automata consisting of states and transitions. 
 Each finite automata must have an initial state and at least one final state. 
 To navigate from state to state, a unidirectional transition can be used. 
 A transition has a name and a source and target state.
