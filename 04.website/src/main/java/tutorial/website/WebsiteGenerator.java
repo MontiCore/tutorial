@@ -3,7 +3,6 @@ package tutorial.website;
 
 import de.monticore.generating.GeneratorEngine;
 import de.monticore.generating.GeneratorSetup;
-import tutorial.website._ast.ASTPage;
 import tutorial.website._ast.ASTWebsite;
 import de.se_rwth.commons.logging.Log;
 

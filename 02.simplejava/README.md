@@ -448,55 +448,12 @@ The method returns the artifact scope which is the top of the symbol table of th
 This artifact scope can then be added as a subscope to the global scope of the language so that other models
 can resolve symbols of this loaded symbol table as well.
 
-MontiCore is able to generate serilization aand deser infrastructure for most symbols.
-But symbols with custom information require hand-written effort.
-
-The `Type` symbol interface is extended by a `superTypes` attribute, containing a list of `SymTypeExpressions`:
-```mc4
-  symbolrule Type =
-    superTypes: de.monticore.types.check.SymTypeExpression* ;
-```
-
-Thus, we have to extend the SymbolDeSer for java artifact symbols using the TOP-mechanism
-and handle the superTypes (de)serialization, like the following:
-
-```java
-public class JavaArtifactSymbolDeSer extends JavaArtifactSymbolDeSerTOP {
-  @Override
-  protected void serializeSuperTypes(List<SymTypeExpression> superTypes,
-                                     SimpleJavaSymbols2Json s2j) {
-    SymTypeExpressionDeSer.serializeMember(s2j.getJsonPrinter(), "superTypes",
-            superTypes);
-  }
-
-  @Override
-  protected List<SymTypeExpression> deserializeSuperTypes(JsonObject symbolJson) {
-    return SymTypeExpressionDeSer.deserializeListMember("superTypes", symbolJson);
-  }
-}
-```
-
-Similar, the type of a `JavaMethod` symbol is serialized and deserialized:
-```java
-public class JavaMethodSymbolDeSer extends JavaMethodSymbolDeSerTOP {
-  @Override
-  protected void serializeType(SymTypeExpression type, 
-                               SimpleJavaSymbols2Json s2j) {
-    SymTypeExpressionDeSer.serializeMember(s2j.getJsonPrinter(), "type",
-            type);
-  }
-
-  @Override
-  protected SymTypeExpression deserializeType(JsonObject symbolJson) {
-    return SymTypeExpressionDeSer.deserializeMember("type", symbolJson);
-  }
-}
-```
+MontiCore is able to generate serialization and deser infrastructure for most symbols.
+But symbols with custom information, i.e. _symbol rules_, require hand-written effort`.
 
 #### Exercise 6
-Add the handwritten symbol serialization and deserialization to the symbol DeSers of java artifact symbols, 
- java method symbols, and java var declaration symbols.
-Next, go to the class `DeSerTest`. 
+For the SimpleJava grammar, all serialization and deserialization classes are already generated.
+Go to the class `DeSerTest`. 
 Implement the method `testSerialization` by storing the symbol table of the model Bar into a file. 
 For this, you have to parse the model, create its symbol table and serialize it. 
 Store the serialized symbol table in the file `target/symboltable/Bar.javasym`. 
@@ -504,7 +461,7 @@ After that, implement the method `testDeserialization`.
 Use the `SimpleJavaSymbols2Json` to deserialize the symbol table of the model.
 Check that is stored under `src/test/resources/tutorial/simplejava/symboltable`. 
 Add it as a subscope to the global scope and make sure that resolving the TypeSymbol `Check` is possible.
-Next, ensure that the amount of super types the TypeSymbol `Check` has equals `0`. (Hint: `.getSuperTypesList().size()`)
+Next, ensure that the amount of super types the TypeSymbol `Check` equals `0`. (Hint: `.getSuperTypesList().size()`)
 
 
 
