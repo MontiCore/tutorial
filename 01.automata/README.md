@@ -132,8 +132,8 @@ For further explanation about the AST, see Chapter 5 of the MontiCore Handbook.
 
 For every grammar that is not labeled as component (not handled here, see Section 7.3.1 of the MontiCore Handbook), MontiCore generates a Parser class. 
 A parser can be used to read a model and create an instance of the AST conforming to the model. 
-This means that an `AutomatonParser` can be used to read the Ping Pong automaton and transfer it into an instance of `ASTAutomaton`. 
-The `name` attribute of this instance is filled with the string `PingPong` and the attributes `states` and `transitions` are filled with instances of the `ASTState` and `ASTTransition` classes fitting to the ping pong automaton. 
+This means that an `AutomataParser` can be used to read the Ping Pong automaton and transfer it into an instance of `ASTAutomaton`. 
+The `name` attribute of this instance is filled with the string `PingPong` and the attributes `states` and `transitions` are filled with instances of the `ASTState` and `ASTTransition` classes matching the ping pong automaton. 
 Therefore, the content of the ping pong automaton is now stored in the instance of the AST created by the parser. 
 This instance can now be analyzed programmatically.
 
