@@ -9,17 +9,25 @@ A transition has a name and a source and target state.
 
 Consider a simple ping pong game. 
 To begin playing, someone has to start the game first. 
-After that, the ball is returned from one player to the other until either a player cannot return a ball or the players agree to stop the game. 
-If we translate this into an automaton, the resulting automaton could have three states. 
+After that, the ball is returned from one player to the other until either a 
+player cannot return a ball or the players agree to stop the game. 
+If we translate this into an automaton, the resulting automaton could have 
+three states. 
 It is depicted in Figure [2.1](#fig_2.1).
-The initial state `NoGame` describes the situation that the game is currently paused or has not started yet. 
+The initial state `NoGame` describes the situation that the game is currently 
+paused or has not started yet. 
 To resume or start the game, the transition `startGame` can be used. 
-It changes the current state to Ping, meaning that it is Player 1's turn to return the ball to Player 2. 
-The transition `returnBall` is executed when Player 1 hits the ball and it is now Player 2's turn to hit it back. 
+It changes the current state to Ping, meaning that it is Player 1's turn to 
+return the ball to Player 2. 
+The transition `returnBall` is executed when Player 1 hits the ball, and it 
+is now Player 2's turn to hit it back. 
 The current state is then changed to Pong. 
-Another transition `returnBall` can be used after that to return the ball to Player 1 again, so that the automaton's current state is Ping again. 
-This can be repeated either until one player is not able to return the ball again or both players agree to stop or end the game.
-For this, two transitions `stopGame` exist that change the state from either `Ping` or `Pong` to `NoGame` again.
+Another transition `returnBall` can be used after that to return the ball to 
+Player 1 again, so that the automaton's current state is Ping again. 
+This can be repeated either until one player is not able to return the ball 
+again or both players agree to stop or end the game.
+For this, two transitions `stopGame` exist that change the state from either 
+`Ping` or `Pong` to `NoGame` again.
 
 |  ![Graphical representation of the Ping Pong Automaton](02.01.pingponggraphical.png)\  |
 |:--------------------------------------------------------------------------------------:| 
@@ -28,7 +36,8 @@ For this, two transitions `stopGame` exist that change the state from either `Pi
 
 
 
-Figure [2.1](#fig_2.1) shows a graphical representation of the ping pong automaton. 
+Figure [2.1](#fig_2.1) shows a graphical representation of the ping pong 
+automaton. 
 Alternatively, a textual representation like the following can be used:
 
 ```mc4
@@ -48,31 +57,49 @@ automaton PingPong {
 ```
 
 It describes the same automaton as Figure [2.1](#fig_2.1). 
-The name of the automaton is `PingPong` and it has three states `NoGame`, `Ping` and `Pong`. 
+The name of the automaton is `PingPong` and it has three states `NoGame`, 
+`Ping` and `Pong`. 
 NoGame is the inital state and Pong the final state of the automaton.
-Further, the transitions `startGame` going from NoGame to Pong, `stopGame` going from either `Ping` or `Pong` to `NoGame` and `returnBall` going from `Ping` to `Pong` and the other way around are included.
-As within MontiCore, we develop mainly textual DSLs, this textual representation is more important for this tutorial. 
+Further, the transitions `startGame` going from NoGame to Pong, `stopGame` 
+going from either `Ping` or `Pong` to `NoGame` and `returnBall` going from 
+`Ping` to `Pong` and the other way around are included.
+As within MontiCore, we develop mainly textual DSLs, this textual 
+representation is more important for this tutorial. 
 
 The ping pong automaton is only one automaton out of many more. 
-Automata can be created for many situations that have multiple states and transitions between those states.
-The textual representation must be consistent for all possible automata and conform to certain rules. 
+Automata can be created for many situations that have multiple states and 
+transitions between those states.
+The textual representation must be consistent for all possible automata and 
+conform to certain rules. 
 These rules can be constituted by a grammar. 
-It specifies a syntax that all automata must adhere to and is based on the Extended Backus Naur Form (EBNF). 
-A grammar consists of production rules which have a left hand side and a right hand side separated by a `=`.
+It specifies a syntax that all automata must adhere to and is based on the 
+Extended Backus Naur Form (EBNF). 
+A grammar consists of production rules which have a left hand side and a 
+right hand side separated by a `=`.
 
 The grammar constituting the Automata language is shown below. 
-The Automata grammar has three such production rules: Automaton, State and Transition. 
-The textual representation of an automaton must be started with the keyword `automaton`.
+The Automata grammar has three such production rules: Automaton, State and 
+Transition. 
+The textual representation of an automaton must be started with the keyword 
+`automaton`.
 After that, the automaton must be given a name. 
-Then, the representation of an automaton needs an opening curly bracket followed by multiple states or transitions and a closing curly bracket. 
-The description of a state starts with the keyword `state` and must have a name as well. 
+Then, the representation of an automaton needs an opening curly bracket 
+followed by multiple states or transitions and a closing curly bracket. 
+The description of a state starts with the keyword `state` and must have a 
+name as well. 
 It can have the stereotypes `«initial»` and/or `«final»`. 
-After that, either an opening curly bracket followed by other states and transitions and a closing bracket or a simple semicolon can be written to end the representation of a state. 
-The representation of a transition starts with the (qualified) name of its source state and then continues with a `-`. 
-After that, the input, i.e. the trigger of the transition, is followed by a `>`. 
-To end the transition, the (qualified) name of the target state and a semicolon must be written.
+After that, either an opening curly bracket followed by other states and 
+transitions and a closing bracket or a simple semicolon can be written to end 
+the representation of a state. 
+The representation of a transition starts with the (qualified) name of its 
+source state and then continues with a `-`. 
+After that, the input, i.e. the trigger of the transition, is followed by 
+a `>`. 
+To end the transition, the (qualified) name of the target state and a 
+semicolon must be written.
 
-The following table summarizes the most often used constructs for grammar construction:
+The following table summarizes the most often used constructs for grammar 
+construction:
 
 | Element                | Example         | Description                                                                                                               
 |------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------
@@ -103,51 +130,91 @@ grammar Automata extends de.monticore.MCBasics,
 }
 ```
 
-When comparing the grammar and textual notation above, it can be deduced that the grammar constitutes rules for the automaton language that the ping pong automaton adheres to. 
+When comparing the grammar and textual notation above, it can be deduced 
+that the grammar constitutes rules for the automaton language that the 
+ping pong automaton adheres to. 
 The ping pong automaton is called a model of the automaton language. 
 This is similar to a Java class and an object of this class. 
-The Java class specifies the structure of the object and the object fills the attributes of the class with concrete values. 
-In the automaton grammar, the nonterminals on the right-hand side of a production rule like Name can be compared to attributes in a Java class. 
-A model of the automaton language needs to fill these nonterminals like Name or State with concrete values, like shown above.
-The grammar specifies the *abstract syntax* for models of a language while the models themselves fill the nonterminals on the right-hand side of production rules so that they contain *concrete syntax*.
+The Java class specifies the structure of the object and the object fills 
+the attributes of the class with concrete values. 
+In the automaton grammar, the nonterminals on the right-hand side of a 
+production rule like Name can be compared to attributes in a Java class. 
+A model of the automaton language needs to fill these nonterminals like Name 
+or State with concrete values, like shown above.
+The grammar specifies the *abstract syntax* for models of a language while 
+the models themselves fill the nonterminals on the right-hand side of 
+production rules so that they define the *concrete syntax*.
 
 Grammars can extend one another similar to Java classes. 
 By doing this, they `inherit`
-every production of the super grammar, so that every production of that grammar can be used. 
-In this case, the Automata grammar extends two grammars that are provided by MontiCore, `MCBasics` and `MCBasicTypes`. 
-The nonterminals `Name` and `MCQualifiedName` that are used in the Automata grammar are declared in those grammars respectively. 
-To enable a language engineer to use basic features of (programming) languages, MontiCore supplies basic grammars that can be extended when creating a new language. 
-This language then combines all these basic features and the productions in its own grammar. 
-To find out about MontiCore's basic grammars, see Chapters 17-20 of the MontiCore Handbook.
+every production of the super grammar, so that every production of that 
+grammar can be used. 
+In this case, the Automata grammar extends two grammars that are provided 
+by MontiCore, `MCBasics` and `MCBasicTypes`. 
+The nonterminals `Name` and `MCQualifiedName` that are used in the Automata 
+grammar are declared in those grammars respectively. 
+To enable a language engineer to use basic features of (programming) 
+languages, MontiCore supplies basic grammars that can be extended when 
+creating a new language. 
+This language then combines all these basic features and the productions in 
+its own grammar. 
+To find out about MontiCore's basic grammars, see Chapters 17-20 of the 
+MontiCore Handbook.
 
-For each production of a grammar, a Java class is generated that can store all its information. 
+For each production of a grammar, a Java class is generated that can store 
+all its information. 
 We will use the production for Automaton as an example. 
 MontiCore generates a class `ASTAutomaton` for this production. 
-As the right-hand side of the production uses the nonterminals `Name`, `State` and `Transition`, the class `ASTAutomaton` has attributes `name`, `states` and `transitions`, since an automaton can contain multiple states and transitions. 
-The concrete word `automaton` and the curly brackets are not stored in the class however as they are not variable, i.e. are the same for every automaton. 
-Such a class is generated for every production rule, meaning the classes `ASTState` and `ASTTransition` will be generated for the productions `State` and `Transition`.
-All of these classes combined are called the AST (abstract syntax tree) for a language.
-This is the data structure that MontiCore generates for every grammar to work with the models. 
+As the right-hand side of the production uses the nonterminals `Name`, 
+`State` and `Transition`, the class `ASTAutomaton` has attributes `name`, 
+`states` and `transitions`, since an automaton can contain multiple states 
+and transitions. 
+The concrete word `automaton` and the curly brackets are not stored in the 
+class however as they are not variable, i.e. are the same for every automaton. 
+Such a class is generated for every production rule, meaning the classes 
+`ASTState` and `ASTTransition` will be generated for the productions `State` 
+and `Transition`.
+All of these classes combined are called the AST (abstract syntax tree) for 
+a language.
+This is the data structure that MontiCore generates for every grammar to work 
+with the models. 
 For further explanation about the AST, see Chapter 5 of the MontiCore Handbook.
 
-For every grammar that is not labeled as component (not handled here, see Section 7.3.1 of the MontiCore Handbook), MontiCore generates a Parser class. 
-A parser can be used to read a model and create an instance of the AST conforming to the model. 
-This means that an `AutomataParser` can be used to read the Ping Pong automaton and transfer it into an instance of `ASTAutomaton`. 
-The `name` attribute of this instance is filled with the string `PingPong` and the attributes `states` and `transitions` are filled with instances of the `ASTState` and `ASTTransition` classes matching the ping pong automaton. 
-Therefore, the content of the ping pong automaton is now stored in the instance of the AST created by the parser. 
+For every grammar that is not labeled as component (not handled here, see 
+Section 7.3.1 of the MontiCore Handbook), MontiCore generates a Parser class. 
+A parser can be used to read a model and create an instance of the AST 
+conforming to the model. 
+This means that an `AutomataParser` can be used to read the PingPong 
+automaton and transfer it into an instance of `ASTAutomaton`. 
+The `name` attribute of this instance is filled with the string `PingPong` 
+and the attributes `states` and `transitions` are filled with instances of 
+the `ASTState` and `ASTTransition` classes matching the ping pong automaton. 
+Therefore, the content of the ping pong automaton is now stored in the 
+instance of the AST created by the parser. 
 This instance can now be analyzed programmatically.
 
 #### Exercise 1
 Switch to your IDE. 
-First, have a look at the `Automata` grammar located under `src/main/grammars/tutorial/` and make yourself familiar with the production rules.
-You will identify similar rules as described above for `Automaton`, `State`, and `Transition`.
-Come up with your own automaton and write it down as an Automata model, i.e., follow the rules set by the Automata grammar (located in `src/main/grammars`). 
-Store your file under `src/test/resources/tutorial/automata` and with the file ending `.aut`. 
-After that, open the class `VisitorTest`, complete the test method `testYourModel` and execute it.
-(It suffices to execute the test itself, e.g., directly from within your IDE. Alternatively, you could run `gradle 01.automata:build` again,
-which incrementally checks what to rebuild, and ultimately results in executing the yet missing tests.)
-The test processes your model with the parser that was generated for the Automata language and transfer its contents into an instance of `ASTAutomaton`. 
+First, have a look at the `Automata` grammar located under 
+`src/main/grammars/tutorial/` and make yourself familiar with the 
+production rules.
+You will identify similar rules as described above for `Automaton`, `State`, 
+and `Transition`.
+Come up with your own automaton and write it down as an Automata model, i.e., 
+follow the rules set by the Automata grammar. 
+Store your file under `src/test/resources/tutorial/automata` and with the 
+file ending `.aut`. 
+After that, open the class `ParserTest`, complete the test method 
+`testYourModel` and execute it.
+All tests are located under `src/test/java/tutorial/automata/`.
+(It suffices to execute the test itself, e.g., directly from within your IDE. 
+Alternatively, you could run `gradle 01.automata:build` again, which 
+incrementally checks what to rebuild, and ultimately results in executing the 
+yet missing tests.)
+The test processes your model with the parser that was generated for the 
+Automata language and transfer its contents into an instance of `ASTAutomaton`.
 Check that no error was logged.
+
 <!-- (c) https://github.com/MontiCore/monticore -->
 
 ## Modifying the Automata Grammar
@@ -191,7 +258,9 @@ You will find a corresponding model under `src/test/resources/tutorial/PingPongM
 To test your grammar modifications with that model, go to `src/test/java/ParserTest.java`
 and remove the `@Ignore` annotation before the corresponding test method.
 After that, rebuild your language by executing `gradle 01.automata:build` again.
-
+Make sure that your modification is only optional.
+Otherwise, it can have the side effects of original (non-mealy machines) not
+parsing anymore.
 
 <!--
 #### Exercise TODO (evtl. weglassen)
@@ -210,22 +279,35 @@ source [x > 42] - input > target;
   * Test
 --><!-- (c) https://github.com/MontiCore/monticore -->
 ## Context Conditions 
-The MontiCore grammars that are written for creating DSLs have one problem: they are context-free. 
-This means that some restrictions for a language cannot or should not be realized in a grammar. 
-In the Automata language for example, an automaton must have exactly one initial state. 
-This rule cannot be established in a grammar because the grammar only describes the syntax of a state. 
-However, there is no mechanism for the grammar that enables counting the number of initial states of an automaton.
-The production State does not know the context necessary for the restriction (there should be exactly one initial state in an automaton) and thus it cannot prevent more than one or no initial state existing in an automaton.
+The MontiCore grammars that are written for creating DSLs are context-free. 
+This means that some restrictions for a language cannot (or should not) be 
+realized in a grammar. 
+In the Automata language for example, an automaton must have exactly one 
+initial state. 
+This rule cannot be established in a grammar because the grammar only 
+describes the syntax of a state without any context. 
+Within the grammar, there is no mechanism that enables counting the number 
+of initial states of an automaton.
+The production State does not know the context necessary for the restriction 
+(there should be exactly one initial state in an automaton) and thus it 
+cannot prevent more than one or no initial state existing in an automaton.
 
-To add these restrictions, MontiCore offers the possibility to create Context Conditions for a language. 
-Context Conditions are handwritten restrictions in the form of simple Java classes that can use the AST and visitor to check context-sensitive restrictions. 
-After parsing a model and thus creating an instance of the AST of a language for this model,
-a Context Condition can be applied to this AST to check that the additional context-sensitive restrictions are kept by the model. 
-For this, MontiCore generates interfaces for every production of a grammar that specify a check method. 
-Additionally, a `CoCoChecker` is generated that can be used to check one or more Context Conditions for a model. 
-For a more detailed explanation, see Chapter 10 of the MontiCore Reference Manual.
+To add these restrictions, MontiCore offers the possibility to create Context 
+Conditions (CoCos) for a language. 
+CoCos are handwritten restrictions in the form of simple Java classes that 
+operate on the parsed model (i.e.,the AST) to check context-sensitive 
+restrictions. 
+After parsing, a CoCo can be applied to this AST to check that the additional 
+context-sensitive restrictions are kept for the model. 
+For this, MontiCore generates interfaces for every production of a grammar 
+that specify a check method. 
+Additionally, a `CoCoChecker` is generated that can be used to check one or 
+multiple CoCos on a model. 
+For a more detailed explanation, see also Chapter 10 of the MontiCore Handbook.
 
-To add the restriction from above that there must be exactly one initial state in an automaton, the class `AutomatonHasExactlyOneInitialState` displayed below was written by a language engineer. 
+To add the restriction from above that there must be exactly one initial 
+state in an automaton, the class `AutomatonHasExactlyOneInitialState` 
+displayed below was written by a language engineer. 
 ```java
 public class AutomatonHasExactlyOneInitialState implements AutomataASTAutomatonCoCo {
     public static final String errorCode = "0xA005";
@@ -240,19 +322,29 @@ public class AutomatonHasExactlyOneInitialState implements AutomataASTAutomatonC
     }
 }
 ```
-The class implements the CoCo interface that was generated for the Automaton production of the grammar Automata (`AutomataASTAutomatonCoCo`) 
- and implements its specified `check` method. 
-In the method, the number of initial states of the automaton are counted and if it does not equal 1, an error is logged by the log provided by MontiCore's runtime. 
-It is common to specify a different error code and error message in every CoCo so that errors in models can be retraced to a single restriction of a language.
+The class implements the CoCo interface that was generated for the Automaton 
+production of the grammar Automata (`AutomataASTAutomatonCoCo`) 
+and implements its specified `check` method. 
+In the method, the number of initial states of the automaton are counted and 
+if it does not equal 1, an error is logged by the log provided by MontiCore's 
+runtime. 
+It is common to specify a different error code and error message in every 
+CoCo so that errors in models can be retraced to a single restriction of a 
+language.
 
 #### Exercise 4
 The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
-`AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and `TransitionNameUncapitalized` are all given for the automata language.
+`AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and 
+`TransitionNameUncapitalized` are all given for the automata language 
+(located under `src/main/java/cocos/`).
 Implement them! 
-To test that the CoCos are implemented correctly, 
- execute every test except for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
-
-TODO: Wenn mealy, dann überall<!-- (c) https://github.com/MontiCore/monticore -->
+To test that the CoCos are implemented correctly, execute every test except 
+for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
+As before, enable them by removing the `@Ignore` flag and running the tests 
+or rebuilding the project.
+Before implementing the corresponding CoCo checks, these tests will fail.
+Afterwards, all mentioned tests should succeed.
+<!-- (c) https://github.com/MontiCore/monticore -->
 ## Visitors 
 Visitors provide the means to traverse the AST and execute different behavior for every AST node.
 For every grammar `A`, MontiCore generates three interfaces `AHandler`, `AVisitor2` and `ATraverser`.
