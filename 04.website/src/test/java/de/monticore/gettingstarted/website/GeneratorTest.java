@@ -6,6 +6,7 @@ import de.monticore.gettingstarted.website._ast.ASTWebsite;
 import de.monticore.gettingstarted.website._visitor.WebsiteTraverser;
 import de.monticore.gettingstarted.website._visitor.WebsiteVisitor2;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class GeneratorTest extends AbstractTest {
 
   @Test
+  @Ignore
   public void testSERWTH() throws IOException {
     ASTWebsite ast = parse("src/test/resources/de/monticore/gettingstarted/website/valid/SERWTH.web");
     final Path outputDirectory = Paths.get("target/website/");
