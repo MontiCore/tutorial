@@ -247,7 +247,12 @@ source [x > 42] - input > target;
 
 * Insert (optional) precondition
   * extends Expression (teaser for later)
-* Include test
+  * [expressions language family documentation](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/Expressions.md)
+  * `de.monticore.expressions.CommonExpressions`
+  * > 0xA0278 The interface nonterminal Literal must not be used without nonterminals implementing it in a grammar not marked as a grammar component
+  * `de.monticore.literals.MCCommonLiterals`
+  * `("[" precondition:Expression "]")?`
+  * Test
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Context Conditions 
 The MontiCore grammars that are written for creating DSLs have one problem: they are context-free. 

@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+automaton WithPreconditions {
+  state I <<initial>>;
+  state F <<final>>;
+
+  I [x > 42] - input > F;
+}

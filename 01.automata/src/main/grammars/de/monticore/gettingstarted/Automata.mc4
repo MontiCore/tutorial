@@ -1,7 +1,13 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.gettingstarted;
 
-grammar Automata extends de.monticore.MCBasics, de.monticore.types.MCBasicTypes {
+grammar Automata extends
+	de.monticore.MCBasics,
+	//<#if solution>
+  de.monticore.expressions.CommonExpressions,
+  de.monticore.literals.MCCommonLiterals,
+	//</#if>
+	de.monticore.types.MCBasicTypes {
 
     /** A ASTAutomaton represents a finite automata
         @attribute name Name of the automata
@@ -35,6 +41,7 @@ grammar Automata extends de.monticore.MCBasics, de.monticore.types.MCBasicTypes 
     // TODO: Insert a precondition
     Transition =
       from:MCQualifiedName
+      ("[" precondition:Expression "]")?
       "-"
       input:Name
       //<#if solution>
