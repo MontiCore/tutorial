@@ -72,18 +72,6 @@ The representation of a transition starts with the (qualified) name of its sourc
 After that, the input, i.e. the trigger of the transition, is followed by a `>`. 
 To end the transition, the (qualified) name of the target state and a semicolon must be written.
 
-The following table summarizes the most often used constructs for grammar construction:
-
-| Element                | Example         | Description                                                                                                               
-|------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------
-| Constant Strings       | `"state"`       | Double quotes to define constant strings, which are then used as keywords                                                 
-| NonTerminal References | `A`             | Usage of other nonterminals                                                                                               
-| Grouping               | `( A B )`       | Parentheses `(` and `)` to signify grouping                                                                               
-| Cardinality  1..*      | `A+`            | `+` to signify the appearance of a group or nonterminal one or more times.                                                
-| Cardinality  *         | `A*`            | `*` to signify the appearance of a group or nonterminal zero or more times.                                               
-| Cardinality  0..1      | `A?`            | `?` to signify the appearance of a group or nonterminal zero or one time.                                                 
-| Usagenames             | `myA:A`         | Names can be attached to terminals and nonterminal, describing where the attributes will be stored in the AST             
-| Separated list         | `(A \|\| "b")+` | Shorthand notation to define zero or one or more repetitions of the nonterminal `A` being separated by the terminal `"b"` 
 
 ```mc4
 grammar Automata extends de.monticore.MCBasics,
@@ -94,11 +82,10 @@ grammar Automata extends de.monticore.MCBasics,
 
  symbol State =
         "state" Name
-         (("<<" ["initial"] ">>" ) | ("<<" ["final"] ">>" ))*
-         ( ("{" (State | Transition)* "}") | ";") ;
+         (("<<" ["initial"] ">>" ) | ("<<" ["final"] ">>" ))* ";") ;
 
  Transition =
-         from:Name@MCQualifiedName "-" input:Name ">" to:MCQualifiedName ";" ;
+         from:Name "-" input:Name ">" to:Name ";" ;
 
 }
 ```
@@ -111,6 +98,20 @@ In the automaton grammar, the nonterminals on the right-hand side of a productio
 A model of the automaton language needs to fill these nonterminals like Name or State with concrete values, like shown above.
 The grammar specifies the *abstract syntax* for models of a language while the models themselves fill the nonterminals on the right-hand side of production rules so that they contain *concrete syntax*.
 
+To provide a brief overview, the following table summarizes the most often used constructs for grammar construction:
+
+| Element                | Example         | Description                                                                                                               
+|------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------
+| Constant Strings       | `"state"`       | Double quotes to define constant strings, which are then used as keywords                                                 
+| NonTerminal References | `A`             | Usage of other nonterminals                                                                                               
+| Grouping               | `( A B )`       | Parentheses `(` and `)` to signify grouping                                                                               
+| Cardinality  1..*      | `A+`            | `+` to signify the appearance of a group or nonterminal one or more times.                                                
+| Cardinality  *         | `A*`            | `*` to signify the appearance of a group or nonterminal zero or more times.                                               
+| Cardinality  0..1      | `A?`            | `?` to signify the appearance of a group or nonterminal zero or one time.                                                 
+| Usagenames             | `myA:A`         | Names can be attached to terminals and nonterminal, describing where the attributes will be stored in the AST             
+| Separated list         | `(A \|\| "b")+` | Shorthand notation to define zero or one or more repetitions of the nonterminal `A` being separated by the terminal `"b"` 
+
+
 Grammars can extend one another similar to Java classes. 
 By doing this, they `inherit`
 every production of the super grammar, so that every production of that grammar can be used. 
@@ -118,17 +119,17 @@ In this case, the Automata grammar extends two grammars that are provided by Mon
 The nonterminals `Name` and `MCQualifiedName` that are used in the Automata grammar are declared in those grammars respectively. 
 To enable a language engineer to use basic features of (programming) languages, MontiCore supplies basic grammars that can be extended when creating a new language. 
 This language then combines all these basic features and the productions in its own grammar. 
-To find out about MontiCore's basic grammars, see Chapters 17-20 of the Reference Manual.
+To find out about MontiCore's basic grammars, see Chapters 17-20 of the MontiCore Handbook.
 
 For each production of a grammar, a Java class is generated that can store all its information. 
 We will use the production for Automaton as an example. 
 MontiCore generates a class `ASTAutomaton` for this production. 
 As the right-hand side of the production uses the nonterminals `Name`, `State` and `Transition`, the class `ASTAutomaton` has attributes `name`, `stateList` and `transitionList`, since an automaton can contain multiple states and transitions. 
-The concrete word `automaton` and the curly brackets are not stored in the class however as they are not variable, i.e. are the same for every automaton. 
+The concrete keyword `automaton` and the curly brackets are not stored in the class however as they are not variable, i.e., are the same for every automaton. 
 Such a class is generated for every production rule, meaning the classes `ASTState` and `ASTTransition` will be generated for the productions `State` and `Transition`.
 All of these classes combined are called the AST (abstract syntax tree) for a language.
 This is the data structure that MontiCore generates for every grammar to work with the models. 
-For further explanation about the AST, see Chapter 5 of the MontiCore Reference Manual.
+For further explanation about the AST, see Chapter 5 of the MontiCore Handbook.
 
 For every grammar that is not labeled as component (not handled here, see Section 7.3.1 of the MontiCore Reference Manual), MontiCore generates a Parser class. 
 A parser can be used to read a model and create an instance of the AST conforming to the model. 
