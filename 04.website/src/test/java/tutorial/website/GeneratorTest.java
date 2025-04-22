@@ -1,7 +1,6 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.website;
 
-import tutorial.website._ast.ASTPage;
 import tutorial.website._ast.ASTWebsite;
 import tutorial.website._visitor.WebsiteTraverser;
 import tutorial.website._visitor.WebsiteVisitor2;
@@ -50,7 +49,7 @@ public class GeneratorTest extends AbstractTest {
     // check that for each page in the model a html file is created within the
     // outputDirectory. Therefore, we can use a visitor.
     WebsiteVisitor2 visitor = new WebsiteVisitor2() {
-      public void visit(ASTPage node) {
+      public void visit(tutorial.website._ast.ASTPage node) {
         File expectedFile = Paths.get(expectedFolder + "/" + node.getName() + ".html").toFile();
         assertTrue(
           String.format("Expected generated file '%s' to exist", expectedFile.getAbsolutePath()),
