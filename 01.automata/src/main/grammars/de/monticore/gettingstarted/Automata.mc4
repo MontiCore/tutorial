@@ -37,7 +37,6 @@ grammar Automata extends
     // TODO: Insert a precondition
     Transition =
       from:MCQualifiedName
-      ("[" precondition:Expression "]")?
       "-"
       input:Name
       ">"

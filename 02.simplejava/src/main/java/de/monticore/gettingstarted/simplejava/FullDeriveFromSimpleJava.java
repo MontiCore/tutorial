@@ -4,6 +4,7 @@ package de.monticore.gettingstarted.simplejava;
 import de.monticore.gettingstarted.simplejava._visitor.SimpleJavaTraverser;
 import de.monticore.types.check.*;
 
+@Deprecated(forRemoval = true)
 public class FullDeriveFromSimpleJava extends AbstractDerive {
 
   public FullDeriveFromSimpleJava(){

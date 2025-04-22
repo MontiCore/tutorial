@@ -4,6 +4,7 @@ package de.monticore.gettingstarted.simplejava;
 import de.monticore.gettingstarted.simplejava._ast.ASTJavaCompilationUnit;
 import de.monticore.gettingstarted.simplejava._symboltable.ISimpleJavaArtifactScope;
 import de.monticore.gettingstarted.simplejava._symboltable.SimpleJavaScopesGenitorDelegator;
+import de.monticore.gettingstarted.simplejava.types3.SimpleJavaTypeCheck3;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symbols.basicsymbols._symboltable.FunctionSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
@@ -22,6 +23,7 @@ public class SymTabTest extends AbstractTest {
   public void setup(){
     SimpleJavaMill.globalScope().clear();
     SimpleJavaMill.init();
+    SimpleJavaTypeCheck3.init();
     BasicSymbolsMill.initializePrimitives();
   }
 

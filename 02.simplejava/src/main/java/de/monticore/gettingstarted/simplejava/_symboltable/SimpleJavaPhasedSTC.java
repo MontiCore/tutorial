@@ -3,10 +3,7 @@ package de.monticore.gettingstarted.simplejava._symboltable;
 
 //<#if solution>
 import com.google.common.collect.Lists;
-import de.monticore.gettingstarted.simplejava.FullDeriveFromSimpleJava;
-import de.monticore.gettingstarted.simplejava.FullSynthesizeFromSimpleJava;
 import de.monticore.gettingstarted.simplejava.SimpleJavaMill;
-import de.monticore.types.check.TypeCalculator;
 //</#if>
 import de.monticore.gettingstarted.simplejava._ast.ASTJavaCompilationUnit;
 import de.monticore.gettingstarted.simplejava._visitor.SimpleJavaTraverser;
@@ -25,9 +22,8 @@ public class SimpleJavaPhasedSTC {
     this.scopesGenitorDelegator = SimpleJavaMill.scopesGenitorDelegator();
     this.priorityList = Lists.newArrayList();
 
-    TypeCalculator tc = new TypeCalculator(new FullSynthesizeFromSimpleJava(), new FullDeriveFromSimpleJava());
     SimpleJavaTraverser traverser = SimpleJavaMill.traverser();
-    traverser.add4SimpleJava(new SimpleJavaSTCompleteTypes(tc));
+    traverser.add4SimpleJava(new SimpleJavaSTCompleteTypes());
     priorityList.add(traverser);
     //</#if>
   }

@@ -101,7 +101,7 @@ conservative way, the new class `ASTJavaBlock` extends the old class `ASTJavaBlo
 
 
 Composing a symbol table means creating scopes that can store the symbols of every part language. 
-Therefore, MontiCore generates the three scope classes and interfaces mentioned in Section 2.4 for every grammar. The scope interface of the composed grammar extends
+Therefore, MontiCore generates the three scope classes and interfaces mentioned in Section 1.4 for every grammar. The scope interface of the composed grammar extends
 all the scope interfaces of the sub languages. 
 Thus, the scope class implementing this interface is able to resolve the different symbols of all the sub languages. 
 Similar to the AST, the symbol classes of the sub languages are used instead of generating them anew
@@ -164,7 +164,7 @@ Thus, symbol tables from totally different languages can be used together if the
 
 ### Visitors
 
-We will test whether the visitors we implemented in Section 2.2 work for models of the
+We will test whether the visitors we implemented in Section 1.2 work for models of the
 composed languages as well. For this, we will write a test that executes the three visitors
 on a new model. The test can be seen in the method `testVisitorsOnAutomaton`
 in the class `VisitorTest`.

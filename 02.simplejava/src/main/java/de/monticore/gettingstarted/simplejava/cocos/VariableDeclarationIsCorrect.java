@@ -3,21 +3,17 @@ package de.monticore.gettingstarted.simplejava.cocos;
 
 import de.monticore.gettingstarted.simplejava._ast.ASTJavaVarDecl;
 import de.monticore.gettingstarted.simplejava._cocos.SimpleJavaASTJavaVarDeclCoCo;
-import de.monticore.types.check.SymTypeExpression;
-import de.monticore.types.check.TypeCalculator;
+import de.monticore.types3.SymTypeRelations;
+import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
 public class VariableDeclarationIsCorrect implements SimpleJavaASTJavaVarDeclCoCo {
 
-  protected TypeCalculator tc;
 
   protected static final String errorMsg = "The type and the expression of the variable declaration %s " +
      "are not compatible";
   protected static final String errorCode = "0xA0457";
 
-  public VariableDeclarationIsCorrect(TypeCalculator tc){
-    this.tc = tc;
-  }
 
 
   @Override
@@ -26,9 +22,12 @@ public class VariableDeclarationIsCorrect implements SimpleJavaASTJavaVarDeclCoC
     //If an expression to initialize the declared attribute is present
     //  then check that the types of the expression and of the declaration
     //  are compatible
-    //Hint: Use the TypeCalculator class to check compatibility
+    //Hint: Use the SymTypeRelations class to check compatibility
     //<#if solution>
-    if (node.isPresentExpression() && !tc.compatible(tc.symTypeFromAST(node.getMCType()), tc.typeOf(node.getExpression()))) {
+    if (node.isPresentExpression() &&
+            !SymTypeRelations.isCompatible(
+                    TypeCheck3.symTypeFromAST(node.getMCType()),
+                    TypeCheck3.typeOf(node.getExpression()))) {
       Log.error(errorCode + String.format(errorMsg, node.getName()));
     }
     //</#if>

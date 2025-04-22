@@ -153,10 +153,8 @@ MontiCore's basic Type Check infrastructure.
 MontiCore's Type Check infrastructure consists of multiple parts:
 *  BasicSymbols grammar
 *  SymTypeExpression classes
-*  TypeCheckResult class
-*  Synthesize classes and FullSynthesizer
-*  Derive classes and FullDeriver
-*  TypeCheck and TypeCalculator interfaces
+*  Type Visitors
+*  TypeCheck3 and SymTypeRelations interfaces
 
 As explained above, the basis for working with the Type Check is the `BasicSymbols` grammar.
 The Type Check works with the symbols introduced in this grammar, hence why
@@ -223,8 +221,10 @@ This means that the Type Check has to provide different functions:
 * deriving a `SymTypeExpression` from an `Expression`
 * comparing `SymTypeExpressions` in terms of assignability
 
-The first two are solved with visitors, handlers and traversers. They have the same concept.
-For each grammar `A` that adds new types to a language, a class `SynthesizeSymType` `FromA` is created that implements the `AHandler` and/or the `AVisitor2` interface. 
+
+The first two are solved with visitors, handlers and traversers following the same concept.
+For each grammar `A` that adds new types to a language, a class extending `AbstractTypeVisitor` has to be created 
+ that implements the `AHandler` and/or the `AVisitor2` interface. 
 For each production that extends the basis type `MCType`, 
  the traversal is edited by implementing either the `endVisit` or the `traverse` method. 
 In this method, a `SymTypeExpression` for the type is created and stored as a result.
@@ -235,194 +235,56 @@ If this is possible, the whole type `Map<String,Foo>` is synthesized next by
 creating a `SymTypeOfGeneric` with the `TypeSymbol` `Map`.
 The synthesized `SymTypeExpressions` for `String` and `Foo` are used as arguments for this `SymTypeOfGeneric`.
 The actual implementation for `ASTMCMapType` is displayed below and can be found
-in MontiCore's class `SynthesizeSymTypeFromMCCollectionTypes`. 
-MontiCore provides a basic implementation of a `Synthesize` class for every standard MontiCore grammar that introduces types. 
-This class can be used and/or extended by language developers for their own language.
 
-```java
-public void traverse(ASTMCMapType node){
-  List<TypeSymbol> mapSyms=getScope(node.getEnclosingScope())
-  .resolveTypeMany("Map");
-  
-  // Argument 1:
-  if(null!=node.getKey()){
-    node.getKey().accept(getTraverser());
-  }
-  TypeCheckResult keyTypeResult=getTypeCheckResult().copy();
-  
-  // Argument 2:
-  if(null!=node.getValue()){
-    node.getValue().accept(getTraverser());
-  }
-  TypeCheckResult valueTypeResult=getTypeCheckResult().copy();
-  
-  if(!keyTypeResult.isPresentResult()){
-      Log.error("0xE9FDD Missing SymType argument 1 for Map type.");
-      getTypeCheckResult()
-        .setResult(SymTypeExpressionFactory.createObscureType());
-  }else if(!valueTypeResult.isPresentResult()){
-      Log.error("0xE9FDE Missing SymType argument 2 for Map type.");
-      getTypeCheckResult()
-        .setResult(SymTypeExpressionFactory.createObscureType());
-  }else{
-      if(!keyTypeResult.getResult().isObscureType()
-        &&!valueTypeResult.getResult().isObscureType()){
-          if(mapSyms.size()==1){
-              SymTypeExpression keyTypeExpr=keyTypeResult.getResult();
-              SymTypeExpression valueTypeExpr=valueTypeResult.getResult();
-              SymTypeExpression typeExpression=
-              SymTypeExpressionFactory.createGenerics(mapSyms.get(0),
-                keyTypeExpr,valueTypeExpr);
-              getTypeCheckResult().setResult(typeExpression);
-              node.setDefiningSymbol(typeExpression.getTypeInfo());
-          }else{
-              Log.error("0xE9FDC multiple or no matching types were found for ’Map’");
-              getTypeCheckResult()
-                .setResult(SymTypeExpressionFactory.createObscureType());
-          }
-      }else{
-          getTypeCheckResult()
-            .setResult(SymTypeExpressionFactory.createObscureType());
-      }
-  }
-}
-```
-
-\newpage
-Combining the `Synthesize` classes for every grammar that add types and are (transitively) extended by the grammar `A` and therefore combining their calculations is done by
-creating a `FullSynthesizeFromA` class.
-This class combines them by adding all of them to an `ATraverser` and giving them the same instance of the class `TypeCheckResult` to store all their (intermediate) results in. 
-They extend the abstract class `AbstractSynthesize` that provides the function `synthesizeType` to synthesize a type to a `SymTypeExpression`. 
-The `FullSynthesize` class for the grammar `MCFullGenericTypes` can be seen below:
-
-
-```java
-public class FullSynthesizeFromMCFullGenericTypes
-                extends AbstractSynthesize {
-
-     public FullSynthesizeFromMCFullGenericTypes(){
-      this(MCFullGenericTypesMill.traverser());
-     }
-    
-     public FullSynthesizeFromMCFullGenericTypes(
-         MCFullGenericTypesTraverser traverser){
-         super(traverser);
-         init(traverser);
-     }
-    
-     public void init(MCFullGenericTypesTraverser traverser) {
-         SynthesizeSymTypeFromMCFullGenericTypes synFromFull =
-          new SynthesizeSymTypeFromMCFullGenericTypes();
-         synFromFull.setTypeCheckResult(getTypeCheckResult());
-         SynthesizeSymTypeFromMCSimpleGenericTypes synFromSimple =
-          new SynthesizeSymTypeFromMCSimpleGenericTypes();
-         synFromSimple.setTypeCheckResult(getTypeCheckResult());
-         SynthesizeSymTypeFromMCCollectionTypes synFromCollection =
-          new SynthesizeSymTypeFromMCCollectionTypes();
-         synFromCollection.setTypeCheckResult(getTypeCheckResult());
-         SynthesizeSymTypeFromMCBasicTypes synFromBasic =
-          new SynthesizeSymTypeFromMCBasicTypes();
-         synFromBasic.setTypeCheckResult(getTypeCheckResult());
-        
-         traverser.add4MCFullGenericTypes(synFromFull);
-         traverser.setMCFullGenericTypesHandler(synFromFull);
-         traverser.add4MCSimpleGenericTypes(synFromSimple);
-         traverser.setMCSimpleGenericTypesHandler(synFromSimple);
-         traverser.add4MCCollectionTypes(synFromCollection);
-         traverser.setMCCollectionTypesHandler(synFromCollection);
-         traverser.add4MCBasicTypes(synFromBasic);
-         traverser.setMCBasicTypesHandler(synFromBasic);
-     }
-
- }
-```
 
 #### Exercise 1
 Switch to your IDE. 
-The skeleton of a `FullSynthesize` class for the grammar `SimpleJava` is already provided in the class `FullSynthesizeFromSimpleJava`.
-Implement the `init` method by adding the `Synthesize` classes of all grammars that `SimpleJava` transitively extends to a traverser and passing them the same instance of a `TypeCheckResult` like shown for `FullSynthesizeFromMCFullGenericTypes` above.
-Execute the test `testSynthesizer` in the class `TypeCheckTest` to check the correctness of your implementation.
+The skeleton of a type check for the grammar `SimpleJava` is already provided in the class `SimpleJavaTypeCheck3`.
+The TypeCheck has to be initialized with the various TypeVisitors of its component grammars.
+
+For example, all nonterminals of the AssignmentExpressions grammar are added to the TypeCheck with the following lines: 
+```java
+    AssignmentExpressionsCTTIVisitor visAssignmentExpressions = new AssignmentExpressionsCTTIVisitor();
+    visAssignmentExpressions.setType4Ast(type4Ast);
+    visAssignmentExpressions.setContext4Ast(ctx4Ast);
+    traverser.add4AssignmentExpressions(visAssignmentExpressions);
+    traverser.setAssignmentExpressionsHandler(visAssignmentExpressions);
+```
+First, the `type4Ast` which maps AST-nodes to their SymTypeExpressions and `ctx4Ast` which stores context during the inference
+ are passed to the `AssignmentExpressionsCTTIVisitor`.
+Next, this type visitor is added as both a visitor and a handler to the type-checking traverser.
+
+Complete the `init` method by adding the correct visitors of the missing grammars that `SimpleJava` transitively extends to 
+the traverser, like shown for `AssignmentExpressionsCTTIVisitor` above.
+Execute the `TypeCheckTest` tests to check the correctness of your implementation.
 
 *Hint:* You can find the existing grammar definitions on [github](https://github.com/MontiCore/monticore/tree/dev/monticore-grammar/src/main/grammars/de/monticore).
 
-Deriving a `SymTypeExpression` from an expression works the same way as synthesizing it from a type. 
-For each grammar `A` that introduces expressions, a class `DeriveSymTypeOfA` is created that implements the `AHandler` and/or `AVisitor2` interface. 
-For every production extending or implementing the production `Expression` transitively, a
-`traverse` or `endVisit` method is programmed that is able to calculate a `SymTypeExpression` for the expression. 
-See below for an example of a traverse method:
-
-```java
-public void traverse(ASTPlusExpression expr) {
- List<SymTypeExpression> innerTypes = calculateInnerTypes(expr.getLeft(),
-        expr.getRight());
- if(checkNotObscure(innerTypes)){
-     //calculate
-     SymTypeExpression wholeResult = calculatePlusExpression(expr, 
-        innerTypes.get(0), innerTypes.get(1));
-     storeResultOrLogError(wholeResult, expr, "0xA0210");
- }else{
-     getTypeCheckResult().reset();
-     getTypeCheckResult().
-     setResult(SymTypeExpressionFactory.createObscureType());
- }
-}
-```
-
-This is done for a `PlusExpression` like `3+4` or `a + map.get("Foo")`. 
-At first, `SymTypeExpressions` are derived for both subexpressions left and right from the plus. 
-If there was no type error in those subexpressions, the logic behind the calculation is executed in
-the method `calculatePlusExpression` that compares the `SymTypeExpressions`
-for both subexpressions in the terms of the operator `"+"`. 
-If they are both `int`, the result will be `int`. 
-If however one of them is a `String`, the result (in Java) should be `String` as well. 
-If one of them has the type `Person`, an error will be returned as the operator `"+"` cannot be applied to this type.
-After the resulting `SymTypeExpression` was derived, it is stored in an instance of the class `TypeCheckResult`.
-
-These Derive classes are provided by MontiCore for every grammar that introduces expressions and literals. 
-Similar to the `FullSynthesize` class, a `FullDerive` class can combine
-`Derive` classes of different grammars and thus combine their derivations of expressions.
-The class `FullDeriveFromSimpleJava` has a similar structure as the class `FullSynthesizeFromSimpleJava`. 
-It extends the abstract class `AbstractDerive` instead of
-`AbstractSynthesize`.
-This abstract class provides a method `deriveType` to derive a
-`SymTypeExpression` for a given `ASTExpression`. 
-It has the same two constructors as
-the `FullSynthesize` class and its `init` method consists of creating the `Derive` classes of the
-grammars introducing expressions or literals that `SimpleJava` extends, passing them the
-same instance of `TypeCheckResult` and adding them to a `SimpleJavaTraverser`.
+The various type checking classes are provided by MontiCore for every grammar that introduces expressions and literals. 
+See [the documentation](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/java/de/monticore/types3/TypeSystem3.md) for more information about the type system.
 
 
 The last two parts of MontiCore's Type Check that were not introduced yet are the
-classes `TypeCheck` and `TypeCalculator`. 
-The `TypeCalculator` class needs one `FullDerive` and one `FullSynthesize` class for the same
- grammar and can be used as a common interface to synthesize `SymTypeExpressions` from types 
+classes `TypeCheck3` and `SymTypeRelations`. 
+The `TypeCheck3` class exposes methods which can be used to synthesize `SymTypeExpressions` from types 
  or derive them from expressions and literals. 
-It offers methods like `symTypeFromAST` and `typeOf` for those purposes. 
+It offers methods like `SymTypeExpression symTypeFromAST(ASTMCType mcType)` and `SymTypeExpression typeOf(ASTExpression expr)`  for those purposes. 
 Means to checking whether a type is a subtype of another
- or whether an assignment is correct are provided by the `TypeCheck` class. 
-The function of its methods `isSubtypeOf` and `compatible` should be self-explanatory.
+ or whether an assignment is correct are provided by the `SymTypeRelations` class. 
+The function of its methods `isSubTypeOf` and `isCompatible` should be self-explanatory.
 This class is often used in Context Conditions to check if the declared type and the type of an initializing expression  of a variable declaration are compatible.
 
-
-#### Exercise 2
-Switch to your IDE. The skeleton of a `FullDerive` class for the grammar `SimpleJava` is already provided in the class `FullDeriveFromSimpleJava`. 
-Implement the `init` method by adding the `Derive` classes of all grammars that `SimpleJava` transitively extends 
- to a traverser and passing them the same instance of a `TypeCheckResult` similar  to the last exercise. 
-Execute the method `testDeriver` to check the correctness of your implementation.
-
-*Hint:* Not all derivers implement the `Handler` interface.
-Especially ones for Literals may only be visitors and thus only be added as visitors to the traverser.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Symbol Table
 ### Symbol Table Creation
 
-As explained in Section 2.4, a basic infrastructure for a symbol table is already generated
+As explained in Section 1.4, a basic infrastructure for a symbol table is already generated
 for every MontiCore grammar. 
 These are the symbol classes, the scope classes and interfaces, the `ScopesGenitor` and the `ScopesGenitorDelegator` 
  for the creation of a symbol table corresponding to an AST. 
 Because it is only a *basic* infrastructure, some languages
 need to supplement the infrastructure by overwriting the basic implementation. This can
-be done with the help of the TOP mechanism presented in Section 2.5. 
+be done with the help of the TOP mechanism presented in Section 1.5. 
 SimpleJava is such a language. 
 One information that is not added to the symbol table automatically is
 the package in which the model is located. This is because not every language needs a

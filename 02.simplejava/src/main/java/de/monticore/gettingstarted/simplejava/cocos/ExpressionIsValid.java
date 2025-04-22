@@ -13,29 +13,25 @@ import de.monticore.types.check.SymTypeExpression;
 import de.monticore.types.check.SymTypeExpressionFactory;
 import de.monticore.types.check.TypeCalculator;
 import de.monticore.types.check.TypeCheck;
+import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
 public class ExpressionIsValid implements ExpressionsBasisASTExpressionCoCo, CommonExpressionsHandler {
 
-  protected TypeCalculator tc;
-
   protected static final String errorMsg = "The type of the expression could not be calculated";
   protected static final String errorCode = "0xA0456";
-
-  public ExpressionIsValid(TypeCalculator tc){
-    this.tc = tc;
-  }
 
 
   @Override
   public void check(ASTExpression node) {
     //<#if solution>
-    SymTypeExpression sym = tc.typeOf(node);
+    SymTypeExpression sym = TypeCheck3.typeOf(node);
     if(sym.isObscureType()){
       Log.error(errorCode + ": " + errorMsg);
     }
     //</#if>
     //TODO implement me!
+    // Hint: Use the TypeCheck3
   }
 
 

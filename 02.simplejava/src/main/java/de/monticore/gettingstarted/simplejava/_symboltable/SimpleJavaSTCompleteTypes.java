@@ -12,6 +12,7 @@ import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.types.check.SymTypeExpression;
 import de.monticore.types.check.SymTypeExpressionFactory;
 import de.monticore.types.check.TypeCalculator;
+import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.ArrayList;
@@ -21,18 +22,13 @@ import java.util.stream.Collectors;
 
 public class SimpleJavaSTCompleteTypes implements SimpleJavaVisitor2 {
 
-  protected TypeCalculator tc;
-
-  public SimpleJavaSTCompleteTypes(TypeCalculator tc){
-    this.tc = tc;
-  }
 
   @Override
   public void visit(ASTJavaMethod node) {
     //TODO implement me!
     //<#if solution>
     JavaMethodSymbol symbol = node.getSymbol();
-    SymTypeExpression symType = tc.symTypeFromAST(node.getMCReturnType());
+    SymTypeExpression symType = TypeCheck3.symTypeFromAST(node.getMCReturnType());
     symbol.setType(symType);
     replaceSurrogate(symbol);
     //</#if>
@@ -43,7 +39,7 @@ public class SimpleJavaSTCompleteTypes implements SimpleJavaVisitor2 {
     //TODO implement me!
     //<#if solution>
     JavaVarDeclSymbol symbol = node.getSymbol();
-    SymTypeExpression symType = tc.symTypeFromAST(node.getMCType());
+    SymTypeExpression symType = TypeCheck3.symTypeFromAST(node.getMCType());
     symbol.setType(symType);
     replaceSurrogate(symbol);
     //</#if>
@@ -55,7 +51,7 @@ public class SimpleJavaSTCompleteTypes implements SimpleJavaVisitor2 {
     //<#if solution>
     JavaArtifactSymbol symbol = node.getSymbol();
     if(node.isPresentSuperType()) {
-      SymTypeExpression superType = tc.symTypeFromAST(node.getSuperType());
+      SymTypeExpression superType = TypeCheck3.symTypeFromAST(node.getSuperType());
       symbol.setSuperTypesList(Lists.newArrayList(superType));
     }
     replaceSurrogates(symbol);

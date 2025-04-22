@@ -9,6 +9,7 @@ import de.monticore.types.check.SynthesizeSymTypeFromMCCollectionTypes;
 import de.monticore.types.check.SynthesizeSymTypeFromMCSimpleGenericTypes;
 //</#if>
 
+@Deprecated(forRemoval = true)
 public class FullSynthesizeFromSimpleJava extends AbstractSynthesize {
 
   public FullSynthesizeFromSimpleJava(){

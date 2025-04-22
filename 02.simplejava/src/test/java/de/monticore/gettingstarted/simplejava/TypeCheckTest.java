@@ -12,8 +12,10 @@ import de.monticore.expressions.expressionsbasis._symboltable.IExpressionsBasisS
 import de.monticore.expressions.expressionsbasis._visitor.ExpressionsBasisTraverser;
 import de.monticore.gettingstarted.simplejava._parser.SimpleJavaParser;
 import de.monticore.gettingstarted.simplejava._visitor.SimpleJavaTraverser;
+import de.monticore.gettingstarted.simplejava.types3.SimpleJavaTypeCheck3;
 import de.monticore.literals.mccommonliterals._visitor.MCCommonLiteralsTraverser;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
+import de.monticore.types.check.SymTypeExpression;
 import de.monticore.types.check.SymTypeExpressionFactory;
 import de.monticore.types.check.TypeCheckResult;
 import de.monticore.types.mcbasictypes._ast.ASTMCPrimitiveType;
@@ -21,6 +23,8 @@ import de.monticore.types.mcbasictypes._visitor.MCBasicTypesTraverser;
 import de.monticore.types.mccollectiontypes._ast.ASTMCListType;
 import de.monticore.types.mccollectiontypes._visitor.MCCollectionTypesTraverser;
 import de.monticore.types.mcsimplegenerictypes._visitor.MCSimpleGenericTypesTraverser;
+import de.monticore.types3.SymTypeRelations;
+import de.monticore.types3.TypeCheck3;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -37,6 +41,7 @@ public class TypeCheckTest extends AbstractTest {
   public void setup(){
     SimpleJavaMill.globalScope().clear();
     SimpleJavaMill.init();
+    SimpleJavaTypeCheck3.init();
     BasicSymbolsMill.initializePrimitives();
     SimpleJavaMill.globalScope().add(SimpleJavaMill.typeSymbolBuilder().setName("List").build());
     SimpleJavaMill.globalScope().add(SimpleJavaMill.fieldSymbolBuilder().setName("variable").setType(SymTypeExpressionFactory.createPrimitive("float")).build());
@@ -46,7 +51,6 @@ public class TypeCheckTest extends AbstractTest {
   //<#if !solution>@Ignore//</#if>
   public void testSynthesizer() throws IOException {
     SimpleJavaParser p = SimpleJavaMill.parser();
-    FullSynthesizeFromSimpleJava syn = new FullSynthesizeFromSimpleJava();
 
     //BasicTypes
     Optional<ASTMCPrimitiveType> prim = p.parse_StringMCPrimitiveType("int");
@@ -54,9 +58,8 @@ public class TypeCheckTest extends AbstractTest {
     SimpleJavaTraverser traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     prim.get().accept(traverser);
-    TypeCheckResult res = syn.synthesizeType(prim.get());
-    assertTrue(res.isPresentResult());
-    assertEquals("int", res.getResult().print());
+    SymTypeExpression res = TypeCheck3.symTypeFromAST(prim.get());
+    assertEquals("int", res.print());
 
     //CollectionTypes
     Optional<ASTMCListType> list = p.parse_StringMCListType("List<int>");
@@ -64,16 +67,14 @@ public class TypeCheckTest extends AbstractTest {
     traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     list.get().accept(traverser);
-    res = syn.synthesizeType(list.get());
-    assertTrue(res.isPresentResult());
-    assertEquals("List<int>", res.getResult().print());
+    res = TypeCheck3.symTypeFromAST(list.get());
+    assertEquals("List<int>", res.print());
   }
 
   @Test
   //<#if !solution>@Ignore//</#if>
   public void testDeriver() throws IOException {
     SimpleJavaParser p = SimpleJavaMill.parser();
-    FullDeriveFromSimpleJava der = new FullDeriveFromSimpleJava();
 
     //ExpressionsBasis
     Optional<ASTLiteralExpression> lit = p.parse_StringLiteralExpression("3");
@@ -81,9 +82,8 @@ public class TypeCheckTest extends AbstractTest {
     SimpleJavaTraverser traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     lit.get().accept(traverser);
-    TypeCheckResult res = der.deriveType(lit.get());
-    assertTrue(res.isPresentResult());
-    assertEquals("int", res.getResult().print());
+    SymTypeExpression res = TypeCheck3.typeOf(lit.get());
+    assertEquals("int", res.print());
 
     //CommonExpressions
     Optional<ASTLiteralExpression> lit2 = p.parse_StringLiteralExpression("3.4");
@@ -92,9 +92,8 @@ public class TypeCheckTest extends AbstractTest {
     traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     plus.accept(traverser);
-    res = der.deriveType(plus);
-    assertTrue(res.isPresentResult());
-    assertEquals("double", res.getResult().print());
+    res = TypeCheck3.typeOf(plus);
+    assertEquals("double", res.print());
 
     //AssignmentExpressions
     Optional<ASTNameExpression> name = p.parse_StringNameExpression("variable");
@@ -103,9 +102,8 @@ public class TypeCheckTest extends AbstractTest {
     traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     ass.accept(traverser);
-    res = der.deriveType(ass);
-    assertTrue(res.isPresentResult());
-    assertEquals("float", res.getResult().print());
+    res = TypeCheck3.typeOf(ass);
+    assertEquals("float", res.print());
   }
 
   private void addToTraverser(ExpressionsBasisTraverser traverser, IExpressionsBasisScope enclosingScope) {

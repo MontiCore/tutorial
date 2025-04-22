@@ -392,9 +392,9 @@ The generated Builder-class uses the hand-written `ASTState` class that extends 
 #### Exercise 6
 Create a hand-written extension for the generated class `AutomataTool`. 
 First, have a look at the already generated Tool class for the Automata grammar to get an overview of which methods are already implemented and do not need to be overwritten. 
-Overwrite the previously empty `runDefaultCoCos` method with the functionality to check all CoCos that were developed in Section 2.3. 
+Overwrite the previously empty `runDefaultCoCos` method with the functionality to check all CoCos that were developed in Section 1.3. 
 Additionally, overwrite the method `report` to create a report for an AST as a text file. 
-Use the visitors implemented in Section 2.2 to collect some statistics for the states and transitions in the AST. 
+Use the visitors implemented in Section 1.2 to collect some statistics for the states and transitions in the AST. 
 Store the report in the directory `target/automata/reports` as a text file with the name of the automaton. 
 For this, you will have to overwrite the `run` method and add the functionality for parsing, creating a symbol table, checking context conditions and reporting as well. 
 The command for parsing, creating a symbol table and checking context conditions is `i` and for reporting is `r`. 
