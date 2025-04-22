@@ -19,7 +19,7 @@ The transition `returnBall` is executed when Player 1 hits the ball and it is no
 The current state is then changed to Pong. 
 Another transition `returnBall` can be used after that to return the ball to Player 1 again, so that the automaton's current state is Ping again. 
 This can be repeated either until one player is not able to return the ball again or both players agree to stop or end the game.
-For this, two transitions stopGame exist that change the state from either `Ping` or `Pong` to `NoGame` again.
+For this, two transitions `stopGame` exist that change the state from either `Ping` or `Pong` to `NoGame` again.
 
 |  ![Graphical representation of the Ping Pong Automaton](02.01.pingponggraphical.png)\  |
 |:--------------------------------------------------------------------------------------:| 
