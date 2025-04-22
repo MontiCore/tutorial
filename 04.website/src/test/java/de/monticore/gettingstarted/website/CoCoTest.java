@@ -6,6 +6,7 @@ import de.monticore.gettingstarted.website._cocos.WebsiteCoCoChecker;
 import de.monticore.gettingstarted.website.cocos.*;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
