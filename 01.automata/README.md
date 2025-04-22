@@ -118,7 +118,7 @@ In this case, the Automata grammar extends two grammars that are provided by Mon
 The nonterminals `Name` and `MCQualifiedName` that are used in the Automata grammar are declared in those grammars respectively. 
 To enable a language engineer to use basic features of (programming) languages, MontiCore supplies basic grammars that can be extended when creating a new language. 
 This language then combines all these basic features and the productions in its own grammar. 
-To find out about MontiCore's basic grammars, see Chapters 17-20 of the MOntiCore Handbook.
+To find out about MontiCore's basic grammars, see Chapters 17-20 of the MontiCore Handbook.
 
 For each production of a grammar, a Java class is generated that can store all its information. 
 We will use the production for Automaton as an example. 
