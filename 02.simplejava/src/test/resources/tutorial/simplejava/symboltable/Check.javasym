@@ -1,0 +1,93 @@
+{
+  "generated-using": "www.MontiCore.de technology",
+  "name": "Check",
+  "package": "tutorial.simplejava.valid",
+  "symbols": [
+    {
+      "kind": "tutorial.simplejava._symboltable.JavaArtifactSymbol",
+      "name": "Check",
+      "spannedScope": {
+        "symbols": [
+          {
+            "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
+            "name": "getBar",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "tutorial.simplejava.valid.Bar"
+            },
+            "spannedScope": {
+              "symbols": [
+                {
+                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+                  "name": "bar",
+                  "type": {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "tutorial.simplejava.valid.Bar"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
+            "name": "doSomething",
+            "type": "void",
+            "spannedScope": {
+              "symbols": [
+                {
+                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+                  "name": "bar",
+                  "type": {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "tutorial.simplejava.valid.Bar"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
+            "name": "print",
+            "type": "void",
+            "spannedScope": {
+              "symbols": [
+                {
+                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+                  "name": "inBar",
+                  "type": {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "tutorial.simplejava.valid.InheritanceBar"
+                  }
+                },
+                {
+                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+                  "name": "bar",
+                  "type": {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "tutorial.simplejava.valid.Bar"
+                  }
+                },
+                {
+                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+                  "name": "foo",
+                  "type": {
+                    "kind": "de.monticore.types.check.SymTypePrimitive",
+                    "primitiveName": "int"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+            "name": "foo",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypePrimitive",
+              "primitiveName": "int"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

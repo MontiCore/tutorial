@@ -1,0 +1,39 @@
+package tutorial.simplejavawithautomata.invalid;
+
+class InvalidAutomaton {
+
+  int foo = 3
+
+  tutorial.simplejava.valid.Bar getBar(){
+    tutorial.simplejava.valid.Bar bar
+    foo = bar.getAge()
+  }
+
+  void doSomething(){
+    tutorial.simplejava.valid.Bar bar = getBar()
+    // The ping pong game
+    automaton PingPong {
+      state NoGame;
+      state Ping;
+      state Pong <<final>>;
+    
+      NoGame - startGame > Ping;
+    
+      Ping - stopGame > NoGame;
+      Pong - stopGame > NoGame;
+    
+      Ping - returnBall > Pong;
+      Pong - returnBall > Ping;
+    }
+    print()
+  }
+
+  void print(){
+    tutorial.simplejava.valid.InheritanceBar inBar
+    //test inheritance
+    tutorial.simplejava.valid.Bar bar = inBar
+    //test that InheritanceBar can use the methods of Bar
+    int foo = inBar.getAge()
+  }
+
+}
