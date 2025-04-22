@@ -31,11 +31,12 @@ grammar Automata extends de.monticore.MCBasics, de.monticore.types.MCBasicTypes 
         @attribute input Activation signal for this transition
         @attribute to Name of the state to which the transitions goes
     */
+    // TODO: Insert simple mealy output?
+    // TODO: Insert a precondition
     Transition =
       from:MCQualifiedName "-" input:Name ">" to:MCQualifiedName ";" ;
 
     // Note: Not part of the automata specification presented, just here to cause issues
     AutAttributes = "(" (Attribute | ",")* ")";
     symbol Attribute = MCType Name;
-
 }

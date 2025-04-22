@@ -714,4 +714,4 @@ Implement these Context Conditions like described above and check their correctn
 (*Hint*: Be aware, that the expression of variable declarations is optional.)
 <!-- (c) https://github.com/MontiCore/monticore -->
 
-Next, continue with [Chapter 4](../03.composition/README.md)
+Next, continue with [Chapter 3](../03.composition/README.md)

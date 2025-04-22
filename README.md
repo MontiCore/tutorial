@@ -15,21 +15,21 @@ This means that at some point you yourself have to write Java code to build a sp
 In each chapter, a new language is presented.
 If this is your first time using MontiCore, then we suggest completing the first language before trying anything else because it introduces you to the basics of working with a DSL in MontiCore.
 
-Chapter 2 introduces the Automaton language.
+Chapter 1 introduces the Automaton language.
 It is one of the easiest and yet one of the most useful languages and describes finite-state automata.
 With the help of the Automaton language, we hope to show you the basics of the grammars describing a DSL and their connection to the models of a DSL.
 Further, we will describe the concepts of an abstract syntax tree (AST) and its traversal with the help of MontiCore's visitor and traverser infrastructure.
 At last, the Automaton language is used to explain the concept of a symbol table and its uses for DSLs.
 
-In Chapter 3, you will learn how to create a very limited version of the Java programming language.
+In Chapter 2, you will learn how to create a very limited version of the Java programming language.
 With the help of this language, we want to teach you how MontiCore handles the creation of a symbol table from an AST.
 Furthermore, we want to create a TypeCheck for this language and write CoCos based on that TypeCheck.
 
-Chapter 4 composes the two previously designed languages.
+Chapter 3 composes the two previously designed languages.
 It should explain MontiCore's grammar composition.
 Additionally, it should give you an idea of when it is possible to use the code of the part languages and when it is better to write your own code for the composed language.
 
-Another possible DSL is presented in Chapter 5.
+Another possible DSL is presented in Chapter 4.
 It can be used to model a website.
 Here, you will get multiple models of the language.
 You will create the grammar for the language yourself by abstracting it from the model contents.
@@ -52,4 +52,9 @@ In case this command fails, ensure that you are using the correct versions
 of Java and Gradle by using the commands `java --version` and
 `gradle --version`. 
 
-Next, continue with [Chapter 2](01.automata/README.md)
+#### Exercise 00
+If you ever find yourself stuck, take a look at the 
+[MontiCore Handbook](https://monticore.de/handbook.pdf).
+It foes into 
+
+Next, continue with [Chapter 1](01.automata/README.md)

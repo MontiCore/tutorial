@@ -272,4 +272,4 @@ Run all tests of the `CoCoTest` class.
 Remember, that you might have to remove some `@Ignore` annotations.
 <!-- (c) https://github.com/MontiCore/monticore -->
 
-Next, continue with [Chapter 5](../04.website/README.md)
+Next, continue with [Chapter 4](../04.website/README.md)

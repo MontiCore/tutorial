@@ -190,6 +190,19 @@ The skeletons for two more visitors, `CountStates` and `AddPrefixToName` are giv
 Implement the traversal behavior for these two classes by overriding the correct methods of the `AutomataVisitor2`.
 Test your implementation by removing the `@Ignore` annotation before the test methods in the `VisitorTest` class and executing the methods.
 Execute the visitors on your own model from Exercise 1 in the `testYourModel` method.<!-- (c) https://github.com/MontiCore/monticore -->
+## Modifying the Automata Grammar 
+ 
+TODO:
+* Insert mealy
+* Insert (optional) precondition
+  * mention conservative?
+  * extends Expression (teaser for later)
+* Show example transition
+* Include test
+
+#### Exercise TODO
+ 
+TODO<!-- (c) https://github.com/MontiCore/monticore -->
 ## Context Conditions 
 The MontiCore grammars that are written for creating DSLs have one problem: they are context-free. 
 This means that some restrictions for a language cannot or should not be realized in a grammar. 
@@ -232,7 +245,8 @@ The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
 Implement them! 
 To test that the CoCos are implemented correctly, 
  execute every test except for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
-<!-- (c) https://github.com/MontiCore/monticore -->
+
+TODO: Wenn mealy, dann überall<!-- (c) https://github.com/MontiCore/monticore -->
 ## Symbol Table 
 Nearly every computer language needs a symbol table to reference objects. 
 In Java, you can differentiate between the declaration of a variable and its use. 
@@ -430,4 +444,4 @@ Store the model in a file with the name of the automaton and the file ending `.a
 Test your implementation by executing the last `testPrettyPrinter` of the class `ToolTest`.
 <!-- (c) https://github.com/MontiCore/monticore -->
 
-Next, continue with [Chapter 3](../02.simplejava/README.md)
+Next, continue with [Chapter 2](../02.simplejava/README.md)
