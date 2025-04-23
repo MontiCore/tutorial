@@ -7,10 +7,7 @@ import tutorial.simplejava._visitor.SimpleJavaTraverser;
 import java.util.List;
 
 public class SimpleJavaPhasedSTC {
-
-  protected List<SimpleJavaTraverser> priorityList;
-
-  protected SimpleJavaScopesGenitorDelegator scopesGenitorDelegator;
+  
 
   public SimpleJavaPhasedSTC(){
     //TODO implement me!
