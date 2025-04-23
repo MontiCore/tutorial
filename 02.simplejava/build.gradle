@@ -16,9 +16,6 @@ dependencies {
     implementation "commons-cli:commons-cli:1.4"
 
     // TODO: add class2mc dependency
-    //<#if solution>
-    implementation group: 'de.monticore', name: 'class2mc', version: mc_version
-    //</#if>
 
     testImplementation "junit:junit:$junit_version"
 }

@@ -9,6 +9,3 @@ nppBackup
 .gradle
 *.iml
 
-gradlew.bat
-gradlew
-gradle
