@@ -55,6 +55,6 @@ of Java and Gradle by using the commands `java --version` and
 #### Exercise 00
 If you ever find yourself stuck, take a look at the 
 [MontiCore Handbook](https://monticore.de/handbook.pdf).
-It foes into 
+
 
 Next, continue with [Chapter 1](01.automata/README.md)
