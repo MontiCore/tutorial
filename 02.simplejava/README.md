@@ -239,7 +239,7 @@ different kinds of type usages:
 
 * `SymTypePrimitive` for primitive types such as `int` or `char`
 * `SymTypeVoid` for the type `void`
-*  `SymTypeOfNull` for the type `null`
+* `SymTypeOfNull` for the type `null`
 * `SymTypeOfObject` for normal types like `java.lang.String` or `de.monticore.Foo`
 * `SymTypeOfGenerics` for generic types like `List<String>` or `Map<Foo,Bar>`
 * `SymTypeVariable` for referencing type variables like `E`. 
@@ -247,7 +247,8 @@ This is mainly used for the methods of a type like `List<E>`.
 The return type of the `get` method must be `E` and a `SymTypeExpression`
 * `SymTypeArray` for array types like `int[]` or `String[][][]`
 * `SymTypeOfWildcard` for types like `? extends String`, `? super Foo>` and `?`
-* `SymTypeOfFunction` for functional programming and function types like `int -> String`
+* `SymTypeOfFunction` for functional programming, method references
+and function types like `int -> String`
 * `SymTypeObscure` if the Type Check does not find the correct type or finds 
 a type error
 
@@ -342,8 +343,8 @@ Means to checking whether a type is a subtype of another or whether an
 assignment is correct are provided by the `SymTypeRelations` class. 
 The function of its methods `isSubTypeOf` and `isCompatible` should be 
 self-explanatory.
-This class is often used in Context Conditions to check if the declared 
-type and the type of an initializing expression  of a variable declaration 
+These classes are often used in Context Conditions to check if the declared 
+type and the type of an initializing expression of a variable declaration 
 are compatible.
 
 <!-- (c) https://github.com/MontiCore/monticore -->
