@@ -370,7 +370,7 @@ of the super class.
 After that, the package name can be added to the ArtifactScope before 
 the ArtifactScope is returned.
 
-#### Exercise 3
+#### Exercise 2
 Switch to your IDE. 
 Add the package of the model to the ArtifactScope by overwriting the
 `createFromAST` method of the `SimpleJavaScopesGenitor` with the help 
@@ -422,7 +422,7 @@ corresponding symbol fetched.
 Then, the attributes of the symbols can be filled however the language 
 developer wants.
 
-#### Exercise 4
+#### Exercise 3
 The skeleton of a visitor for the second phase of the symbol table creation is 
 displayed in the class `SimpleJavaSTCompleteTypes`. 
 Implement the `visit` methods and use the `TypeCheck3` class to fill the 
@@ -432,7 +432,7 @@ In this regards, the `JavaVarDeclSymbol` requires a type,
 and `JavaArtifactSymbol` a potential super type.
 After filling the attributes of the symbols, use the methods `replaceSurrogate`
 or `replaceSurrogates` to remove symbol surrogates if present. 
-The test for correctness will be done after Exercise 5.
+The test for correctness will be done after Exercise 4.
 
 It is useful to combine both parts of the symbol table creation in a common 
 class. 
@@ -451,12 +451,12 @@ the parameter.
 After that, the ArtifactScope that was returned by the `createFromAST` method 
 of the ScopesGenitorDelegator can be returned.
 
-#### Exercise 5
+#### Exercise 4
 The skeleton of a common class for executing both parts of the symbol table 
 creation is displayed in the class `SimpleJavaPhasedSTC`. 
 Implement the constructor and the `createFromAST` method correctly. 
 Execute the test `testTypesSet` in the class `SymTabTest` to test your 
-implementation from both Exercise 4 and 5.
+implementation from both Exercise 3 and 4.
 
 
 ### Symbol Table Import and Export
@@ -556,7 +556,7 @@ most symbols.
 But symbols with custom information, i.e., _symbol rules_, require 
 hand-written effort.
 
-#### Exercise 6
+#### Exercise 5
 For the SimpleJava grammar, all serialization and deserialization classes 
 are already generated.
 Go to the class `DeSerTest`. 
@@ -643,7 +643,7 @@ could not derive a type for the `ASTExpression` which means that the
 expression is not valid as the types of its subexpressions do not match. 
 In this case, an error should be logged.
 
-#### Exercise 7
+#### Exercise 6
 The skeletons for the Context Conditions `ExpressionIsValid`  and 
 `VariableDeclarationIsCorrect` are already given in the tutorial project. 
 Implement these Context Conditions like described above and check their 
