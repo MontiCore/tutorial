@@ -594,11 +594,24 @@ dependencies {
 Next, add an adapted OOType symbol resolver to your languages global scope:
 
 ```java
-SimpleJavaMill.globalScope().addAdaptedOOTypeSymbolResolver(new Class2MCResolver());
+MyMillMill.globalScope().addAdaptedTypeSymbolResolver(new Class2MCResolver());
 ```
 
-Now the symbol table will resolve for (object oriented) types in loaded class files 
+Class2MC requires knowledge of where to search for java types.
+You can add the standard RTE path using:
+```
+MyMillMill.globalScope().getSymbolPath().addEntry(Class2MCResolver.getJRTPath());
+```
+
+Now the symbol table will resolve for (object oriented) types in loaded class files
 (Note: Class2MC works on the compiled files, not the `.java` source files).
+
+
+#### Exercise 6
+Open the `build.gradle` to add the Class2MC dependency,
+ then open the `Class2MCTest`, un-ignore the one test, and set-up Class2MC in the `setUpClass2MC` method.
+Voilà, now you can resolve for any java types.
+
 
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## CoCos
@@ -647,7 +660,7 @@ could not derive a type for the `ASTExpression` which means that the
 expression is not valid as the types of its subexpressions do not match. 
 In this case, an error should be logged.
 
-#### Exercise 6
+#### Exercise 7
 The skeletons for the Context Conditions `ExpressionIsValid`  and 
 `VariableDeclarationIsCorrect` are already given in the tutorial project. 
 Implement these Context Conditions like described above and check their 
