@@ -20,12 +20,47 @@ import static org.junit.Assert.*;
 
 public class VisitorTest extends AbstractTest {
 
+  @Test
+  @Ignore
+  public void testPingPongTCount() throws IOException {
+    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
+    checkCountTransitions(aut, 5);
+  }
+
+  @Test
+  @Ignore // TODO Exercise 5: (once CountStates is implemented)  
+  public void testPingPong() throws IOException {
+    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
+    checkCountTransitions(aut, 5);
+    checkCountStates(aut, 3, 1, 1);
+    // We do not check for the change name in this test
+  }
+
+  @Test
+  @Ignore // TODO Exercise 5 (once both visitors are implemented)  
+  public void testDoor() throws IOException {
+    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Door.aut");
+    checkCountTransitions(aut, 4);
+    checkCountStates(aut, 5, 2, 1);
+    checkChangeName(aut, "Bar");
+  }
+
+  @Test
+  @Ignore // TODO Exercise 5 (once both visitors are implemented)  
+  public void testHierarchical() throws IOException {
+    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Hierarchical.aut");
+    checkCountTransitions(aut, 7);
+    checkCountStates(aut, 6, 3, 1);
+    checkChangeName(aut, "Bar");
+  }
+
+
   public void checkCountTransitions(ASTAutomaton automaton, int expectedNumber) {
     CountTransitions ct = new CountTransitions();
     AutomataTraverser traverser = AutomataMill.traverser();
     traverser.add4Automata(ct);
     automaton.accept(traverser);
-    assertEquals(expectedNumber, ct.countTransitions());
+    assertEquals("CountTransitions result incorrect ", expectedNumber, ct.countTransitions());
   }
 
   public void checkCountStates(ASTAutomaton automaton, int expectedNumber, int countInitial, int countFinal) {
@@ -33,9 +68,9 @@ public class VisitorTest extends AbstractTest {
     AutomataTraverser traverser = AutomataMill.traverser();
     traverser.add4Automata(cs);
     automaton.accept(traverser);
-    assertEquals(expectedNumber, cs.countStates());
-    assertEquals(countInitial, cs.countInitialStates());
-    assertEquals(countFinal, cs.countFinalStates());
+    assertEquals("CountStates state result incorrect", expectedNumber, cs.countStates());
+    assertEquals("CountStates initial state result incorrect", countInitial, cs.countInitialStates());
+    assertEquals("CountStates final state result incorrect", countFinal, cs.countFinalStates());
   }
 
   public void checkChangeName(ASTAutomaton automaton, String prefix){
@@ -48,44 +83,10 @@ public class VisitorTest extends AbstractTest {
     List<ASTState> stateList = automaton.getSpannedScope()
             .getStateSymbols().values().stream().map(StateSymbol::getAstNode)
             .collect(Collectors.toList());
-    assertFalse(stateList.isEmpty());
+    assertFalse("All states were removed?", stateList.isEmpty());
     for(ASTState state: stateList){
-      assertTrue(state.getName().startsWith(prefix));
+      assertTrue("AddPrefixToName did not add prefix, found " + state.getName() , state.getName().startsWith(prefix));
     }
-  }
-  
-  @Test
-  @Ignore
-  public void testPingPongTCount() throws IOException {
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
-    checkCountTransitions(aut, 5);
-  }
-
-  @Test
-  @Ignore
-  public void testPingPong() throws IOException {
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
-    checkCountTransitions(aut, 5);
-    checkCountStates(aut, 3, 1, 1);
-    checkChangeName(aut, "Foo");
-  }
-
-  @Test
-  @Ignore
-  public void testDoor() throws IOException {
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Door.aut");
-    checkCountTransitions(aut, 4);
-    checkCountStates(aut, 5, 2, 1);
-    checkChangeName(aut, "Bar");
-  }
-
-  @Test
-  @Ignore
-  public void testHierarchical() throws IOException {
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Hierarchical.aut");
-    checkCountTransitions(aut, 7);
-    checkCountStates(aut, 6, 3, 1);
-    checkChangeName(aut, "Bar");
   }
 
 }

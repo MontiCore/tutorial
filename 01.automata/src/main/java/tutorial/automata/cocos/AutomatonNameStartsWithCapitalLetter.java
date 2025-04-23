@@ -13,7 +13,7 @@ public class AutomatonNameStartsWithCapitalLetter implements AutomataASTAutomato
 
   @Override
   public void check(ASTAutomaton node) {
-    //TODO implement CoCo
+    //TODO implement me in Exercise 3
   }
 
 }

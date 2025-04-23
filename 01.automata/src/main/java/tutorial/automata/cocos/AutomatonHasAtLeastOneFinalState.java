@@ -13,7 +13,7 @@ public class AutomatonHasAtLeastOneFinalState implements AutomataASTAutomatonCoC
 
   @Override
   public void check(ASTAutomaton node) {
-    //TODO implement me!
+    //TODO implement me in Exercise 3
   }
 
 }

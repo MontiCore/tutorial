@@ -13,6 +13,6 @@ public class TransitionNameUncapitalized implements AutomataASTTransitionCoCo {
 
   @Override
   public void check(ASTTransition node) {
-    //TODO implement me
+    //TODO implement me in Exercise 3
   }
 }

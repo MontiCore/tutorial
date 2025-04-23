@@ -319,7 +319,7 @@ language.
 
 #### Exercise 3
 The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
-`AutomatonNameStartWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and 
+`AutomatonNameStartsWithCapitalLetter`, `StateNameStartsWithCapitalLetter` and 
 `TransitionNameUncapitalized` are all given for the automata language 
 (located under `src/main/java/tutorial/automata/cocos/`).
 Implement them! 
@@ -329,6 +329,10 @@ As before, enable them by removing the `@Ignore` flag and running the tests
 or rebuilding the project.
 Before implementing the corresponding CoCo checks, these tests will fail.
 Afterwards, all mentioned tests should succeed.
+
+In case your IDE complains about missing classes, reload the Gradle project:
+For both Intellij and VSCode, there exists a _Reload all Gradle projects_ button
+within the Gradle tool view.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Visitors 
 Visitors provide the means to traverse the AST and execute different behavior 
@@ -496,7 +500,7 @@ language-specific `Mill`.
 For more information on the creation of a symbol table from the AST, see 
 also Chapter 9 of the MontiCore Handbook.
 
-A state in an automaton can be seen similar to a attribute in a Java class. 
+A state in an automaton can be seen similar to an attribute in a Java class. 
 It has a unique name and should, thus, be referable by it. 
 If the declaration of a variable can be compared to the `declaration` of a 
 state (e.g. `state Ping;`), then the use of a variable can be compared to 
@@ -561,7 +565,17 @@ the default navigation being performed;
 The productions are printed during this navigation.
 Simple keywords like `"automaton"` or `"state"` in the Automata grammar 
 can be printed with the indent printer while references to other 
-nonterminals should be handled by delegating to the specific `handle` method.
+nonterminals should be handled by delegating to their respective pretty printer 
+ method.
+
+We can't guarantee that a nonterminal is not extended and thus can't call the 
+local `handle` method directly!
+For example, transitions could be overridden in a composed language
+ to also contain java-like statements as their action.
+By calling the `handle` method directly,
+ those new transitions will not be printed correctly.
+Instead, we utilize double-dispatch by calling `ASTNode#accept(getTraverser())`,
+ which will call the correct printing method.
 
 The `IndentPrinter` can be used to add an indent to each new line after 
 an opening curly bracket as well as removing this indent before the 
@@ -667,7 +681,11 @@ If everything succeeded you should now find a generated class
 In your hand-written counterpart, you should now extend this superclass and 
 override the respective method of the printer.
 Assume a comma seperated list should be printed.
-Once everything is implemented, the initial test should, finally, secceed.<!-- (c) https://github.com/MontiCore/monticore -->
+Once everything is implemented, the initial test should, finally, succeed.
+
+Hint: Compare the `handle` methods within the generated 
+ `AutomataPrettyPrinterTOP` with their productions definitions in the 
+ `Automata.mc4` grammar.<!-- (c) https://github.com/MontiCore/monticore -->
 ## Language Tool 
 For each language, a *Tool* is generated. 
 This tool provides a general interface for the functionalities developed for 

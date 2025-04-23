@@ -62,21 +62,21 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @Ignore // TODO: Exercise 3
   public void testInvalidAutomatonName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/AutName.aut");
     checkInvalid(aut, AutomatonNameStartsWithCapitalLetter.errorCode);
   }
 
   @Test
-  @Ignore
+  @Ignore // TODO: Exercise 3
   public void testInvalidStateName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/StateName.aut");
     checkInvalid(aut, StateNameStartsWithCapitalLetter.errorCode);
   }
 
   @Test
-  @Ignore
+  @Ignore // TODO: Exercise 3
   public void testInvalidTransitionName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/TransName.aut");
     checkInvalid(aut, TransitionNameUncapitalized.errorCode);
@@ -89,14 +89,14 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @Ignore // TODO: Exercise 3
   public void testNoFinalState() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/NoFinal.aut");
     checkInvalid(aut, AutomatonHasAtLeastOneFinalState.errorCode);
   }
   
   @Test
-  @Ignore
+  @Ignore // TODO: Exercise 6
   public void testTransitionSourceDoesNotExist() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/TransitionSource.aut");
     checkInvalid(aut, TransitionSourceIsState.errorCode);

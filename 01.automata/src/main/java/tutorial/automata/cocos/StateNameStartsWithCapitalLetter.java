@@ -14,7 +14,7 @@ public class StateNameStartsWithCapitalLetter implements AutomataASTStateCoCo {
 
   @Override
   public void check(ASTState node) {
-    //TODO implement me!
+    //TODO implement me in Exercise 3
   }
 
 }

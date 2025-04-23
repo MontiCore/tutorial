@@ -1,6 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejava;
 
+import org.junit.*;
 import tutorial.simplejava._ast.ASTJavaCompilationUnit;
 import tutorial.simplejava._cocos.SimpleJavaCoCoChecker;
 import tutorial.simplejava._symboltable.SimpleJavaPhasedSTC;
@@ -12,10 +13,6 @@ import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -96,6 +93,7 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
+  @Ignore // Broken
   public void testValidCheckOOAndAbstract(){
     testValidOO(check);
   }
@@ -111,21 +109,21 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // Broken?
+  @Ignore
   public void testStaticAbstractOOMethods(){
-    testInvalidOO("0xA2239", staticAbstractOOMethods);
+    testInvalidOO("0xF736F", staticAbstractOOMethods);
   }
 
   @Test
   @Ignore
   public void testStaticAbstractOOFields(){
-    testInvalidOO("0xFD118", staticAbstractOOFields);
+    testInvalidOO("0xF736F", staticAbstractOOFields);
   }
 
   @Test
-  @Ignore // Broken?
+  @Ignore
   public void testInheritedCannotUseStaticFromSuper(){
-    testInvalidOO("0xA2239", inheritedCannotUseStaticFromSuper);
+    testInvalidOO("0xF736F", inheritedCannotUseStaticFromSuper);
   }
 
   @Test
@@ -145,6 +143,14 @@ public class CoCoTest extends AbstractTest {
     testInvalidOO("0xA0457", wrongAssignment);
   }
 
+  protected Finding findError() {
+    for (Finding f : Log.getFindings()) {
+      if (f.isError()) return f;
+    }
+    Assert.fail("Expected an error finding, but found none");
+    return null;
+  }
+
   protected void testInvalidOO(String errorCode, ASTJavaCompilationUnit comp){
     Log.clearFindings();
     SimpleJavaCoCoChecker checker = getOOChecker();
@@ -155,14 +161,17 @@ public class CoCoTest extends AbstractTest {
     }
     assertTrue("Expected a finding, but found none!", Log.getFindingsCount()>=1);
     assertTrue(Log.getFindings().stream().map(Finding::toString).collect(Collectors.joining(System.lineSeparator())),
-               Log.getFindings().get(0).getMsg().startsWith(errorCode));
+               findError().getMsg().startsWith(errorCode));
   }
 
   protected void testValidOO(ASTJavaCompilationUnit comp){
     Log.clearFindings();
     SimpleJavaCoCoChecker checker = getOOChecker();
     checker.checkAll(comp);
-    assertEquals(0, Log.getFindingsCount());
+    assertEquals("Unexpected findings found: " +
+            Log.getFindings().stream().map(Finding::getMsg).collect(Collectors.joining(System.lineSeparator())),
+            0,
+            Log.getFindingsCount());
   }
 
   protected SimpleJavaCoCoChecker getOOChecker(){

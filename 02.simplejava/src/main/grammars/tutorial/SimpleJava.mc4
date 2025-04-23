@@ -12,11 +12,11 @@ grammar SimpleJava extends de.monticore.types.MCSimpleGenericTypes,
                         MCImportStatement*
                         JavaArtifact;
 
-  scope symbol JavaArtifact implements Type = "class" Name ("extends" superType:MCType)? "{" JavaElement* "}";
+  scope symbol JavaArtifact implements OOType = "class" Name ("extends" superType:MCType)? "{" JavaElement* "}";
 
   interface JavaElement;
 
-  scope symbol JavaMethod implements JavaElement,Function = MCReturnType
+  scope symbol JavaMethod implements JavaElement, Method = MCReturnType
                                                            Name
                                                            FormalParameters
                                                            "{" JavaBlock "}";
@@ -28,6 +28,6 @@ grammar SimpleJava extends de.monticore.types.MCSimpleGenericTypes,
 
   JavaBlock = (JavaVarDecl | Expression)*;
 
-  symbol JavaVarDecl implements JavaElement,Variable = MCType Name ("=" Expression)?;
+  symbol JavaVarDecl implements JavaElement, Field = MCType Name ("=" Expression)?;
 
 }

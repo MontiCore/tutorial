@@ -33,6 +33,7 @@ grammar Automata extends
         @attribute input Activation signal for this transition
         @attribute to Name of the state to which the transitions goes
     */
+    // TODO: Add to this transition production
     Transition =
       from:MCQualifiedName
       "-"

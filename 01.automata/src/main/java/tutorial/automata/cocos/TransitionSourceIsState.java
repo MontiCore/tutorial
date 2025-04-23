@@ -13,7 +13,7 @@ public class TransitionSourceIsState implements AutomataASTTransitionCoCo {
 
   @Override
   public void check(ASTTransition node) {
-    //TODO implement me!
+    //TODO implement me in Exercise 6
     // check that the "from" name of the transition can be resolved to a state
 
     // hint: use the symbol table by accessing the enclosing scope of the transition

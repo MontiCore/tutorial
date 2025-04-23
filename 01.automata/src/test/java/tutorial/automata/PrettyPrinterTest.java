@@ -1,6 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.automata;
 
+import de.se_rwth.commons.logging.LogStub;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._parser.AutomataParser;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class PrettyPrinterTest extends AbstractTest {
     // then
     AutomataParser parser = AutomataMill.parser();
     final Optional<ASTAutomaton> astPrint = parser.parse_String(output);
-    assertTrue("The pretty printed output is not syntactically correct", astPrint.isPresent());
+    assertTrue("The pretty printed output is not syntactically correct: " + output, astPrint.isPresent());
     assertTrue("The pretty printed output does not compare to the original input", ast.deepEquals(astPrint.get()));
   }
 }
