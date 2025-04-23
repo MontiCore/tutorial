@@ -11,10 +11,6 @@ import java.util.List;
 
 public class SimpleJavaWithAutomataPhasedSTC {
 
-  protected List<SimpleJavaWithAutomataTraverser> priorityList;
-
-  protected SimpleJavaWithAutomataScopesGenitorDelegator scopesGenitorDelegator;
-
   public SimpleJavaWithAutomataPhasedSTC(){
     //TODO implement me!
   }
