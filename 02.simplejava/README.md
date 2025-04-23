@@ -215,15 +215,21 @@ a method are `SymTypeExpressions` or type usages as they are not declarations
 of new classes and thus do not add a new type symbol to the symbol table.
 
 Because a type usage should always refer the definition of the type to have 
-an idea which methods and attributes/variables can be used, a 
-`SymTypeExpression` always knows its corresponding `TypeSymbol`.
-When asking the class `List<String>` for the return type
-of its `get` method, it will ask its type definition `List<E>` for all its 
-methods named `get`.
+an idea which methods and attributes/variables can be used, 
+ most `SymTypeExpressions` know their corresponding `TypeSymbol`.
+For example: The `get(int)` method is called on a variable `myList` of type `List<String>`.
+The type of `myList` is represented as a `SymTypeOfGenerics`,
+ with a reference to the `TypeSymbol` of the `List` class
+ and a further `SymTypeOfObject` for the `String` type parameter.
+Note: Not all `SymTypeExpressions` are guaranteed to have a type definition.
+
+When asking the `List<String>` type for the return type
+of its `get` method, its type definition `List<E>` is asked for all its 
+methods named `get` with the matching signature.
 The type symbol returns a method with the return type `E`, the type variable 
-of the class. 
-Next, the `SymTypeExpression` replaces the type variable `E` with its actual 
-type argument `String` and returns the method. 
+of the `List` class. 
+Next, the type-check replaces the type variable `E` with the actual 
+type argument `String` and returns this type information. 
 If the parameter of the `get` method was of the correct type,
 the whole expression `get(12)` will return the type `String` as it is the 
 return type of the method.
