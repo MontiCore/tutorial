@@ -421,6 +421,8 @@ Implement the traversal behavior for these two classes by overriding the
 correct methods of the `AutomataVisitor2`.
 `CountStates` should reflect a similar behavior as `CountTransitions` and is
 a straightforward starting point for implementing your first visitor. 
+Additional to just counting states, this visitor should also count the number 
+of initial and the number final states, as well.
 `AddPrefixToName` should rename all states of an automaton by adding a 
 given prefix.
 After realizing your visitors, test your implementation by removing the 
