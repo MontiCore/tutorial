@@ -18,7 +18,7 @@ public class ParserTest extends AbstractTest {
   @Ignore 
   public void testYourModel() throws IOException {
     //TODO Exercise 1: Delete the @Ignore annotation and insert the path to your model similar to the other test methods!
-    ASTAutomaton aut = parse("src/test/resources/tutorial/automata/<YOUR_MODEL>.aut");
+    //ASTAutomaton aut = parse("src/test/resources/tutorial/automata/<YOUR_MODEL>.aut");
   }
   
   @Test
