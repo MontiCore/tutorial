@@ -423,6 +423,10 @@ correct methods of the `AutomataVisitor2`.
 a straightforward starting point for implementing your first visitor. 
 Additional to just counting states, this visitor should also count the number 
 of initial and the number final states, as well.
+Furthermore, this visitor should not only count the respectice scenarios of
+states, but also collect their corresponding names.
+Again we do this for each state, as well as additionally for initial and final
+states.
 `AddPrefixToName` should rename all states of an automaton by adding a 
 given prefix.
 After realizing your visitors, test your implementation by removing the 
