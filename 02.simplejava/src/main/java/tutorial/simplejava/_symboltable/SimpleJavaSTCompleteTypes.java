@@ -6,18 +6,10 @@ import tutorial.simplejava._ast.ASTJavaArtifact;
 import tutorial.simplejava._ast.ASTJavaMethod;
 import tutorial.simplejava._ast.ASTJavaVarDecl;
 import tutorial.simplejava._visitor.SimpleJavaVisitor2;
-import de.monticore.symbols.basicsymbols._symboltable.FunctionSymbol;
-import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.types.check.SymTypeExpression;
-import de.monticore.types.check.SymTypeExpressionFactory;
 import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class SimpleJavaSTCompleteTypes implements SimpleJavaVisitor2 {
 
@@ -37,39 +29,6 @@ public class SimpleJavaSTCompleteTypes implements SimpleJavaVisitor2 {
     //TODO implement me!
   }
 
-  public void replaceSurrogates(TypeSymbol type){
-    List<SymTypeExpression> superTypes = new ArrayList<>();
-    for(TypeSymbol superType: type.streamSuperTypes().map(SymTypeExpression::getTypeInfo).collect(Collectors.toList())) {
-      Optional<TypeSymbol> ts = superType.getEnclosingScope().resolveType(superType.getName());
-      if (ts.isPresent()) {
-        superTypes.add(SymTypeExpressionFactory.createTypeExpression(ts.get()));
-      } else {
-        Log.error("Could not find the type " + superType.getName());
-        superTypes.add(SymTypeExpressionFactory.createTypeExpression(superType));
-      }
-    }
-    type.setSuperTypesList(superTypes);
-  }
 
-  public void replaceSurrogate(VariableSymbol variable){
-    TypeSymbol type = variable.getType().getTypeInfo();
-    Optional<TypeSymbol> ts = type.getEnclosingScope().resolveType(type.getName());
-    if(ts.isPresent()){
-      variable.setType(SymTypeExpressionFactory.createTypeExpression(ts.get()));
-    } else {
-      Log.error("Could not find the type " + type.getName());
-    }
-  }
 
-  public void replaceSurrogate(FunctionSymbol function){
-    if(!function.getType().isVoidType()) {
-      TypeSymbol type = function.getType().getTypeInfo();
-      Optional<TypeSymbol> ts = type.getEnclosingScope().resolveType(type.getName());
-      if (ts.isPresent()) {
-        function.setType(SymTypeExpressionFactory.createTypeExpression(ts.get()));
-      } else {
-        Log.error("Could not find the type " + type.getName());
-      }
-    }
-  }
 }

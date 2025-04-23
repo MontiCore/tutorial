@@ -430,8 +430,6 @@ missing type information of the symbols.
 In this regards, the `JavaVarDeclSymbol` requires a type,
 `JavaMethodSymbol` a return type,
 and `JavaArtifactSymbol` a potential super type.
-After filling the attributes of the symbols, use the methods `replaceSurrogate`
-or `replaceSurrogates` to remove symbol surrogates if present. 
 The test for correctness will be done after Exercise 4.
 
 It is useful to combine both parts of the symbol table creation in a common 
