@@ -1,9 +1,0 @@
-package de.monticore.gettingstarted.simplejava.valid;
-
-objectdiagram ComplicatedCorrectAssignment {
-
-  bar:FooType {
-    String a = 3/7*(4+"Foo");
-  }
-
-}
