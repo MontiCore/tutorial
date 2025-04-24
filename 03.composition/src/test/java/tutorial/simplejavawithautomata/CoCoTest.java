@@ -152,7 +152,7 @@ public class CoCoTest extends AbstractTest {
   @Test
   @Ignore //TODO Exercise 2 
   public void testInvalidAutomaton(){
-    testInvalidOO("0xF737F", invalidAutomaton);
+    testInvalidOO("0xA005", invalidAutomaton);
   }
 
   protected void testInvalidOO(String errorCode, ASTJavaCompilationUnit comp){

@@ -1,6 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejava;
 
+import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import tutorial.simplejava._ast.ASTJavaCompilationUnit;
 import tutorial.simplejava._symboltable.*;
 import tutorial.simplejava._symboltable.ISimpleJavaArtifactScope;
@@ -46,6 +48,7 @@ public class DeSerTest extends AbstractTest {
   @Test
   public void testDeserialization(){
     //TODO implement me!
+    String symbolTableFile = "src/test/resources/tutorial/simplejava/symboltable/Check.javasym";
   }
 
 }

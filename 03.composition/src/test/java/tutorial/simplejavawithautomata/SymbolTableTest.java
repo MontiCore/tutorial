@@ -51,7 +51,7 @@ public class SymbolTableTest extends AbstractTest {
     SimpleJavaWithAutomataSymbols2Json symbols2Json = new SimpleJavaWithAutomataSymbols2Json();
     ISimpleJavaWithAutomataArtifactScope as = symbols2Json.load("src/test/resources/tutorial/simplejava/symboltable/Check.javasym");
     Optional<FunctionSymbol> function = as.resolveFunctionDown("Check.getBar");
-    assertTrue(function.isPresent());
+    assertTrue("Failed to find Check.getBar", function.isPresent());
   }
 
 

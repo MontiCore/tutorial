@@ -93,7 +93,6 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // Broken
   public void testValidCheckOOAndAbstract(){
     testValidOO(check);
   }

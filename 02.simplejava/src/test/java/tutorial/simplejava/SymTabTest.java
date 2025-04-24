@@ -47,9 +47,8 @@ public class SymTabTest extends AbstractTest {
     assertEquals("int", getMax.get().getType().print());
 
     Optional<VariableSymbol> d = as.resolveVariableDown("Bar.getMax.d");
-    assertTrue(d.isPresent());
-    assertNotNull(d.get().getType());
-    assertEquals("double", d.get().getType().print());
+    assertFalse(d.isPresent());
+    // the variable d is now within a non-exporting scope
   }
 
 

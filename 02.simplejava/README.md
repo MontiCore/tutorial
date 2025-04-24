@@ -436,7 +436,8 @@ Implement the `visit` methods and use the `TypeCheck3` class to fill the
 missing type information of the symbols.
 In this regards, the `JavaVarDeclSymbol` requires a type,
 `JavaMethodSymbol` a return type,
-and `JavaArtifactSymbol` a potential super type.
+`JavaArtifactSymbol` a potential super type,
+and `FormalParameter` a type.
 The test for correctness will be done after Exercise 4.
 
 It is useful to combine both parts of the symbol table creation in a common 

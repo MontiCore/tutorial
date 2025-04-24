@@ -4,87 +4,50 @@
   "package": "tutorial.simplejava.valid",
   "symbols": [
     {
-      "kind": "tutorial.simplejava._symboltable.JavaArtifactSymbol",
+      "kind": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
       "name": "Check",
+      "fullName": "tutorial.simplejava.valid.Check",
+      "packageName": "tutorial.simplejava.valid",
+      "isPublic": true,
       "spannedScope": {
         "symbols": [
           {
-            "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
-            "name": "getBar",
-            "type": {
-              "kind": "de.monticore.types.check.SymTypeOfObject",
-              "objName": "tutorial.simplejava.valid.Bar"
-            },
-            "spannedScope": {
-              "symbols": [
-                {
-                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
-                  "name": "bar",
-                  "type": {
-                    "kind": "de.monticore.types.check.SymTypeOfObject",
-                    "objName": "tutorial.simplejava.valid.Bar"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
-            "name": "doSomething",
-            "type": "void",
-            "spannedScope": {
-              "symbols": [
-                {
-                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
-                  "name": "bar",
-                  "type": {
-                    "kind": "de.monticore.types.check.SymTypeOfObject",
-                    "objName": "tutorial.simplejava.valid.Bar"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "kind": "tutorial.simplejava._symboltable.JavaMethodSymbol",
-            "name": "print",
-            "type": "void",
-            "spannedScope": {
-              "symbols": [
-                {
-                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
-                  "name": "inBar",
-                  "type": {
-                    "kind": "de.monticore.types.check.SymTypeOfObject",
-                    "objName": "tutorial.simplejava.valid.InheritanceBar"
-                  }
-                },
-                {
-                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
-                  "name": "bar",
-                  "type": {
-                    "kind": "de.monticore.types.check.SymTypeOfObject",
-                    "objName": "tutorial.simplejava.valid.Bar"
-                  }
-                },
-                {
-                  "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
-                  "name": "foo",
-                  "type": {
-                    "kind": "de.monticore.types.check.SymTypePrimitive",
-                    "primitiveName": "int"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "kind": "tutorial.simplejava._symboltable.JavaVarDeclSymbol",
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
             "name": "foo",
+            "fullName": "tutorial.simplejava.valid.Check.foo",
+            "packageName": "tutorial.simplejava.valid",
+            "isPublic": true,
             "type": {
               "kind": "de.monticore.types.check.SymTypePrimitive",
               "primitiveName": "int"
             }
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.MethodSymbol",
+            "name": "getBar",
+            "fullName": "tutorial.simplejava.valid.Check.getBar",
+            "packageName": "tutorial.simplejava.valid",
+            "isPublic": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "tutorial.simplejava.valid.Bar"
+            }
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.MethodSymbol",
+            "name": "doSomething",
+            "fullName": "tutorial.simplejava.valid.Check.doSomething",
+            "packageName": "tutorial.simplejava.valid",
+            "isPublic": true,
+            "type": "void"
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.MethodSymbol",
+            "name": "print",
+            "fullName": "tutorial.simplejava.valid.Check.print",
+            "packageName": "tutorial.simplejava.valid",
+            "isPublic": true,
+            "type": "void"
           }
         ]
       }
