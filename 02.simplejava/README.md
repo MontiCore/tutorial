@@ -53,7 +53,7 @@ grammar SimpleJava extends de.monticore.types.MCSimpleGenericTypes,
 ```
 
 As you can see, the grammar itself, although claiming to support a certain 
-portion of Java syntax, is in itself still quite easy to easy. 
+portion of Java syntax, is in itself still quite easy to comprehend. 
 The reason is, that it is not extended from scratch but reuses multiple 
 language components.
 It extends several grammars that are provided by MontiCore as base grammars. 
