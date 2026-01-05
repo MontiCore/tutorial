@@ -626,7 +626,7 @@ Open the generated class `AutomataPrettyPrinter`  in the folder
 
 Inspect the various `handle` methods. 
 Test the generated implementation by executing the class `PrettyPrinterTest`.
-Remove the `@Ignore` JUnit annotations first to enable this test.
+Remove the `@Disabled` JUnit annotations first to enable this test.
 
 You might notice that one of the tests fails.
 Open the `AutomataPrettyPrinter` class again and inspect the failing method.

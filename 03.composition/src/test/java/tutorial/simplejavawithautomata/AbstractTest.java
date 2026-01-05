@@ -8,7 +8,8 @@ import tutorial.simplejavawithautomata._symboltable.SimpleJavaWithAutomataPhased
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class AbstractTest {
 

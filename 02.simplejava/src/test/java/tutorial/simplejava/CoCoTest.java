@@ -1,7 +1,10 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejava;
 
-import org.junit.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import tutorial.simplejava._ast.ASTJavaCompilationUnit;
 import tutorial.simplejava._cocos.SimpleJavaCoCoChecker;
 import tutorial.simplejava._symboltable.SimpleJavaPhasedSTC;
@@ -18,10 +21,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-public class CoCoTest extends AbstractTest {
+class CoCoTest extends AbstractTest {
 
   private ASTJavaCompilationUnit check;
   private ASTJavaCompilationUnit bar;
@@ -33,7 +33,7 @@ public class CoCoTest extends AbstractTest {
   private ASTJavaCompilationUnit complicatedCorrectAssignment;
   private ASTJavaCompilationUnit inheritedCannotUseStaticFromSuper;
 
-  @BeforeClass
+  @BeforeAll
   public static void init(){
     LogStub.init();
     LogStub.enableFailQuick(false);
@@ -41,7 +41,7 @@ public class CoCoTest extends AbstractTest {
     SimpleJavaTypeCheck3.init();
   }
 
-  @Before
+  @BeforeEach
   public void setup() throws IOException {
     Log.clearFindings();
     SimpleJavaMill.globalScope().clear();
@@ -93,52 +93,52 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  public void testValidCheckOOAndAbstract(){
+  void testValidCheckOOAndAbstract(){
     testValidOO(check);
   }
 
   @Test
-  public void testValidBarOOAndAbstract(){
+  void testValidBarOOAndAbstract(){
     testValidOO(bar);
   }
 
   @Test
-  public void testValidInheritanceBarOOAndAbstract(){
+  void testValidInheritanceBarOOAndAbstract(){
     testValidOO(inheritanceBar);
   }
 
   @Test
   @Ignore
-  public void testStaticAbstractOOMethods(){
+  void testStaticAbstractOOMethods(){
     testInvalidOO("0xF736F", staticAbstractOOMethods);
   }
 
   @Test
   @Ignore
-  public void testStaticAbstractOOFields(){
+  void testStaticAbstractOOFields(){
     testInvalidOO("0xF736F", staticAbstractOOFields);
   }
 
   @Test
   @Ignore
-  public void testInheritedCannotUseStaticFromSuper(){
+  void testInheritedCannotUseStaticFromSuper(){
     testInvalidOO("0xF736F", inheritedCannotUseStaticFromSuper);
   }
 
   @Test
-  public void testComplicatedCorrectAssignment(){
+  void testComplicatedCorrectAssignment(){
     testValidOO(complicatedCorrectAssignment);
   }
 
   @Test
   @Ignore
-  public void testComplicatedWrongAssignment(){
+  void testComplicatedWrongAssignment(){
     testInvalidOO("0xB0163", complicatedWrongAssignment);
   }
 
   @Test
   @Ignore
-  public void testWrongAssignment(){
+  void testWrongAssignment(){
     testInvalidOO("0xA0457", wrongAssignment);
   }
 
@@ -146,7 +146,7 @@ public class CoCoTest extends AbstractTest {
     for (Finding f : Log.getFindings()) {
       if (f.isError()) return f;
     }
-    Assert.fail("Expected an error finding, but found none");
+    Assertions.fail("Expected an error finding, but found none");
     return null;
   }
 
@@ -158,19 +158,18 @@ public class CoCoTest extends AbstractTest {
     }catch(Exception e){
       //do nothing here, just catch the exception for further testing
     }
-    assertTrue("Expected a finding, but found none!", Log.getFindingsCount()>=1);
-    assertTrue(Log.getFindings().stream().map(Finding::toString).collect(Collectors.joining(System.lineSeparator())),
-               findError().getMsg().startsWith(errorCode));
+    Assertions.assertTrue(Log.getFindingsCount()>=1, "Expected a finding, but found none!");
+    Assertions.assertTrue(findError().getMsg().startsWith(errorCode),
+                          Log.getFindings().stream().map(Finding::toString).collect(
+                                  Collectors.joining(System.lineSeparator())));
   }
 
   protected void testValidOO(ASTJavaCompilationUnit comp){
     Log.clearFindings();
     SimpleJavaCoCoChecker checker = getOOChecker();
     checker.checkAll(comp);
-    assertEquals("Unexpected findings found: " +
-            Log.getFindings().stream().map(Finding::getMsg).collect(Collectors.joining(System.lineSeparator())),
-            0,
-            Log.getFindingsCount());
+    Assertions.assertEquals(0, Log.getFindingsCount(), "Unexpected findings found: " +
+            Log.getFindings().stream().map(Finding::getMsg).collect(Collectors.joining(System.lineSeparator())));
   }
 
   protected SimpleJavaCoCoChecker getOOChecker(){

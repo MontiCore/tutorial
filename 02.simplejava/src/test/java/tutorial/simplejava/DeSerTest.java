@@ -1,10 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejava;
 
-import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.LogStub;
+import org.junit.jupiter.api.*;
 import tutorial.simplejava._ast.ASTJavaCompilationUnit;
-import tutorial.simplejava._symboltable.*;
 import tutorial.simplejava._symboltable.ISimpleJavaArtifactScope;
 import tutorial.simplejava._symboltable.SimpleJavaPhasedSTC;
 import tutorial.simplejava._symboltable.SimpleJavaSymbols2Json;
@@ -12,19 +10,14 @@ import tutorial.simplejava.types3.SimpleJavaTypeCheck3;
 import de.monticore.io.paths.MCPath;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+class DeSerTest extends AbstractTest {
 
-public class DeSerTest extends AbstractTest {
-
-  @Before
+  @BeforeEach
   public void setup() {
     SimpleJavaMill.globalScope().clear();
     SimpleJavaMill.init();
@@ -41,12 +34,12 @@ public class DeSerTest extends AbstractTest {
   }
 
   @Test
-  public void testSerialization() throws IOException {
+  void testSerialization() throws IOException {
     //TODO implement me!
   }
 
   @Test
-  public void testDeserialization(){
+  void testDeserialization(){
     //TODO implement me!
     String symbolTableFile = "src/test/resources/tutorial/simplejava/symboltable/Check.javasym";
   }

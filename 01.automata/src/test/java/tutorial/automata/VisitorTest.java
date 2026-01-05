@@ -1,6 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.automata;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._ast.ASTState;
 import tutorial.automata._symboltable.StateSymbol;
@@ -9,27 +11,23 @@ import tutorial.automata.visitor.AddPrefixToName;
 import tutorial.automata.visitor.CountStates;
 import tutorial.automata.visitor.CountTransitions;
 import tutorial.automata.visitor.StateCollector;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
-
-public class VisitorTest extends AbstractTest {
+class VisitorTest extends AbstractTest {
 
   @Test
   @Ignore
-  public void testPingPongTCount() throws IOException {
+  void testPingPongTCount() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
     checkCountTransitions(aut, 5);
   }
 
   @Test
   @Ignore // TODO Exercise 5: (once CountStates is implemented)  
-  public void testPingPong() throws IOException {
+  void testPingPong() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
     checkCountTransitions(aut, 5);
     checkCountStates(aut, 3, 1, 1);
@@ -38,7 +36,7 @@ public class VisitorTest extends AbstractTest {
 
   @Test
   @Ignore // TODO Exercise 5 (once both visitors are implemented)  
-  public void testDoor() throws IOException {
+  void testDoor() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Door.aut");
     checkCountTransitions(aut, 4);
     checkCountStates(aut, 5, 2, 1);
@@ -47,7 +45,7 @@ public class VisitorTest extends AbstractTest {
 
   @Test
   @Ignore // TODO Exercise 5 (once both visitors are implemented)  
-  public void testHierarchical() throws IOException {
+  void testHierarchical() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Hierarchical.aut");
     checkCountTransitions(aut, 7);
     checkCountStates(aut, 6, 3, 1);
@@ -60,7 +58,7 @@ public class VisitorTest extends AbstractTest {
     AutomataTraverser traverser = AutomataMill.traverser();
     traverser.add4Automata(ct);
     automaton.accept(traverser);
-    assertEquals("CountTransitions result incorrect ", expectedNumber, ct.countTransitions());
+    Assertions.assertEquals(expectedNumber, ct.countTransitions(), "CountTransitions result incorrect ");
   }
 
   public void checkCountStates(ASTAutomaton automaton, int expectedNumber, int countInitial, int countFinal) {
@@ -68,9 +66,9 @@ public class VisitorTest extends AbstractTest {
     AutomataTraverser traverser = AutomataMill.traverser();
     traverser.add4Automata(cs);
     automaton.accept(traverser);
-    assertEquals("CountStates state result incorrect", expectedNumber, cs.countStates());
-    assertEquals("CountStates initial state result incorrect", countInitial, cs.countInitialStates());
-    assertEquals("CountStates final state result incorrect", countFinal, cs.countFinalStates());
+    Assertions.assertEquals(expectedNumber, cs.countStates(), "CountStates state result incorrect");
+    Assertions.assertEquals(countInitial, cs.countInitialStates(), "CountStates initial state result incorrect");
+    Assertions.assertEquals(countFinal, cs.countFinalStates(), "CountStates final state result incorrect");
   }
 
   public void checkChangeName(ASTAutomaton automaton, String prefix){
@@ -83,9 +81,10 @@ public class VisitorTest extends AbstractTest {
     List<ASTState> stateList = automaton.getSpannedScope()
             .getStateSymbols().values().stream().map(StateSymbol::getAstNode)
             .collect(Collectors.toList());
-    assertFalse("All states were removed?", stateList.isEmpty());
+    Assertions.assertFalse(stateList.isEmpty(), "All states were removed?");
     for(ASTState state: stateList){
-      assertTrue("AddPrefixToName did not add prefix, found " + state.getName() , state.getName().startsWith(prefix));
+      Assertions.assertTrue(state.getName().startsWith(prefix),
+                            "AddPrefixToName did not add prefix, found " + state.getName());
     }
   }
 

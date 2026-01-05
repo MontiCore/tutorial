@@ -1,7 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejavawithautomata;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import tutorial.simplejava._ast.ASTJavaCompilationUnit;
 import tutorial.simplejavawithautomata._cocos.SimpleJavaWithAutomataCoCoChecker;
 import tutorial.simplejavawithautomata._symboltable.SimpleJavaWithAutomataPhasedSTC;
@@ -18,10 +19,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-public class CoCoTest extends AbstractTest {
+class CoCoTest extends AbstractTest {
 
   private ASTJavaCompilationUnit check;
   private ASTJavaCompilationUnit bar;
@@ -35,7 +33,7 @@ public class CoCoTest extends AbstractTest {
 
   private ASTJavaCompilationUnit invalidAutomaton;
 
-  @BeforeClass
+  @BeforeAll
   public static void init(){
     LogStub.init();
     LogStub.enableFailQuick(false);
@@ -44,7 +42,7 @@ public class CoCoTest extends AbstractTest {
     Log.clearFindings();
   }
 
-  @Before
+  @BeforeEach
   public void setup() throws IOException {
     SimpleJavaWithAutomataMill.globalScope().clear();
     BasicSymbolsMill.initializePrimitives();
@@ -99,24 +97,25 @@ public class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // TODO: Broken
-  public void testValidCheckOOAndAbstract(){
+  @Disabled
+    // TODO: Broken
+  void testValidCheckOOAndAbstract(){
     testValidOO(check);
   }
 
   @Test
-  public void testValidBarOOAndAbstract(){
+  void testValidBarOOAndAbstract(){
     testValidOO(bar);
   }
 
   @Test
-  public void testValidInheritanceBarOOAndAbstract(){
+  void testValidInheritanceBarOOAndAbstract(){
     testValidOO(inheritanceBar);
   }
 
   @Test
   @Ignore //TODO Exercise 2 
-  public void testStaticAbstractOOFields(){
+  void testStaticAbstractOOFields(){
     testInvalidOO("0xF736F", staticAbstractOOFields);
   }
 
@@ -133,25 +132,25 @@ public class CoCoTest extends AbstractTest {
 //  }
 
   @Test
-  public void testComplicatedCorrectAssignment(){
+  void testComplicatedCorrectAssignment(){
     testValidOO(complicatedCorrectAssignment);
   }
 
   @Test
   @Ignore //TODO Exercise 2 
-  public void testComplicatedWrongAssignment(){
+  void testComplicatedWrongAssignment(){
     testInvalidOO("0xB0163", complicatedWrongAssignment);
   }
 
   @Test
   @Ignore //TODO Exercise 2 
-  public void testWrongAssignment(){
+  void testWrongAssignment(){
     testInvalidOO("0xA0457", wrongAssignment);
   }
 
   @Test
   @Ignore //TODO Exercise 2 
-  public void testInvalidAutomaton(){
+  void testInvalidAutomaton(){
     testInvalidOO("0xA005", invalidAutomaton);
   }
 
@@ -163,9 +162,10 @@ public class CoCoTest extends AbstractTest {
     }catch(Exception e){
       //do nothing here, just catch the exception for further testing
     }
-    assertTrue("Expected finding, but found none!", Log.getFindingsCount()>=1);
-    assertTrue(Log.getFindings().stream().map(Finding::toString).collect(Collectors.joining(System.lineSeparator())),
-               findError().getMsg().startsWith(errorCode));
+    Assertions.assertTrue(Log.getFindingsCount()>=1, "Expected finding, but found none!");
+    Assertions.assertTrue(findError().getMsg().startsWith(errorCode),
+                          Log.getFindings().stream().map(Finding::toString).collect(
+                                  Collectors.joining(System.lineSeparator())));
   }
 
 
@@ -173,7 +173,7 @@ public class CoCoTest extends AbstractTest {
     for (Finding f : Log.getFindings()) {
       if (f.isError()) return f;
     }
-    Assert.fail("Expected an error finding, but found none");
+    Assertions.fail("Expected an error finding, but found none");
     return null;
   }
 
@@ -181,7 +181,7 @@ public class CoCoTest extends AbstractTest {
     Log.clearFindings();
     SimpleJavaWithAutomataCoCoChecker checker = getOOChecker();
     checker.checkAll(comp);
-    assertEquals(0, Log.getFindingsCount());
+    Assertions.assertEquals(0, Log.getFindingsCount());
   }
 
   protected SimpleJavaWithAutomataCoCoChecker getOOChecker(){

@@ -10,7 +10,7 @@ plugins {
 
 allprojects {
 
-  group 'de.monticore'
+  group = 'de.monticore'
   buildDir = "$projectDir/target"
 
 
@@ -29,16 +29,16 @@ allprojects {
 
 subprojects {
 
-  test {
-    useJUnit()
+  tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 
     testLogging {
       // controls whether test output is shown
       showStandardStreams = !("false").equals(getProperty('showTestOutput'))
-      showExceptions true
-      showCauses true
-      showStackTraces true
-      exceptionFormat TestExceptionFormat.FULL
+      showExceptions = true
+      showCauses = true
+      showStackTraces = true
+      exceptionFormat = TestExceptionFormat.FULL
       info {
         events TestLogEvent.FAILED,
                 TestLogEvent.PASSED,

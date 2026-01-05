@@ -3,6 +3,7 @@ package tutorial.simplejavawithautomata;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.symbols.oosymbols._symboltable.MethodSymbol;
+import org.junit.jupiter.api.Assertions;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._ast.ASTState;
 import tutorial.automata._symboltable.AutomatonSymbol;
@@ -17,19 +18,16 @@ import tutorial.simplejavawithautomata._symboltable.SimpleJavaWithAutomataScope;
 import tutorial.simplejavawithautomata._visitor.SimpleJavaWithAutomataTraverser;
 import tutorial.simplejavawithautomata.types3.SimpleJavaWithAutomataTypeCheck3;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+class VisitorTest extends AbstractTest {
 
-public class VisitorTest extends AbstractTest {
-
-  @Before
+  @BeforeEach
   public void setup(){
     SimpleJavaWithAutomataMill.globalScope().clear();
     SimpleJavaWithAutomataMill.init();
@@ -39,15 +37,15 @@ public class VisitorTest extends AbstractTest {
 
   @Test
   @Ignore
-  public void testVisitorsOnAutomaton() throws IOException {
+  void testVisitorsOnAutomaton() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);
     Optional<MethodSymbol> getMaxSymbol = as.resolveMethodDown("Bar.getMax");
-    assertTrue("getMax not found", getMaxSymbol.isPresent());
+    Assertions.assertTrue(getMaxSymbol.isPresent(), "getMax not found");
     SimpleJavaWithAutomataScope s = (SimpleJavaWithAutomataScope) ((ASTJavaMethod)getMaxSymbol.get()
             .getAstNode()).getJavaBlock().getSpannedScope();
     Optional<AutomatonSymbol> aut = s.resolveAutomatonDown("Door");
-    assertTrue(aut.isPresent());
+    Assertions.assertTrue(aut.isPresent());
     ASTAutomaton automaton = aut.get().getAstNode();
     checkCountTransitions(automaton, 4);
     checkCountStates(automaton, 5, 2, 1);
@@ -56,7 +54,7 @@ public class VisitorTest extends AbstractTest {
 
   @Test
   @Ignore
-  public void testVisitorsOnWholeModel() throws IOException {
+  void testVisitorsOnWholeModel() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);
     checkCountTransitions(ast, 4);
@@ -69,7 +67,7 @@ public class VisitorTest extends AbstractTest {
     SimpleJavaWithAutomataTraverser traverser = SimpleJavaWithAutomataMill.traverser();
     traverser.add4Automata(ct);
     automaton.accept(traverser);
-    assertEquals(expectedNumber, ct.countTransitions());
+    Assertions.assertEquals(expectedNumber, ct.countTransitions());
   }
 
   public void checkCountStates(ASTNode automaton, int expectedNumber, int countInitial, int countFinal) {
@@ -77,9 +75,9 @@ public class VisitorTest extends AbstractTest {
     SimpleJavaWithAutomataTraverser traverser = SimpleJavaWithAutomataMill.traverser();
     traverser.add4Automata(cs);
     automaton.accept(traverser);
-    assertEquals(expectedNumber, cs.countStates());
-    assertEquals(countInitial, cs.countInitialStates());
-    assertEquals(countFinal, cs.countFinalStates());
+    Assertions.assertEquals(expectedNumber, cs.countStates());
+    Assertions.assertEquals(countInitial, cs.countInitialStates());
+    Assertions.assertEquals(countFinal, cs.countFinalStates());
   }
 
   public void checkChangeName(ASTNode automaton, String prefix){
@@ -90,9 +88,9 @@ public class VisitorTest extends AbstractTest {
     traverser.add4Automata(sc);
     automaton.accept(traverser);
     List<ASTState> stateList = sc.collectStates();
-    assertFalse(stateList.isEmpty());
+    Assertions.assertFalse(stateList.isEmpty());
     for(ASTState state: stateList){
-      assertTrue(state.getName().startsWith(prefix));
+      Assertions.assertTrue(state.getName().startsWith(prefix));
     }
   }
 

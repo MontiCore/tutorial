@@ -17,39 +17,7 @@ dependencies {
 
     // TODO: add class2mc dependency
 
-    testImplementation "junit:junit:$junit_version"
-}
-
-
-test {
-    useJUnit()
-
-    testLogging {
-        // controls whether test output is shown
-        showStandardStreams = !("false").equals(getProperty('showTestOutput'))
-        showExceptions true
-        showCauses true
-        showStackTraces true
-        exceptionFormat TestExceptionFormat.FULL
-        info {
-            events TestLogEvent.FAILED,
-                    TestLogEvent.PASSED,
-                    TestLogEvent.SKIPPED,
-                    TestLogEvent.STANDARD_OUT
-        }
-    }
-    afterTest { desc, result ->
-        logger.lifecycle "${desc.className} > ${desc.name} ${result.resultType}"
-    }
-    afterSuite { desc, result ->
-        if (!desc.parent) { // will match the outermost suite
-            def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
-            def startItem = '|  ', endItem = '  |'
-            logger.lifecycle startItem + output + endItem
-        }
-    }
-    reports {
-        junitXml.required = false
-        html.required = false
-    }
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation testFixtures("de.monticore:monticore-grammar:$mc_version")
 }

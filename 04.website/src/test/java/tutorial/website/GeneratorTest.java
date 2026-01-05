@@ -1,24 +1,22 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.website;
 
+import org.junit.jupiter.api.Assertions;
 import tutorial.website._ast.ASTWebsite;
 import tutorial.website._visitor.WebsiteTraverser;
 import tutorial.website._visitor.WebsiteVisitor2;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertTrue;
-
-public class GeneratorTest extends AbstractTest {
+class GeneratorTest extends AbstractTest {
 
   @Test
   @Ignore //TODO: Exercise 3 
-  public void testSERWTH() throws IOException {
+  void testSERWTH() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/SERWTH.web");
     final Path outputDirectory = Paths.get("target/website/");
     executeGenerator(ast, outputDirectory);
@@ -26,7 +24,7 @@ public class GeneratorTest extends AbstractTest {
 
   @Test
   @Ignore //TODO: Exercise 3 
-  public void testDream() throws IOException {
+  void testDream() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/Dream.web");
     final Path outputDirectory = Paths.get("target/website/");
     executeGenerator(ast, outputDirectory);
@@ -34,7 +32,7 @@ public class GeneratorTest extends AbstractTest {
 
   @Test
   @Ignore //TODO: Exercise 3 
-  public void testSinglePage() throws IOException {
+  void testSinglePage() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/SinglePage.web");
     final Path outputDirectory = Paths.get("target/website/");
     executeGenerator(ast, outputDirectory);
@@ -53,9 +51,8 @@ public class GeneratorTest extends AbstractTest {
     WebsiteVisitor2 visitor = new WebsiteVisitor2() {
       public void visit(tutorial.website._ast.ASTPage node) {
         File expectedFile = Paths.get(expectedFolder + "/" + node.getName() + ".html").toFile();
-        assertTrue(
-          String.format("Expected generated file '%s' to exist", expectedFile.getAbsolutePath()),
-          expectedFile.exists());
+        Assertions.assertTrue(expectedFile.exists(),
+                              String.format("Expected generated file '%s' to exist", expectedFile.getAbsolutePath()));
       }
     };
 
