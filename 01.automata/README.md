@@ -544,17 +544,23 @@ qualified name as a String.
 <!-- (c) https://github.com/MontiCore/monticore -->
 ## Application of Visitors: Pretty Printer 
 Pretty printing is the opposite to parsing. 
-The input for a parser is a text file, the model,
+The input for a parser is a textual model
 and its output is the AST conforming to the model. 
 For a pretty printer, this is the exact opposite. 
-Its input is an AST and its output is the model conforming to this AST 
+Its input is an AST and its output is the textual model conforming to this AST 
 and the concrete syntax of the language. 
 A pretty printer can be useful after the AST was transformed (e.g., 
 adding a prefix to each state name). 
 Pretty printing the transformed AST and storing the contents in a file 
 to view the transformed model might be interesting.
 
-MontiCore attempts to generate a pretty printer for each language.
+By default, an AST can be pretty printed via the mill of a language:
+```java
+String textual = AutomataMill.prettyPrint(ast, /*withComments*/ false);
+```
+
+
+MontiCore generates a pretty printer for each language.
 For a language `A`, the two classes `APrettyPrinter` and `AFullPrettyPrinter` 
 will be generated.
 The `APrettyPrinter` utilizes the visitor pattern and implements the 
@@ -594,6 +600,10 @@ One possible handle method for the printer handling an `ASTAutomaton`
 is displayed below.
 
 ```java
+// In the best-case, this method should be generated
+// For this tutorial, we will take a look at the 
+// cleaned-up generated source code
+@Override
 public void handle(ASTAutomaton node) {
     if (this.isPrintComments()) {
       CommentPrettyPrinter.printPreComments(node, getPrinter());
