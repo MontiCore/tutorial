@@ -256,7 +256,7 @@ Modify or extend the `Transition` production by an optional `Name` output value.
 Use a sensible usage name for the output.
 You will find a corresponding model under `src/test/resources/tutorial/PingPongMealy.aut`.
 To test your grammar modifications with that model, go to `src/test/java/ParserTest.java`
-and remove the `@Ignore` annotation before the corresponding test method.
+and remove the `@Disabled` annotation before the corresponding test method.
 After that, rebuild your language by executing `gradle 01.automata:build` again.
 Make sure that your modification is only optional.
 Otherwise, it can have the side effects of original (non-mealy machines) not
@@ -325,7 +325,7 @@ The skeletons for the Context Conditions `AutomatonHasAtLeastOneFinalState`,
 Implement them! 
 To test that the CoCos are implemented correctly, execute every test except 
 for the test `testTransitionSourceDoesNotExist` in the class `CoCoTest`.
-As before, enable them by removing the `@Ignore` flag and running the tests 
+As before, enable them by removing the `@Disabled` flag and running the tests 
 or rebuilding the project.
 Before implementing the corresponding CoCo checks, these tests will fail.
 Afterwards, all mentioned tests should succeed.
@@ -434,7 +434,7 @@ states.
 `AddPrefixToName` should rename all states of an automaton by adding a 
 given prefix.
 After realizing your visitors, test your implementation by removing the 
-`@Ignore` annotation before the test methods in the `VisitorTest` class and 
+`@Disabled` annotation before the test methods in the `VisitorTest` class and 
 executing the methods.<!-- (c) https://github.com/MontiCore/monticore -->
 ## Symbol Table 
 Symbol tables are a common practice in compiler construction for enabling 

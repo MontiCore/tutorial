@@ -20,16 +20,16 @@ class ParserTest extends AbstractTest {
   }
   
   @Test
-  @Ignore 
+  @org.junit.jupiter.api.Disabled 
   void testYourModel() throws IOException {
-    //TODO Exercise 1: Delete the @Ignore annotation and insert the path to your model similar to the other test methods!
+    //TODO Exercise 1: Delete the @org.junit.jupiter.api.Disabled annotation and insert the path to your model similar to the other test methods!
     //ASTAutomaton aut = parse("src/test/resources/tutorial/automata/<YOUR_MODEL>.aut");
   }
   
   @Test
-  @Ignore 
+  @org.junit.jupiter.api.Disabled 
   void testPingPongMealy() throws IOException {
-    //TODO Exercise 2: Delete the @Ignore annotation to test if the mealy automaton parses correctly
+    //TODO Exercise 2: Delete the @org.junit.jupiter.api.Disabled annotation to test if the mealy automaton parses correctly
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPongMealy.aut");
   }
 }

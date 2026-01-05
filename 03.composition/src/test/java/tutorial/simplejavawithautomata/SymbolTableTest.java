@@ -25,7 +25,7 @@ class SymbolTableTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO Exercise 1 
+  @org.junit.jupiter.api.Disabled //TODO Exercise 1 
   void testPackage() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope symbolTable = createSymbolTable(ast);
@@ -35,7 +35,7 @@ class SymbolTableTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO Exercise 1 
+  @org.junit.jupiter.api.Disabled //TODO Exercise 1 
   void testSymbolCompletion() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope symbolTable = createSymbolTable(ast);

@@ -108,19 +108,19 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testStaticAbstractOOMethods(){
     testInvalidOO("0xF736F", staticAbstractOOMethods);
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testStaticAbstractOOFields(){
     testInvalidOO("0xF736F", staticAbstractOOFields);
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testInheritedCannotUseStaticFromSuper(){
     testInvalidOO("0xF736F", inheritedCannotUseStaticFromSuper);
   }
@@ -131,13 +131,13 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testComplicatedWrongAssignment(){
     testInvalidOO("0xB0163", complicatedWrongAssignment);
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testWrongAssignment(){
     testInvalidOO("0xA0457", wrongAssignment);
   }

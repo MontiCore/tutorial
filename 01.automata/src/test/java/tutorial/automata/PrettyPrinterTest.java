@@ -13,19 +13,19 @@ import java.util.Optional;
 class PrettyPrinterTest extends AbstractTest {
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testPrettyPrinter() throws IOException {
     testPrettyPrinter("src/test/resources/tutorial/automata/PingPong.aut");
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testPrettyPrinterHierarchical() throws IOException {
     testPrettyPrinter("src/test/resources/tutorial/automata/Hierarchical.aut");
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testPrettyPrinterAttr() throws IOException {
     testPrettyPrinter("src/test/resources/tutorial/automata/PingPongAttributes.aut");
   }

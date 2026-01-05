@@ -36,7 +36,7 @@ class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testVisitorsOnAutomaton() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);
@@ -53,7 +53,7 @@ class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testVisitorsOnWholeModel() throws IOException {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);

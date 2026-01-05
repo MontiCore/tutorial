@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 class GeneratorTest extends AbstractTest {
 
   @Test
-  @Ignore //TODO: Exercise 3 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 3 
   void testSERWTH() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/SERWTH.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -23,7 +23,7 @@ class GeneratorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO: Exercise 3 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 3 
   void testDream() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/Dream.web");
     final Path outputDirectory = Paths.get("target/website/");
@@ -31,7 +31,7 @@ class GeneratorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO: Exercise 3 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 3 
   void testSinglePage() throws IOException {
     ASTWebsite ast = parse("src/test/resources/tutorial/website/valid/SinglePage.web");
     final Path outputDirectory = Paths.get("target/website/");

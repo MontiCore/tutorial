@@ -23,63 +23,63 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testSERWTH() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/valid/SERWTH.web");
     checkValid(website);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testDream() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/valid/Dream.web");
     checkValid(website);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testSinglePage() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/valid/SinglePage.web");
     checkValid(website);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testLinkTitleEmpty() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/invalid/LinkTitleEmpty.web");
     checkInvalid(website, LinkTitleNotEmpty.errorCode);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testMultipleStartPages() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/invalid/MultipleStartPages.web");
     checkInvalid(website, ExactlyOneStartPage.errorCode);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testNavigationReferencesInaccessiblePage() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/invalid/NavigationReferencesInaccessiblePage.web");
     checkInvalid(website, NavigationItemPageExists.errorCode);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testPageNameLowerCase() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/invalid/PageNameLowerCase.web");
     checkInvalid(website, PageNameStartUpperCase.errorCode);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testPageNameNotUnique() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/invalid/PageNameNotUnique.web");
     checkInvalid(website, PageNameIsUnique.errorCode);
   }
 
   @Test
-  @Ignore //TODO: Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO: Exercise 2 
   void testWebsiteNameLowerCase() throws IOException {
     ASTWebsite website = parse("src/test/resources/tutorial/website/invalid/WebsiteNameLowerCase.web");
     checkInvalid(website, WebsiteNameStartUpperCase.errorCode);

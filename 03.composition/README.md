@@ -324,7 +324,7 @@ class by adding the previously designed and implemented automata context
 conditions.
 Do this in a clever way and not by specifying each CoCo individually.
 Run all tests of the `CoCoTest` class.
-Remember, that you might have to remove some `@Ignore` annotations.
+Remember, that you might have to remove some `@Disabled` annotations.
 <!-- (c) https://github.com/MontiCore/monticore -->
 
 Next, continue with [Chapter 4](../04.website/README.md)

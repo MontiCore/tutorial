@@ -26,7 +26,7 @@ class SymTabTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testPackageSet() throws IOException {
     ASTJavaCompilationUnit bar = parse("src/test/resources/tutorial/simplejava/valid/Bar.sjava");
     SimpleJavaScopesGenitorDelegator st = SimpleJavaMill.scopesGenitorDelegator();
@@ -35,7 +35,7 @@ class SymTabTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testTypesSet() throws IOException {
     ASTJavaCompilationUnit bar = parse("src/test/resources/tutorial/simplejava/valid/Bar.sjava");
     ISimpleJavaArtifactScope as = createSymbolTable(bar);

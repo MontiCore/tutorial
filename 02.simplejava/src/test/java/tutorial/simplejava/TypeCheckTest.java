@@ -43,7 +43,7 @@ class TypeCheckTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testSynthesizer() throws IOException {
     SimpleJavaParser p = SimpleJavaMill.parser();
 
@@ -67,7 +67,7 @@ class TypeCheckTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testDeriver() throws IOException {
     SimpleJavaParser p = SimpleJavaMill.parser();
 

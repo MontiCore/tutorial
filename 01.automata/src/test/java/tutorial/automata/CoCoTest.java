@@ -58,21 +58,21 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // TODO: Exercise 3
+  @org.junit.jupiter.api.Disabled // TODO: Exercise 3
   void testInvalidAutomatonName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/AutName.aut");
     checkInvalid(aut, AutomatonNameStartsWithCapitalLetter.errorCode);
   }
 
   @Test
-  @Ignore // TODO: Exercise 3
+  @org.junit.jupiter.api.Disabled // TODO: Exercise 3
   void testInvalidStateName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/StateName.aut");
     checkInvalid(aut, StateNameStartsWithCapitalLetter.errorCode);
   }
 
   @Test
-  @Ignore // TODO: Exercise 3
+  @org.junit.jupiter.api.Disabled // TODO: Exercise 3
   void testInvalidTransitionName() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/TransName.aut");
     checkInvalid(aut, TransitionNameUncapitalized.errorCode);
@@ -85,14 +85,14 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // TODO: Exercise 3
+  @org.junit.jupiter.api.Disabled // TODO: Exercise 3
   void testNoFinalState() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/NoFinal.aut");
     checkInvalid(aut, AutomatonHasAtLeastOneFinalState.errorCode);
   }
   
   @Test
-  @Ignore // TODO: Exercise 6
+  @org.junit.jupiter.api.Disabled // TODO: Exercise 6
   void testTransitionSourceDoesNotExist() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/invalid/TransitionSource.aut");
     checkInvalid(aut, TransitionSourceIsState.errorCode);

@@ -17,7 +17,7 @@ class ToolTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // Task 6 
+  @org.junit.jupiter.api.Disabled // Task 6 
   void testReports() throws IOException {
     AutomataTool.main(new String[]{"-i", "src/test/resources/tutorial/automata/PingPong.aut",
             "-r", "target/automata/reports/"});
@@ -29,7 +29,7 @@ class ToolTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // Task 8 
+  @org.junit.jupiter.api.Disabled // Task 8 
   void testPrettyPrinter() throws IOException {
     ASTAutomaton originalAut = parse("src/test/resources/tutorial/automata/PingPong.aut");
     AutomataTool.main(new String[]{"-i", "src/test/resources/tutorial/automata/PingPong.aut",

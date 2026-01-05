@@ -20,7 +20,7 @@ class Class2MCTest extends AbstractTest {
   }
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void test() throws Exception {
     // Test, that we are successfully able to resolve java symbols, such as String, Optional, ...
     Assertions.assertTrue(SimpleJavaMill

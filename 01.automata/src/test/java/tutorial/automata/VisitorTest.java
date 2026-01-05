@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 class VisitorTest extends AbstractTest {
 
   @Test
-  @Ignore
+  @org.junit.jupiter.api.Disabled
   void testPingPongTCount() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
     checkCountTransitions(aut, 5);
   }
 
   @Test
-  @Ignore // TODO Exercise 5: (once CountStates is implemented)  
+  @org.junit.jupiter.api.Disabled // TODO Exercise 5: (once CountStates is implemented)  
   void testPingPong() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
     checkCountTransitions(aut, 5);
@@ -35,7 +35,7 @@ class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // TODO Exercise 5 (once both visitors are implemented)  
+  @org.junit.jupiter.api.Disabled // TODO Exercise 5 (once both visitors are implemented)  
   void testDoor() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Door.aut");
     checkCountTransitions(aut, 4);
@@ -44,7 +44,7 @@ class VisitorTest extends AbstractTest {
   }
 
   @Test
-  @Ignore // TODO Exercise 5 (once both visitors are implemented)  
+  @org.junit.jupiter.api.Disabled // TODO Exercise 5 (once both visitors are implemented)  
   void testHierarchical() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/Hierarchical.aut");
     checkCountTransitions(aut, 7);

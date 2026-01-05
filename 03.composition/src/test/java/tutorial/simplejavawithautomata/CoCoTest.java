@@ -114,7 +114,7 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO Exercise 2 
   void testStaticAbstractOOFields(){
     testInvalidOO("0xF736F", staticAbstractOOFields);
   }
@@ -137,19 +137,19 @@ class CoCoTest extends AbstractTest {
   }
 
   @Test
-  @Ignore //TODO Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO Exercise 2 
   void testComplicatedWrongAssignment(){
     testInvalidOO("0xB0163", complicatedWrongAssignment);
   }
 
   @Test
-  @Ignore //TODO Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO Exercise 2 
   void testWrongAssignment(){
     testInvalidOO("0xA0457", wrongAssignment);
   }
 
   @Test
-  @Ignore //TODO Exercise 2 
+  @org.junit.jupiter.api.Disabled //TODO Exercise 2 
   void testInvalidAutomaton(){
     testInvalidOO("0xA005", invalidAutomaton);
   }
