@@ -1,4 +1,4 @@
-# Introduction
+# Introduction to the MontiCore Language Workbench
 MontiCore is a language workbench for the efficient development of domain-specific languages (DSLs).
 It processes an extended grammar format which defines the DSL and generates Java components for processing the DSL documents.
 Examples for these components are parsers, AST classes, symboltables or pretty printers.
