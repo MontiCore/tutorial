@@ -39,8 +39,8 @@ For this, you will implement a generator with the help of FreeMarker templates a
 #### Exercise 0
 This exercise will get you started with regard to installing software.
 Checkout/Clone the repository using git.
-Next, install Gradle version 7.6 on your computer.
-We recommend the use of Java 11 (but other versions might work too).
+Next, install Gradle version 8.14 on your computer.
+We recommend the use of Java 21 (but other versions might work as well).
 
 Depending on what IDE you use, it should be able to import the project.
 The various chapters are added as subprojects.
