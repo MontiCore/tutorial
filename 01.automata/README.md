@@ -125,7 +125,7 @@ grammar Automata extends de.monticore.MCBasics,
          ( ("{" (State | Transition)* "}") | ";") ;
 
  Transition =
-         from:Name@MCQualifiedName "-" input:Name ">" to:MCQualifiedName ";" ;
+         from:MCQualifiedName "-" input:Name ">" to:MCQualifiedName ";" ;
 
 }
 ```
