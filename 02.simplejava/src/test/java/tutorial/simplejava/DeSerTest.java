@@ -1,19 +1,22 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejava;
 
-import org.junit.jupiter.api.*;
+import de.monticore.io.paths.MCPath;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import tutorial.simplejava._ast.ASTJavaCompilationUnit;
 import tutorial.simplejava._symboltable.ISimpleJavaArtifactScope;
 import tutorial.simplejava._symboltable.SimpleJavaPhasedSTC;
 import tutorial.simplejava._symboltable.SimpleJavaSymbols2Json;
 import tutorial.simplejava.types3.SimpleJavaTypeCheck3;
-import de.monticore.io.paths.MCPath;
-import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
-import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DeSerTest extends AbstractTest {
 

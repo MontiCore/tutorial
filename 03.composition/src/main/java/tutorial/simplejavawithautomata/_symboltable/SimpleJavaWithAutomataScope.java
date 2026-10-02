@@ -31,10 +31,13 @@ public class SimpleJavaWithAutomataScope extends SimpleJavaWithAutomataScopeTOP 
 
   /**
    * override method from ExpressionBasisScope to resolve all methods correctly
-   * method needed to be overridden because of special cases: if the scope is spanned by a type symbol you have to look for fitting methods in its super types too because of inheritance
-   * the method resolves the methods like the overridden method and if the spanning symbol is a type symbol it additionally looks for methods in its super types
+   * method needed to be overridden because of special cases: if the scope is spanned by a type
+   * symbol you have to look for fitting methods in its super types too because of inheritance
+   * the method resolves the methods like the overridden method and if the spanning symbol is a type
+   * symbol it additionally looks for methods in its super types
    * it is used by the method getMethodList in SymTypeExpression
    */
+  @SuppressWarnings("removal")
   @Override
   public List<FunctionSymbol> resolveFunctionLocallyMany(boolean foundSymbols, String name, AccessModifier modifier,
                                                          Predicate<FunctionSymbol> predicate) {
@@ -55,10 +58,13 @@ public class SimpleJavaWithAutomataScope extends SimpleJavaWithAutomataScopeTOP 
 
   /**
    * override method from ExpressionBasisScope to resolve all fields correctly
-   * method needed to be overridden because of special cases: if the scope is spanned by a type symbol you have to look for fitting fields in its super types too because of inheritance
-   * the method resolves the fields like the overridden method and if the spanning symbol is a type symbol it additionally looks for fields in its super types
+   * method needed to be overridden because of special cases: if the scope is spanned by a type
+   * symbol you have to look for fitting fields in its super types too because of inheritance
+   * the method resolves the fields like the overridden method and if the spanning symbol is a type
+   * symbol it additionally looks for fields in its super types
    * it is used by the method getFieldList in SymTypeExpression
    */
+  @SuppressWarnings("removal")
   @Override
   public List<VariableSymbol> resolveVariableLocallyMany(boolean foundSymbols, String name, AccessModifier modifier, Predicate<VariableSymbol> predicate){
     //resolve methods by using overridden method

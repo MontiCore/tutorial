@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class GeneratorTest extends AbstractTest {
 
   @Test
@@ -51,7 +53,7 @@ class GeneratorTest extends AbstractTest {
     WebsiteVisitor2 visitor = new WebsiteVisitor2() {
       public void visit(tutorial.website._ast.ASTPage node) {
         File expectedFile = Paths.get(expectedFolder + "/" + node.getName() + ".html").toFile();
-        Assertions.assertTrue(expectedFile.exists(),
+        assertTrue(expectedFile.exists(),
                               String.format("Expected generated file '%s' to exist", expectedFile.getAbsolutePath()));
       }
     };

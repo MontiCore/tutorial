@@ -1,16 +1,19 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.automata;
 
-import org.junit.jupiter.api.*;
+import de.se_rwth.commons.logging.Finding;
+import de.se_rwth.commons.logging.Log;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._cocos.AutomataCoCoChecker;
 import tutorial.automata.cocos.*;
-import de.se_rwth.commons.logging.Finding;
-import de.se_rwth.commons.logging.Log;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CoCoTest extends AbstractTest {
 
@@ -27,16 +30,16 @@ class CoCoTest extends AbstractTest {
   public void checkValid(ASTAutomaton node){
     AutomataCoCoChecker checker = new AutomataCoCos().getCoCoChecker();
     checker.checkAll(node);
-    Assertions.assertTrue(Log.getFindings().isEmpty());
+    assertTrue(Log.getFindings().isEmpty());
   }
 
   public void checkInvalid(ASTAutomaton node, String errorCode){
     AutomataCoCoChecker checker = new AutomataCoCos().getCoCoChecker();
     checker.checkAll(node);
     List<Finding> findings = Log.getFindings();
-    Assertions.assertFalse(findings.isEmpty());
-    Assertions.assertEquals(1, findings.size());
-    Assertions.assertTrue(findings.get(0).getMsg().startsWith(errorCode));
+    assertFalse(findings.isEmpty());
+    assertEquals(1, findings.size());
+    assertTrue(findings.get(0).getMsg().startsWith(errorCode));
   }
 
   @Test

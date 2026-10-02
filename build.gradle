@@ -4,14 +4,14 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
   id "java-library" // Java plus providing specific knowledge about Java libraries
   id "de.monticore.generator" version "$mc_version" // MontiCore Plugin
-  id "com.github.johnrengelman.shadow" version "7.1.2" // for creating the all-in-one jar
+  id "com.gradleup.shadow" version "8.3.11" // for creating the all-in-one jar
   id 'maven-publish'
 }
 
 allprojects {
 
   group = 'de.monticore'
-  buildDir = "$projectDir/target"
+  layout.buildDirectory = layout.projectDirectory.dir("target")
 
 
   repositories {
@@ -19,9 +19,9 @@ allprojects {
       mavenLocal()
     }
     maven {
-      credentials.username mavenUser
-      credentials.password mavenPassword
-      url repo
+      credentials.username = mavenUser
+      credentials.password = mavenPassword
+      url = repo
     }
     mavenCentral()
   }
@@ -46,16 +46,26 @@ subprojects {
                 TestLogEvent.STANDARD_OUT
       }
     }
-    afterTest { desc, result ->
-      logger.lifecycle "${desc.className} > ${desc.name} ${result.resultType}"
-    }
-    afterSuite { desc, result ->
-      if (!desc.parent) { // will match the outermost suite
-        def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
-        def startItem = '|  ', endItem = '  |'
-        logger.lifecycle startItem + output + endItem
+    addTestListener(new TestListener() {
+      void afterTest(TestDescriptor testDescriptor, TestResult result) {
+        logger.lifecycle "${testDescriptor.getClassName()} > ${testDescriptor.parent && testDescriptor.parent.getName() != testDescriptor.getClassName() ? testDescriptor.parent.getName() + " " + testDescriptor.getDisplayName() : testDescriptor.getName()} ${result.resultType}"
       }
-    }
+
+      void afterSuite(TestDescriptor suite, TestResult result) {
+        if (!suite.parent) { // will match the outermost suite
+          def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+          def startItem = '|  ', endItem = '  |'
+          logger.lifecycle startItem + output + endItem
+        }
+      }
+
+      // Required for Gradle version < 9.x
+      void beforeSuite(TestDescriptor suite) {
+      }
+
+      void beforeTest(TestDescriptor testDescriptor) {
+      }
+    })
     reports {
       junitXml.required = false
       html.required = false
@@ -71,8 +81,8 @@ publishing {
     }
   }
   repositories.maven {
-    credentials.username mavenUser
-    credentials.password mavenPassword
+    credentials.username = mavenUser
+    credentials.password = mavenPassword
     def releasesRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-releases/"
     def snapshotsRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/"
     url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl

@@ -1,21 +1,15 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 plugins {
     id "java-library"
     id "de.monticore.generator"
     id "jacoco"
 }
 
-
-
-
 dependencies {
     // Depend on the MontiCore language library (which in term depends on the runtime)
     grammar "de.monticore:monticore-grammar:$mc_version"
 
-    implementation "org.apache.commons:commons-lang3:3.9"
-    implementation "commons-cli:commons-cli:1.4"
+    implementation "org.apache.commons:commons-lang3:3.20.0"
+    implementation "commons-cli:commons-cli:1.11.0"
 
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

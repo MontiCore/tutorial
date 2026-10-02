@@ -1,7 +1,12 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.simplejava;
 
-import org.junit.jupiter.api.Assertions;
+import de.monticore.io.paths.MCPath;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.se_rwth.commons.logging.Finding;
+import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,16 +15,12 @@ import tutorial.simplejava._cocos.SimpleJavaCoCoChecker;
 import tutorial.simplejava._symboltable.SimpleJavaPhasedSTC;
 import tutorial.simplejava.cocos.SimpleJavaCoCos;
 import tutorial.simplejava.types3.SimpleJavaTypeCheck3;
-import de.monticore.io.paths.MCPath;
-import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
-import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.se_rwth.commons.logging.Finding;
-import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.LogStub;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CoCoTest extends AbstractTest {
 
@@ -146,7 +147,7 @@ class CoCoTest extends AbstractTest {
     for (Finding f : Log.getFindings()) {
       if (f.isError()) return f;
     }
-    Assertions.fail("Expected an error finding, but found none");
+    fail("Expected an error finding, but found none");
     return null;
   }
 
@@ -158,8 +159,8 @@ class CoCoTest extends AbstractTest {
     }catch(Exception e){
       //do nothing here, just catch the exception for further testing
     }
-    Assertions.assertTrue(Log.getFindingsCount()>=1, "Expected a finding, but found none!");
-    Assertions.assertTrue(findError().getMsg().startsWith(errorCode),
+    assertTrue(Log.getFindingsCount()>=1, "Expected a finding, but found none!");
+    assertTrue(findError().getMsg().startsWith(errorCode),
                           Log.getFindings().stream().map(Finding::toString).collect(
                                   Collectors.joining(System.lineSeparator())));
   }
@@ -168,7 +169,7 @@ class CoCoTest extends AbstractTest {
     Log.clearFindings();
     SimpleJavaCoCoChecker checker = getOOChecker();
     checker.checkAll(comp);
-    Assertions.assertEquals(0, Log.getFindingsCount(), "Unexpected findings found: " +
+    assertEquals(0, Log.getFindingsCount(), "Unexpected findings found: " +
             Log.getFindings().stream().map(Finding::getMsg).collect(Collectors.joining(System.lineSeparator())));
   }
 

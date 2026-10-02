@@ -10,10 +10,6 @@ import de.monticore.expressions.expressionsbasis._ast.ASTLiteralExpression;
 import de.monticore.expressions.expressionsbasis._ast.ASTNameExpression;
 import de.monticore.expressions.expressionsbasis._symboltable.IExpressionsBasisScope;
 import de.monticore.expressions.expressionsbasis._visitor.ExpressionsBasisTraverser;
-import org.junit.jupiter.api.Assertions;
-import tutorial.simplejava._parser.SimpleJavaParser;
-import tutorial.simplejava._visitor.SimpleJavaTraverser;
-import tutorial.simplejava.types3.SimpleJavaTypeCheck3;
 import de.monticore.literals.mccommonliterals._visitor.MCCommonLiteralsTraverser;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.check.SymTypeExpression;
@@ -26,9 +22,15 @@ import de.monticore.types.mcsimplegenerictypes._visitor.MCSimpleGenericTypesTrav
 import de.monticore.types3.TypeCheck3;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tutorial.simplejava._parser.SimpleJavaParser;
+import tutorial.simplejava._visitor.SimpleJavaTraverser;
+import tutorial.simplejava.types3.SimpleJavaTypeCheck3;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TypeCheckTest extends AbstractTest {
 
@@ -49,21 +51,21 @@ class TypeCheckTest extends AbstractTest {
 
     //BasicTypes
     Optional<ASTMCPrimitiveType> prim = p.parse_StringMCPrimitiveType("int");
-    Assertions.assertTrue(prim.isPresent());
+    assertTrue(prim.isPresent());
     SimpleJavaTraverser traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     prim.get().accept(traverser);
     SymTypeExpression res = TypeCheck3.symTypeFromAST(prim.get());
-    Assertions.assertEquals("int", res.print());
+    assertEquals("int", res.print());
 
     //CollectionTypes
     Optional<ASTMCListType> list = p.parse_StringMCListType("List<int>");
-    Assertions.assertTrue(list.isPresent());
+    assertTrue(list.isPresent());
     traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     list.get().accept(traverser);
     res = TypeCheck3.symTypeFromAST(list.get());
-    Assertions.assertEquals("List<int>", res.print());
+    assertEquals("List<int>", res.print());
   }
 
   @Test
@@ -73,54 +75,54 @@ class TypeCheckTest extends AbstractTest {
 
     //ExpressionsBasis
     Optional<ASTLiteralExpression> lit = p.parse_StringLiteralExpression("3");
-    Assertions.assertTrue(lit.isPresent());
+    assertTrue(lit.isPresent());
     SimpleJavaTraverser traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     lit.get().accept(traverser);
     SymTypeExpression res = TypeCheck3.typeOf(lit.get());
-    Assertions.assertEquals("int", res.print());
+    assertEquals("int", res.print());
 
     //CommonExpressions
     Optional<ASTLiteralExpression> lit2 = p.parse_StringLiteralExpression("3.4");
-    Assertions.assertTrue(lit2.isPresent());
+    assertTrue(lit2.isPresent());
     ASTPlusExpression plus = SimpleJavaMill.plusExpressionBuilder().setLeft(lit.get()).setRight(lit2.get()).setOperator("+").build();
     traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     plus.accept(traverser);
     res = TypeCheck3.typeOf(plus);
-    Assertions.assertEquals("double", res.print());
+    assertEquals("double", res.print());
 
     //AssignmentExpressions
     Optional<ASTNameExpression> name = p.parse_StringNameExpression("variable");
-    Assertions.assertTrue(name.isPresent());
+    assertTrue(name.isPresent());
     ASTAssignmentExpression ass = SimpleJavaMill.assignmentExpressionBuilder().setLeft(name.get()).setRight(lit.get()).setOperator(ASTConstantsAssignmentExpressions.MINUSEQUALS).build();
     traverser = SimpleJavaMill.traverser();
     addToTraverser(traverser, SimpleJavaMill.globalScope());
     ass.accept(traverser);
     res = TypeCheck3.typeOf(ass);
-    Assertions.assertEquals("float", res.print());
+    assertEquals("float", res.print());
   }
 
   private void addToTraverser(ExpressionsBasisTraverser traverser, IExpressionsBasisScope enclosingScope) {
     FlatExpressionScopeSetter flatExpressionScopeSetter = new FlatExpressionScopeSetter(enclosingScope);
     traverser.add4ExpressionsBasis(flatExpressionScopeSetter);
-    if (traverser instanceof AssignmentExpressionsTraverser) {
-      ((AssignmentExpressionsTraverser) traverser).add4AssignmentExpressions(flatExpressionScopeSetter);
+    if (traverser instanceof AssignmentExpressionsTraverser assignmentExpressionsTraverser) {
+      assignmentExpressionsTraverser.add4AssignmentExpressions(flatExpressionScopeSetter);
     }
-    if (traverser instanceof CommonExpressionsTraverser) {
-      ((CommonExpressionsTraverser) traverser).add4CommonExpressions(flatExpressionScopeSetter);
+    if (traverser instanceof CommonExpressionsTraverser commonExpressionsTraverser) {
+      commonExpressionsTraverser.add4CommonExpressions(flatExpressionScopeSetter);
     }
-    if (traverser instanceof MCBasicTypesTraverser) {
-      ((MCBasicTypesTraverser) traverser).add4MCBasicTypes(flatExpressionScopeSetter);
+    if (traverser instanceof MCBasicTypesTraverser mcBasicTypesTraverser) {
+      mcBasicTypesTraverser.add4MCBasicTypes(flatExpressionScopeSetter);
     }
-    if(traverser instanceof MCCollectionTypesTraverser) {
-      ((MCCollectionTypesTraverser) traverser).add4MCCollectionTypes(flatExpressionScopeSetter);
+    if (traverser instanceof MCCollectionTypesTraverser mcCollectionTypesTraverser) {
+      mcCollectionTypesTraverser.add4MCCollectionTypes(flatExpressionScopeSetter);
     }
-    if(traverser instanceof MCSimpleGenericTypesTraverser) {
-      ((MCSimpleGenericTypesTraverser) traverser).add4MCSimpleGenericTypes(flatExpressionScopeSetter);
+    if (traverser instanceof MCSimpleGenericTypesTraverser mcSimpleGenericTypesTraverser) {
+      mcSimpleGenericTypesTraverser.add4MCSimpleGenericTypes(flatExpressionScopeSetter);
     }
-    if (traverser instanceof MCCommonLiteralsTraverser) {
-      ((MCCommonLiteralsTraverser) traverser).add4MCCommonLiterals(flatExpressionScopeSetter);
+    if (traverser instanceof MCCommonLiteralsTraverser mcCommonLiteralsTraverser) {
+      mcCommonLiteralsTraverser.add4MCCommonLiterals(flatExpressionScopeSetter);
     }
   }
 

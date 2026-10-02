@@ -2,16 +2,17 @@
 package tutorial.automata;
 
 import de.monticore.runtime.junit.MCAssertions;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._symboltable.AutomataScopesGenitorDelegator;
-import de.se_rwth.commons.logging.LogStub;
 
 import java.io.IOException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AbstractTest {
 
@@ -35,6 +36,7 @@ public class AbstractTest {
   public ASTAutomaton parse(String model) throws IOException {
     Optional<ASTAutomaton> aut = AutomataMill.parser().parse(model);
     MCAssertions.assertNoFindings();
+    assertTrue(aut.isPresent());
     ASTAutomaton automaton = aut.get();
     AutomataScopesGenitorDelegator automataScopesGenitorDelegator = AutomataMill.scopesGenitorDelegator();
     automataScopesGenitorDelegator.createFromAST(automaton);

@@ -1,22 +1,24 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.automata;
 
-import org.junit.jupiter.api.Assertions;
-import tutorial.automata._ast.ASTAutomaton;
 import org.junit.jupiter.api.Test;
+import tutorial.automata._ast.ASTAutomaton;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ParserTest extends AbstractTest {
 
   @Test
   void testPingPong() throws IOException {
     ASTAutomaton aut = parse("src/test/resources/tutorial/automata/PingPong.aut");
-    Assertions.assertNotNull(aut);
-    Assertions.assertEquals(5, aut.getTransitionList().size());
-    Assertions.assertEquals(3, aut.getStateList().size());
-    Assertions.assertEquals("startGame", aut.getTransition(0).getInput());
-    Assertions.assertEquals("NoGame", aut.getState(0).getName());
+    assertNotNull(aut);
+    assertEquals(5, aut.getTransitionList().size());
+    assertEquals(3, aut.getStateList().size());
+    assertEquals("startGame", aut.getTransition(0).getInput());
+    assertEquals("NoGame", aut.getState(0).getName());
   }
   
   @Test

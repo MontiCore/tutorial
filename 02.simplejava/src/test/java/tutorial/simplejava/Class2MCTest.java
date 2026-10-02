@@ -2,10 +2,11 @@
 package tutorial.simplejava;
 
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tutorial.simplejava.types3.SimpleJavaTypeCheck3;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class Class2MCTest extends AbstractTest {
 
@@ -23,10 +24,10 @@ class Class2MCTest extends AbstractTest {
   @org.junit.jupiter.api.Disabled
   void test() throws Exception {
     // Test, that we are successfully able to resolve java symbols, such as String, Optional, ...
-    Assertions.assertTrue(SimpleJavaMill
+    assertTrue(SimpleJavaMill
             .globalScope()
             .resolveType("java.lang.String").isPresent());
-    Assertions.assertTrue(SimpleJavaMill
+    assertTrue(SimpleJavaMill
             .globalScope()
             .resolveType("java.util.Optional").isPresent());
 

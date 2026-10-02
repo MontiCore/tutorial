@@ -1,8 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.website;
 
-import de.se_rwth.commons.logging.Finding;
-import org.junit.jupiter.api.Assertions;
+import de.monticore.runtime.junit.MCAssertions;
 import tutorial.website._ast.ASTWebsite;
 import tutorial.website._cocos.WebsiteCoCoChecker;
 import de.se_rwth.commons.logging.Log;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import tutorial.website.cocos.*;
 
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 class CoCoTest extends AbstractTest {
 
@@ -88,15 +86,12 @@ class CoCoTest extends AbstractTest {
   public void checkValid(ASTWebsite node) {
     WebsiteCoCoChecker checker = new WebsiteCoCos().createChecker();
     checker.checkAll(node);
-    Assertions.assertTrue(Log.getFindings().isEmpty());
+    MCAssertions.assertNoFindings();
   }
 
   public void checkInvalid(ASTWebsite node, String errorCode) {
     WebsiteCoCoChecker checker = new WebsiteCoCos().createChecker();
     checker.checkAll(node);
-    Assertions.assertFalse(Log.getFindings().isEmpty());
-    Assertions.assertTrue(Log.getFindings().get(0).getMsg().startsWith(errorCode),
-                          Log.getFindings().stream().map(Finding::getMsg).collect(
-                                  Collectors.joining(System.lineSeparator())));
+    MCAssertions.assertHasFindingsStartingWith(errorCode);
   }
 }

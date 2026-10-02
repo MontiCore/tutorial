@@ -2,8 +2,10 @@
 package tutorial.simplejavawithautomata;
 
 import de.monticore.ast.ASTNode;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symbols.oosymbols._symboltable.MethodSymbol;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._ast.ASTState;
 import tutorial.automata._symboltable.AutomatonSymbol;
@@ -17,13 +19,12 @@ import tutorial.simplejavawithautomata._symboltable.ISimpleJavaWithAutomataArtif
 import tutorial.simplejavawithautomata._symboltable.SimpleJavaWithAutomataScope;
 import tutorial.simplejavawithautomata._visitor.SimpleJavaWithAutomataTraverser;
 import tutorial.simplejavawithautomata.types3.SimpleJavaWithAutomataTypeCheck3;
-import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class VisitorTest extends AbstractTest {
 
@@ -41,11 +42,11 @@ class VisitorTest extends AbstractTest {
     ASTJavaCompilationUnit ast = parse("src/test/resources/tutorial/simplejavawithautomata/Bar.jla");
     ISimpleJavaWithAutomataArtifactScope as = createSymbolTable(ast);
     Optional<MethodSymbol> getMaxSymbol = as.resolveMethodDown("Bar.getMax");
-    Assertions.assertTrue(getMaxSymbol.isPresent(), "getMax not found");
+    assertTrue(getMaxSymbol.isPresent(), "getMax not found");
     SimpleJavaWithAutomataScope s = (SimpleJavaWithAutomataScope) ((ASTJavaMethod)getMaxSymbol.get()
             .getAstNode()).getJavaBlock().getSpannedScope();
     Optional<AutomatonSymbol> aut = s.resolveAutomatonDown("Door");
-    Assertions.assertTrue(aut.isPresent());
+    assertTrue(aut.isPresent());
     ASTAutomaton automaton = aut.get().getAstNode();
     checkCountTransitions(automaton, 4);
     checkCountStates(automaton, 5, 2, 1);
@@ -67,7 +68,7 @@ class VisitorTest extends AbstractTest {
     SimpleJavaWithAutomataTraverser traverser = SimpleJavaWithAutomataMill.traverser();
     traverser.add4Automata(ct);
     automaton.accept(traverser);
-    Assertions.assertEquals(expectedNumber, ct.countTransitions());
+    assertEquals(expectedNumber, ct.countTransitions());
   }
 
   public void checkCountStates(ASTNode automaton, int expectedNumber, int countInitial, int countFinal) {
@@ -75,9 +76,9 @@ class VisitorTest extends AbstractTest {
     SimpleJavaWithAutomataTraverser traverser = SimpleJavaWithAutomataMill.traverser();
     traverser.add4Automata(cs);
     automaton.accept(traverser);
-    Assertions.assertEquals(expectedNumber, cs.countStates());
-    Assertions.assertEquals(countInitial, cs.countInitialStates());
-    Assertions.assertEquals(countFinal, cs.countFinalStates());
+    assertEquals(expectedNumber, cs.countStates());
+    assertEquals(countInitial, cs.countInitialStates());
+    assertEquals(countFinal, cs.countFinalStates());
   }
 
   public void checkChangeName(ASTNode automaton, String prefix){
@@ -88,9 +89,9 @@ class VisitorTest extends AbstractTest {
     traverser.add4Automata(sc);
     automaton.accept(traverser);
     List<ASTState> stateList = sc.collectStates();
-    Assertions.assertFalse(stateList.isEmpty());
+    assertFalse(stateList.isEmpty());
     for(ASTState state: stateList){
-      Assertions.assertTrue(state.getName().startsWith(prefix));
+      assertTrue(state.getName().startsWith(prefix));
     }
   }
 

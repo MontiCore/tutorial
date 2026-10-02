@@ -1,7 +1,6 @@
 /* (c) https://github.com/MontiCore/monticore */
 package tutorial.automata;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tutorial.automata._ast.ASTAutomaton;
 import tutorial.automata._ast.ASTState;
@@ -14,7 +13,8 @@ import tutorial.automata.visitor.StateCollector;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class VisitorTest extends AbstractTest {
 
@@ -58,7 +58,7 @@ class VisitorTest extends AbstractTest {
     AutomataTraverser traverser = AutomataMill.traverser();
     traverser.add4Automata(ct);
     automaton.accept(traverser);
-    Assertions.assertEquals(expectedNumber, ct.countTransitions(), "CountTransitions result incorrect ");
+    assertEquals(expectedNumber, ct.countTransitions(), "CountTransitions result incorrect ");
   }
 
   public void checkCountStates(ASTAutomaton automaton, int expectedNumber, int countInitial, int countFinal) {
@@ -66,9 +66,9 @@ class VisitorTest extends AbstractTest {
     AutomataTraverser traverser = AutomataMill.traverser();
     traverser.add4Automata(cs);
     automaton.accept(traverser);
-    Assertions.assertEquals(expectedNumber, cs.countStates(), "CountStates state result incorrect");
-    Assertions.assertEquals(countInitial, cs.countInitialStates(), "CountStates initial state result incorrect");
-    Assertions.assertEquals(countFinal, cs.countFinalStates(), "CountStates final state result incorrect");
+    assertEquals(expectedNumber, cs.countStates(), "CountStates state result incorrect");
+    assertEquals(countInitial, cs.countInitialStates(), "CountStates initial state result incorrect");
+    assertEquals(countFinal, cs.countFinalStates(), "CountStates final state result incorrect");
   }
 
   public void checkChangeName(ASTAutomaton automaton, String prefix){
@@ -80,10 +80,10 @@ class VisitorTest extends AbstractTest {
     automaton.accept(traverser);
     List<ASTState> stateList = automaton.getSpannedScope()
             .getStateSymbols().values().stream().map(StateSymbol::getAstNode)
-            .collect(Collectors.toList());
-    Assertions.assertFalse(stateList.isEmpty(), "All states were removed?");
+            .toList();
+    assertFalse(stateList.isEmpty(), "All states were removed?");
     for(ASTState state: stateList){
-      Assertions.assertTrue(state.getName().startsWith(prefix),
+      assertTrue(state.getName().startsWith(prefix),
                             "AddPrefixToName did not add prefix, found " + state.getName());
     }
   }
